@@ -123,6 +123,6 @@
 |**Rebeca Gama**|Product Owner|[![](https://bit.ly/3f9Xo0P)](https://github.com/RebecaGama)|
 |**Elisa Carvalho**|Developer Team|[![](https://bit.ly/3f9Xo0P)](https://github.com/elisadsc)|
 |**Isabel Vitória**|Developer Team|[![](https://bit.ly/3f9Xo0P)](https://github.com/)|
-|**Simone**|Developer Team|[![](https://bit.ly/3f9Xo0P)](https://github.com/)|
+|**Simone Hissae**|Developer Team|[![](https://bit.ly/3f9Xo0P)](https://github.com/)|
 |**Thiago Bueno**|Developer Team|[![](https://bit.ly/3f9Xo0P)](https://github.com/TjBueno)|
 |**Víctor Henrique**|Developer Team|[![](https://bit.ly/3f9Xo0P)](https://github.com/ViktorHenrique)|
