@@ -1,11 +1,11 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import Login from '../../../src/views/login';
-import Cadastros from '../../../src/views/cadastros';
-import DashboardGreenneat from '../../../src/views/dashboardGreenneat';
-import TransacoesGreenneat from '../../../src/views/transacoesGreenneat';
-import CarteiraCooperativo from '../../../src/views/carteiraCooperativo';
-import CarteiraEstabelecimento from '../../../src/views/carteiraEstabelecimento';
-import DashboardCooperativo from '../../../src/views/dashboardCooperativo';
+import Login from '../views/login';
+import Cadastros from '../views/cadastros';
+import DashboardGreenneat from '../views/dashboardGreenneat';
+import TransacoesGreenneat from '../views/transacoesGreenneat';
+import CarteiraCooperativo from '../views/carteiraCooperativo';
+import CarteiraEstabelecimento from '../views/carteiraEstabelecimento';
+import DashboardCooperativo from '../views/dashboardCooperativo';
 
 function Router() {
     return(
