@@ -8,6 +8,7 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Triangulo from '../components/Triangulo/triangulo';
 
 const defaultTheme = createTheme();
 
@@ -16,7 +17,7 @@ const backgroundColor = {
 };
 
 const fontColor = {
-    color: '#136935'
+    color: '#0E681D'
 };
 
 export default function Login() {
@@ -31,7 +32,7 @@ export default function Login() {
 
   return (
     <ThemeProvider theme={defaultTheme}>
-      <Grid container component="main" sx={{ height: '100vh' }}>
+      <Grid container component="main" sx={{ height: '100vh' }} style={backgroundColor}>
         <CssBaseline />
         <Grid
           item
@@ -42,7 +43,8 @@ export default function Login() {
 
           }}
         />
-        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square style={backgroundColor}>
+        <Triangulo />
+        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={0} style={backgroundColor}>
           <Box
             sx={{
               my: 20,
@@ -55,7 +57,7 @@ export default function Login() {
           >
             <Typography component="h1" variant="h5" style={fontColor}>
                 <strong>
-                    LOGIN
+                    Seja bem-vindo!
                 </strong>
             </Typography>
             <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
@@ -64,9 +66,10 @@ export default function Login() {
                 color="success"
                 fullWidth
                 id="email"
-                label="Email"
+                label="E-mail"
                 name="email"
                 autoComplete="email"
+                required
                 autoFocus
                 style={{ backgroundColor: 'white' }}
               />
@@ -79,6 +82,7 @@ export default function Login() {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                required
                 style={{ backgroundColor: 'white' }}
               />
               <Button
