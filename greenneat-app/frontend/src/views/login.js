@@ -34,21 +34,13 @@ export default function Login() {
     <ThemeProvider theme={defaultTheme}>
       <Grid container component="main" sx={{ height: '100vh' }} style={backgroundColor}>
         <CssBaseline />
-        <Grid
-          item
-          xs={false}
-          sm={4}
-          md={7}
-          sx={{
-
-          }}
-        />
-        <Triangulo />
+        <Grid item xs={false} sm={4} md={7} sx={{ }}/>
+          <Triangulo />
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={0} style={backgroundColor}>
           <Box
             sx={{
               my: 20,
-              mx: 4,
+              mx: 10,
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
