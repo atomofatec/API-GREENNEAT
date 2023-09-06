@@ -9,6 +9,7 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Retangulo from '../components/Retangulo/retangulo';
+import { Divider } from '@mui/material';
 
 const defaultTheme = createTheme();
 
@@ -32,7 +33,7 @@ export default function Cadastro() {
 
   return (
     <ThemeProvider theme={defaultTheme}>
-      <Grid container component="main" sx={{ height: '100vh' }} style={backgroundColor}>
+      <Grid container component="main" sx={{ height: '100%' }} style={backgroundColor}>
         <CssBaseline />
         <Grid
           item
@@ -47,8 +48,9 @@ export default function Cadastro() {
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={0} style={backgroundColor}>
           <Box
             sx={{
-              my: 20,
+              my: 5,
               mx: 4,
+              mr: 12,
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
@@ -59,8 +61,21 @@ export default function Cadastro() {
                 <strong>
                     Cadastro Estabelecimento
                 </strong>
+            <Divider sx={{backgroundColor: '#136935', my: 1, height: 3}}/>
             </Typography>
             <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+                <TextField
+                margin="normal"
+                color="success"
+                fullWidth
+                id="cnpj"
+                label="CNPJ"
+                name="cnpj"
+                autoComplete="cnpj"
+                required
+                autoFocus
+                style={{ backgroundColor: 'white' }}
+              />
                 <TextField
                 margin="normal"
                 color="success"
@@ -70,7 +85,6 @@ export default function Cadastro() {
                 name="email"
                 autoComplete="email"
                 required
-                autoFocus
                 style={{ backgroundColor: 'white' }}
               />
               <TextField
@@ -85,6 +99,56 @@ export default function Cadastro() {
                 required
                 style={{ backgroundColor: 'white' }}
               />
+              <TextField
+                margin="normal"
+                color="success"
+                fullWidth
+                name="telefone"
+                label="Telefone"
+                id="telefone"
+                required
+                style={{ backgroundColor: 'white' }}
+              />
+              <TextField
+                margin="normal"
+                color="success"
+                fullWidth
+                name="bairro"
+                label="Bairro"
+                id="bairro"
+                required
+                style={{ backgroundColor: 'white' }}
+              />
+              <TextField
+                margin="normal"
+                color="success"
+                fullWidth
+                name="endereco"
+                label="Endereço"
+                id="endereco"
+                required
+                style={{ backgroundColor: 'white' }}
+              />
+              <TextField
+                margin="normal"
+                color="success"
+                fullWidth
+                name="rSocial"
+                label="Razão Social"
+                id="rSocial"
+                required
+                style={{ backgroundColor: 'white' }}
+              />
+              <TextField
+                margin="normal"
+                color="success"
+                fullWidth
+                name="nFantasia"
+                label="Nome Fantasia"
+                id="nFantasia"
+                required
+                style={{ backgroundColor: 'white' }}
+              />
               <Button
                 type="submit"
                 fullWidth
@@ -92,20 +156,8 @@ export default function Cadastro() {
                 color="success"
                 sx={{ mt: 3, mb: 2, backgroundColor: '#136935'}}
               >
-                Entrar
+                Cadastrar
               </Button>
-              <Grid container>
-                <Grid item xs>
-                  <Link href="#" variant="body2" style={{ textDecoration: 'none', ...fontColor }}>
-                    Esqueceu a senha?
-                  </Link>
-                </Grid>
-                <Grid item>
-                  <Link href="#" variant="body2" style={{ textDecoration: 'none', ...fontColor }}>
-                    Crie a sua conta aqui
-                  </Link>
-                </Grid>
-              </Grid>
             </Box>
           </Box>
         </Grid>
