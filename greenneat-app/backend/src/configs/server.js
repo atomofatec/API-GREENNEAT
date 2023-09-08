@@ -16,7 +16,7 @@ const corsOptions = {
 
 function startServer() {
     const server = express()
-    const port = 3000
+    const port = 3003
 
     server.use(express.urlencoded({ extended: false }))
     server.use(express.json())
