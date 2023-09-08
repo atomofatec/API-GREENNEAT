@@ -1,8 +1,8 @@
 import Address from './address.model'
 import Contact from './contact.model'
-import Foundation from './foundation.model'
+import Partner from './partner.model'
 import Legal from './legal.model'
-import Member from './member.model'
+import Supplier from './supplier.model'
 import Natural from './natural.model'
 
 class User {
@@ -13,8 +13,8 @@ class User {
         nature,
         address,
         contact,
-        foundation,
-        member
+        partner,
+        supplier
     ) {
         this.name = name
         this.email = email
@@ -24,7 +24,7 @@ class User {
             this.nature = nature
         if (address instanceof Address) this.address = address
         if (contact instanceof Contact) this.contact = contact
-        if (foundation instanceof Foundation) this.foundation = foundation
-        if (member instanceof Member) this.member = member
+        if (partner instanceof Partner) this.partner = partner
+        if (supplier instanceof Supplier) this.supplier = supplier
     }
 }
