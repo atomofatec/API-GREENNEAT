@@ -1,7 +1,6 @@
 import * as React from 'react';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
 import { Link } from 'react-router-dom';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
@@ -24,8 +23,9 @@ const fontColor = {
 };
 
 export default function Cadastro() {
-  const [selectedOption, setSelectedOption] = React.useState('estabelecimento');
+  const [selectedOption, setSelectedOption] = React.useState('estabelecimento'); // estado para controlar opção selecionada
 
+  // função para seleção
   const handleOptionChange = (option) => {
     setSelectedOption(option);
   };
@@ -39,7 +39,7 @@ export default function Cadastro() {
     });
   };
 
-// Função condicional que decide quais campos serão renderizados de acordo com botão selecionado
+  // Função condicional que decide quais campos serão renderizados de acordo com botão selecionado
   const renderContent = () => {
     if (selectedOption === 'estabelecimento') {
       return <CadEstab />;
@@ -157,6 +157,7 @@ export default function Cadastro() {
             </Typography>
           </Box>
         </Grid>
+        {/*Formulário*/}
         <Grid item xs={6} sm={8} md={5} component={Paper} elevation={0} style={backgroundColor}>
           <Box
             sx={{
@@ -193,7 +194,7 @@ export default function Cadastro() {
                 fontSize={35}
                 sx={{ textAlign: 'center' }}
               >
-                 {getTitleText()}
+                 {getTitleText()} {/*preenchido com o título da opção selecionada*/}
               </Typography>
               <Divider
                 sx={{

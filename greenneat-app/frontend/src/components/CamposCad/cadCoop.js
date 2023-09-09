@@ -2,14 +2,16 @@ import { Grid, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 
 export default function CadCoop() {
-    const [selectedOption, setSelectedOption] = useState('cpf');
+    const [selectedOption, setSelectedOption] = useState('cpf'); // estado para armezenar escolha (cpf ou cnpj)
 
+    // função de escolha
     const toggleOption = (option) => {
         setSelectedOption(option);
     };
 
     return (
         <>
+        {/* campos comuns (aparecem em cnpj e cpf) */}
             <Grid container spacing={2}>
                 <Grid item xs={12}>
                     <TextField
@@ -36,12 +38,14 @@ export default function CadCoop() {
                         autoFocus
                         style={{ backgroundColor: 'white', display: selectedOption === 'cnpj' ? 'block' : 'none' }}
                     />
+                    {/* botão que altera de cpf para cnpj */}
                     <Typography
                         variant="body2"
                         color="#3B8F5C"
                         style={{ cursor: 'pointer' }}
                         onClick={() => toggleOption(selectedOption === 'cpf' ? 'cnpj' : 'cpf')}
                     >
+                        {/* alterna o texto para ficar coerente de acordo com a opção já selecionada */}
                         {selectedOption === 'cpf' ? 'Entrar com CNPJ' : 'Entrar com CPF'}
                     </Typography>
                 </Grid>
@@ -86,6 +90,7 @@ export default function CadCoop() {
                 </Grid>
                 {selectedOption === 'cnpj' && (
                     <>
+                    {/* campos que só aparecem quando seleciona cnpj */}
                         <Grid item xs={12}>
                             <TextField
                                 margin="normal"
