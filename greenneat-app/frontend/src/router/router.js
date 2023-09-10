@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Login from '../views/login';
-import Cadastros from '../views/cadastros';
+import Cadastro from '../views/cadastros';
 import DashboardGreenneat from '../views/dashboardGreenneat';
 import TransacoesGreenneat from '../views/transacoesGreenneat';
 import CarteiraCooperativo from '../views/carteiraCooperativo';
@@ -12,7 +12,7 @@ function Router() {
         <BrowserRouter>
         <Routes>
             <Route path='/' element={<Login />}/>
-            <Route path='/cadastro' element={<Cadastros />}/>
+            <Route path='/cadastro' element={<Cadastro />}/>
             <Route path='/dashboard-greenneat' element={<DashboardGreenneat />}/>
             <Route path='/dashboard-cooperativo' element={<DashboardCooperativo />}/>
             <Route path='/transacoes-greenneat' element={<TransacoesGreenneat />}/>
