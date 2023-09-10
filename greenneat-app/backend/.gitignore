@@ -50,3 +50,8 @@ coverage
 
 # Bower dependency directory (https://bower.io/)
 bower_component…
+
+# dotenv environment variables file
+.env
+.env.test
+
