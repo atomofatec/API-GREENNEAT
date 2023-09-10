@@ -19,13 +19,14 @@ import Divider from '@mui/material/Divider';
 import Skeleton from '@mui/material/Skeleton';
 import PropTypes from 'prop-types';
 import Grid from '@mui/material/Grid';
+import Container from '@mui/material/Container';
 import { mainListItems } from '../components/Menus/menuEstabelecimento';
 
 const settings = [
   { name: 'Meu Perfil' },
   { name: 'Ajuda' },
   'divider',
-  { name: 'Sair' },
+  { sair: 'Sair' },
 ];  
 
 const drawerWidth = 240;
@@ -76,29 +77,35 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 
+//Retangulos
 function Media(props) {
   const { loading = false } = props;
 
   return (
-    <Grid container wrap="nowrap">
-      {(loading ? Array.from(new Array(3)) : []).map((item, index) => (
-        <Box key={index} sx={{ width: 310, marginRight: 3, my: 5 }}>
-          {item ? (
-            <img
-              style={{ width: 310, height: 200 }}
-            />
-          ) : (
-            <Skeleton variant="rectangular" width={310} height={200} />
-          )}
-        </Box>
-      ))}
-    </Grid>
+    <Container maxWidth="lg">
+      <Grid container spacing={2} justify="center">
+        {(loading ? Array.from(new Array(3)) : []).map((item, index) => (
+          <Grid item xs={12} sm={6} md={4} lg={3} key={index} sx={{ mx: 3 }}>
+            <Box sx={{ width: '100%', my: 2 }}>
+              {item ? (
+                <img
+                  style={{ width: 300, height: 200 }}
+                />
+              ) : (
+                <Skeleton variant="rectangular" width={300} height={200} />
+              )}
+            </Box>
+          </Grid>
+        ))}
+      </Grid>
+    </Container>
   );
 }
 
 Media.propTypes = {
   loading: PropTypes.bool,
 };
+//Fim Retangulos
 
 export default function CarteiraEstabelecimento() {
   const [open, setOpen] = React.useState(false);
@@ -182,8 +189,8 @@ export default function CarteiraEstabelecimento() {
                         <Divider key={index} />
                     ) : (
                         <MenuItem key={setting.name} onClick={handleCloseUserMenu}>
-                        {setting.icon}
                         <Typography textAlign="center">{setting.name}</Typography>
+                        <Typography textAlign="center"><Link href='/' sx={{textDecoration: 'none', color: 'inherit'}}>{setting.sair}</Link></Typography>
                         </MenuItem>
                     )
                     ))}
@@ -236,8 +243,8 @@ export default function CarteiraEstabelecimento() {
         >
           <Toolbar />
           <Box sx={{ overflow: 'hidden' }}>
-            <Media loading />
-            <Media loading />
+            <Media loading /> {/*Retangulos*/}
+            <Media loading /> {/*Retangulos*/}
           </Box>
         </Box>
       </Box>

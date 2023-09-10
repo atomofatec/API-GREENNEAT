@@ -11,7 +11,7 @@ import { Link } from 'react-router-dom';
 
 export const mainListItems = (
   <React.Fragment>
-    <ListItemButton component={Link} to="#" sx={{ color: 'white' }}>
+    <ListItemButton component={Link} to="/carteira-estabelecimento" sx={{ color: 'white' }}>
       <ListItemIcon>
         <WalletIcon sx={{ color: 'white' }} />
       </ListItemIcon>
@@ -30,7 +30,7 @@ export const mainListItems = (
       <ListItemText
         primary={
           <Typography variant="body2" style={{ fontSize: '1rem', fontFamily: "'Century Gothic', Futura, sans-serif" }}>
-            Solicitar
+            Solicitar #
           </Typography>
         }
       />
@@ -42,7 +42,7 @@ export const mainListItems = (
       <ListItemText
         primary={
           <Typography variant="body2" style={{ fontSize: '1rem', fontFamily: "'Century Gothic', Futura, sans-serif" }}>
-            Comprar
+            Comprar #
           </Typography>
         }
       />
@@ -54,7 +54,7 @@ export const mainListItems = (
       <ListItemText
         primary={
           <Typography variant="body2" style={{ fontSize: '1rem', fontFamily: "'Century Gothic', Futura, sans-serif" }}>
-            Histórico
+            Histórico #
           </Typography>
         }
       />

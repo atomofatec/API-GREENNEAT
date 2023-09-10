@@ -11,14 +11,14 @@ import { Link } from 'react-router-dom';
 
 export const mainListItems = (
   <React.Fragment>
-    <ListItemButton component={Link} to="#" sx={{ color: 'white' }}>
+    <ListItemButton component={Link} to="/dashboard-greenneat" sx={{ color: 'white' }}>
       <ListItemIcon>
         <BarChartIcon sx={{ color: 'white' }} />
       </ListItemIcon>
       <ListItemText
         primary={
           <Typography variant="body2" style={{ fontSize: '1rem', fontFamily: "'Century Gothic', Futura, sans-serif" }}>
-            Dashbord
+            Dashboard
           </Typography>
         }
       />
@@ -30,7 +30,7 @@ export const mainListItems = (
       <ListItemText
         primary={
           <Typography variant="body2" style={{ fontSize: '1rem', fontFamily: "'Century Gothic', Futura, sans-serif" }}>
-            Usuários
+            Usuários #
           </Typography>
         }
       />
@@ -42,19 +42,19 @@ export const mainListItems = (
       <ListItemText
         primary={
           <Typography variant="body2" style={{ fontSize: '1rem', fontFamily: "'Century Gothic', Futura, sans-serif" }}>
-            Comparador
+            Comparador #
           </Typography>
         }
       />
     </ListItemButton>
-    <ListItemButton component={Link} to="#" sx={{ color: 'white' }}>
+    <ListItemButton component={Link} to="/transacoes-greenneat" sx={{ color: 'white' }}>
       <ListItemIcon>
         <ReceiptIcon sx={{ color: 'white' }} />
       </ListItemIcon>
       <ListItemText
         primary={
           <Typography variant="body2" style={{ fontSize: '1rem', fontFamily: "'Century Gothic', Futura, sans-serif" }}>
-            Transações
+            Transações 
           </Typography>
         }
       />
