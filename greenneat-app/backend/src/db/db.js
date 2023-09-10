@@ -1,22 +1,29 @@
-const { Pool } = require('pg')
+const pgp = require('pg-promise')()
 
-// Função para testar a conexão com o banco de dados
-async function testDatabaseConnection() {
-    const pool = new Pool({
-        connectionString: process.env.DATABASE_URL,
-    })
-
-    try {
-        const client = await pool.connect()
-        console.log('Conexão com o banco de dados bem-sucedida')
-        client.release()
-    } catch (error) {
-        console.error('Erro ao conectar ao banco de dados:', error.message)
-    } finally {
-        pool.end()
-    }
+const dbConfig = {
+    connectionString: process.env.DATABASE_URL,
 }
 
-testDatabaseConnection()
+const db = pgp(dbConfig)
 
-module.exports = { testDatabaseConnection }
+db.connect()
+    .then((obj) => {
+        console.log('Conexão com o banco de dados bem-sucedida.')
+
+        return obj
+            .one('SELECT 1')
+            .then((data) => {
+                console.log('Consulta de teste bem-sucedida:', data)
+            })
+            .catch((error) => {
+                console.error('Erro na consulta de teste:', error)
+            })
+            .finally(() => {
+                obj.done() 
+            })
+    })
+    .catch((error) => {
+        console.error('Erro na conexão com o banco de dados:', error)
+    })
+
+module.exports = { db }

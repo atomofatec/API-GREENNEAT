@@ -1,6 +1,11 @@
-export default class Address {
-    constructor(address1, address2) {
-        this.address1 = address1
-        this.address2 = address2
-    }
+const Address = {
+    tableName: 'Address',
+    columns: {
+        idAddress: 'serial',
+        address_1: 'varchar(200)',
+        address_2: 'varchar(200)',
+    },
+    primaryKeys: ['idAddress'],
 }
+
+module.exports = { Address }

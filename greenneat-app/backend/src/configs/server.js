@@ -16,7 +16,7 @@ const corsOptions = {
 
 function startServer() {
     const server = express()
-    const port = 3002
+    const port = 3000
 
     server.use(express.urlencoded({ extended: false }))
     server.use(express.json())
@@ -25,7 +25,7 @@ function startServer() {
     server.use(cors(corsOptions))
 
     server.listen(port, () => {
-        console.log('Iniciado com sucesso!')
+        console.log('Server iniciado com sucesso!')
     })
 
     return server
