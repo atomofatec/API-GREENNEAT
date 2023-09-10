@@ -16,10 +16,12 @@ import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import Divider from '@mui/material/Divider';
-import Skeleton from '@mui/material/Skeleton';
-import PropTypes from 'prop-types';
 import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import Title from '../components/Outros/Title';
+import SubTitle from '../components/Outros/SubTitle';
 import { mainListItems } from '../components/Menus/menuEstabelecimento';
 
 const settings = [
@@ -77,36 +79,6 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 
-//Retangulos
-function Media(props) {
-  const { loading = false } = props;
-
-  return (
-    <Container maxWidth="lg">
-      <Grid container spacing={2} justify="center">
-        {(loading ? Array.from(new Array(3)) : []).map((item, index) => (
-          <Grid item xs={12} sm={6} md={4} lg={3} key={index} sx={{ mx: 3 }}>
-            <Box sx={{ width: '100%', my: 2 }}>
-              {item ? (
-                <img
-                  style={{ width: 300, height: 200 }}
-                />
-              ) : (
-                <Skeleton variant="rectangular" width={300} height={200} />
-              )}
-            </Box>
-          </Grid>
-        ))}
-      </Grid>
-    </Container>
-  );
-}
-
-Media.propTypes = {
-  loading: PropTypes.bool,
-};
-//Fim Retangulos
-
 export default function CarteiraEstabelecimento() {
   const [open, setOpen] = React.useState(false);
   const toggleDrawer = () => {
@@ -121,6 +93,14 @@ export default function CarteiraEstabelecimento() {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+  };
+
+  const [valor, setValor] = useState("");
+
+  const handleValorChange = (event) => {
+    const input = event.target.value;
+    const numericValue = input.replace(/[^0-9]/g, "").replace(/^0+/, "");
+    setValor(numericValue || "0");
   };
 
   return (
@@ -242,10 +222,71 @@ export default function CarteiraEstabelecimento() {
         }}
         >
           <Toolbar />
-          <Box sx={{ overflow: 'hidden' }}>
-            <Media loading /> {/*Retangulos*/}
-            <Media loading /> {/*Retangulos*/}
-          </Box>
+          <Container maxWidth="lg" sx={{ m: 'auto', backgroundColor: 'white', borderRadius: 1, marginTop: '40px', marginBottom: '16px', overflow: 'auto'}}>
+            <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{marginBottom: '20px', marginTop: '20px' }}>
+              <Grid item xs={6}>
+                <Title>Enviar Crédito</Title>
+                <SubTitle>Greeneat</SubTitle>
+              </Grid>
+              <Grid item xs={6}>
+                <Box display="flex" justifyContent="flex-end" alignItems="center">
+                  <Title>$30</Title>
+                </Box>
+                <Box textAlign="right">
+                  <SubTitle>Moedas Greenneat</SubTitle>
+                </Box>
+              </Grid>
+            </Grid>
+            <Divider />
+            <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{marginBottom: '20px', marginTop: '10px' }}>
+              <Grid item xs={6}>
+                <TextField
+                  margin="normal"
+                  color="success"
+                  fullWidth
+                  disabled
+                  id="greenneat"
+                  label="Greenneat"
+                  name="greenneat"
+                  autoComplete="greenneat"
+                  autoFocus
+                  style={{ backgroundColor: 'white' }}
+                />
+                <TextField
+                  margin="normal"
+                  color="success"
+                  fullWidth
+                  id="number"
+                  label="Valor"
+                  name="number"
+                  autoComplete="valor"
+                  required
+                  autoFocus
+                  style={{ backgroundColor: 'white' }}
+                  value={valor}
+                  onChange={handleValorChange}
+                />
+              </Grid>
+              <Grid item xs={6}>
+              </Grid>
+            </Grid>
+            <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{marginBottom: '20px', marginTop: '10px' }}>
+              <Grid item xs={6}>
+              </Grid>
+              <Grid item xs={6}>
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  color="success"
+                  size="large"
+                  sx={{ mt: 3, mb: 2, backgroundColor: '#136935'}}
+                >
+                  Enviar
+                </Button>
+              </Grid>
+            </Grid>
+          </Container>
         </Box>
       </Box>
     </ThemeProvider>
