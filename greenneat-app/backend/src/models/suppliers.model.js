@@ -1,4 +1,5 @@
-//Modelo tabela Estabelecimento
+const { db } = require('../db/db')
+//tabela Estabelecimento
 const Suppliers = {
     tableName: 'Suppliers',
     columns: {

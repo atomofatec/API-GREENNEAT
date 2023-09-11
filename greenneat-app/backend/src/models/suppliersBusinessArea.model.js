@@ -1,4 +1,5 @@
-// Modelo tabela regiao de atuacao dos Estabelecimentos fornecedores de oleo
+const { db } = require('../db/db')
+//tabela regiao de atuacao dos Estabelecimentos fornecedores de oleo
 const Suppliers_BusinessArea = {
     tableName: 'Suppliers_BusinessArea',
     columns: {

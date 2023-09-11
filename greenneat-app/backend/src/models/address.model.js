@@ -1,3 +1,5 @@
+const { db } = require('../db/db')
+
 const Address = {
     tableName: 'Address',
     columns: {

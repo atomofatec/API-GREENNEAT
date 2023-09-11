@@ -1,4 +1,5 @@
-// Modelo tabela Parceiro
+const { db } = require('../db/db')
+//tabela Parceiro
 const Partner = {
     tableName: 'Partner',
     columns: {

@@ -1,4 +1,5 @@
-// Modelo tabela pessoa fisica
+const { db } = require('../db/db')
+//tabela pessoa fisica
 const Natural = {
     tableName: 'Natural',
     columns: {

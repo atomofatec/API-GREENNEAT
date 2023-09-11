@@ -1,12 +1,11 @@
-const express = require('express');
-const { router: userRouter, url: userURL } = require('../routes/user.routes');
-
+const express = require('express')
+const { router: userRouter, url: userURL } = require('../routes/address.routes')
 
 function startRoutes(server) {
-   // server.use(`/${userURL}`, userRouter);
+   // server.use(`/${userURL}`, userRouter)
 
-    console.log('Rotes iniciadas com sucesso!')
-    return true;
+    console.log('Rotas iniciadas com sucesso!')
+    return true
 }
 
-module.exports = { startRoutes };
+module.exports = { startRoutes }

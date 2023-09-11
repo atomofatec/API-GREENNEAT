@@ -1,4 +1,5 @@
-// Modelo tabela pessoa juridica
+const { db } = require('../db/db')
+//tabela pessoa juridica
 const Legal = {
     tableName: 'Legal',
     columns: {

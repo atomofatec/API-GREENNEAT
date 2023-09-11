@@ -1,4 +1,5 @@
-// Modelo tabela Transacao financeira
+const { db } = require('../db/db')
+//tabela Transacao financeira
 const TradeCurrency = {
     tableName: 'TradeCurrency',
     columns: {

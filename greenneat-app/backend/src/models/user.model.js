@@ -1,3 +1,5 @@
+const { db } = require('../db/db')
+
 const User = {
     tableName: 'User',
     columns: {
@@ -27,4 +29,3 @@ const User = {
 }
 
 module.exports = { User }
-

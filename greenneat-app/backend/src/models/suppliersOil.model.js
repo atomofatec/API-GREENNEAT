@@ -1,4 +1,5 @@
-// Modelo tabela fornecimento de oleo pelo Estabelecimento
+const { db } = require('../db/db')
+//tabela fornecimento de oleo pelo Estabelecimento
 const Suppliers_Oil = {
     tableName: 'Suppliers_Oil',
     columns: {

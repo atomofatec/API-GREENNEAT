@@ -1,4 +1,5 @@
-//modelo tabela regiao
+const { db } = require('../db/db')
+//tabela regiao
 const BusinessArea = {
     tableName: 'BusinessArea',
     columns: {
