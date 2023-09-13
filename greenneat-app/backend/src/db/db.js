@@ -1,7 +1,19 @@
 const pgp = require('pg-promise')()
 
+const {
+    POSTGRES_USER,
+    POSTGRES_PASSWORD,
+    POSTGRES_HOST,
+    POSTGRES_PORT,
+    POSTGRES_DATABASE,
+} = process.env
+
 const dbConfig = {
-    connectionString: process.env.DATABASE_URL,
+    user: POSTGRES_USER,
+    password: POSTGRES_PASSWORD,
+    host: POSTGRES_HOST,
+    port: POSTGRES_PORT,
+    database: POSTGRES_DATABASE,
 }
 
 const db = pgp(dbConfig)
@@ -19,7 +31,7 @@ db.connect()
                 console.error('Erro na consulta de teste:', error)
             })
             .finally(() => {
-                obj.done() 
+                obj.done()
             })
     })
     .catch((error) => {
@@ -27,3 +39,4 @@ db.connect()
     })
 
 module.exports = { db }
+
