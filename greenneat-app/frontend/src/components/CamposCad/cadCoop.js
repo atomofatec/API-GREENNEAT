@@ -1,4 +1,4 @@
-import { Grid, TextField, Typography } from "@mui/material";
+import { Button, Grid, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 
 export default function CadCoop() {
@@ -11,7 +11,7 @@ export default function CadCoop() {
 
     return (
         <>
-        {/* campos comuns (aparecem em cnpj e cpf) */}
+            {/* campos comuns (aparecem em cnpj e cpf) */}
             <Grid container spacing={2}>
                 <Grid item xs={12}>
                     <TextField
@@ -90,7 +90,7 @@ export default function CadCoop() {
                 </Grid>
                 {selectedOption === 'cnpj' && (
                     <>
-                    {/* campos que só aparecem quando seleciona cnpj */}
+                        {/* campos que só aparecem quando seleciona cnpj */}
                         <Grid item xs={12}>
                             <TextField
                                 margin="normal"
@@ -120,9 +120,9 @@ export default function CadCoop() {
                                 margin="normal"
                                 color="success"
                                 fullWidth
-                                name="endereco"
-                                label="Endereço"
-                                id="endereco"
+                                name="numero"
+                                label="Número"
+                                id="numero"
                                 required
                                 style={{ backgroundColor: 'white' }}
                             />
