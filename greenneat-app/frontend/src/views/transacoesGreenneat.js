@@ -16,11 +16,13 @@ import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import Divider from '@mui/material/Divider';
-import Skeleton from '@mui/material/Skeleton';
-import PropTypes from 'prop-types';
-import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
+import Grid from '@mui/material/Grid';
+import Title from '../components/Outros/Title';
+import SubTitle from '../components/Outros/SubTitle';
+import NovaTransButton from '../components/Buttons/NovaTransButton';
 import { mainListItems } from '../components/Menus/menuGreenneat';
+import { useNavigate } from 'react-router-dom';
 
 const settings = [
   { name: 'Meu Perfil' },
@@ -77,37 +79,14 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 
-//Retangulos
-function Media(props) {
-  const { loading = false } = props;
-
-  return (
-    <Container maxWidth="lg">
-      <Grid container spacing={2} justify="center">
-        {(loading ? Array.from(new Array(3)) : []).map((item, index) => (
-          <Grid item xs={12} sm={6} md={4} lg={3} key={index} sx={{ mx: 3 }}>
-            <Box sx={{ width: '100%', my: 2 }}>
-              {item ? (
-                <img
-                  style={{ width: 300, height: 200 }}
-                />
-              ) : (
-                <Skeleton variant="rectangular" width={300} height={200} />
-              )}
-            </Box>
-          </Grid>
-        ))}
-      </Grid>
-    </Container>
-  );
-}
-
-Media.propTypes = {
-  loading: PropTypes.bool,
-};
-//Fim Retangulos
-
 export default function TransacoesGreenneat() {
+  const navigate = useNavigate();
+
+  const redirectToNovaTransacao = (event) => {
+    event.preventDefault();
+    navigate('/nova-transacao-greenneat');
+  };
+
   const [open, setOpen] = React.useState(false);
   const toggleDrawer = () => {
     setOpen(!open);
@@ -242,10 +221,21 @@ export default function TransacoesGreenneat() {
         }}
         >
           <Toolbar />
-          <Box sx={{ overflow: 'hidden' }}>
-            <Media loading /> {/*Retangulos*/}
-            <Media loading /> {/*Retangulos*/}
-          </Box>
+          <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{ marginBottom: '5px', marginTop: '40px' }}>
+            <Grid item xs={6}>
+              <Container sx={{ m: 'auto', backgroundColor: 'white', borderRadius: 1, marginBottom: '16px', overflow: 'auto', width:'30%', marginLeft: '15%', }}>
+                <Title>$300</Title>
+                <SubTitle>Moedas Greenneat</SubTitle>
+              </Container>
+            </Grid>
+            <Grid item xs={6}>
+              <Box display="flex" justifyContent="flex-end" alignItems="center" style={{ marginRight: '15%' }}>
+                <div style={{ marginRight: '10px' }}>
+                  <NovaTransButton onClick={redirectToNovaTransacao}/>
+                </div>
+              </Box>
+            </Grid>
+          </Grid>
         </Box>
       </Box>
     </ThemeProvider>

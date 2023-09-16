@@ -13,17 +13,18 @@ import List from '@mui/material/List';
 import Link from '@mui/material/Link';
 import Menu from '@mui/material/Menu';
 import Avatar from '@mui/material/Avatar';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import Divider from '@mui/material/Divider';
 import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
-import TextField from '@mui/material/TextField';
-import CarteiraEstabForm from '../components/Forms/CarteiraEstabForm';
 import EnviarButton from '../components/Buttons/EnviarButton';
 import Title from '../components/Outros/Title';
 import SubTitle from '../components/Outros/SubTitle';
-import { mainListItems } from '../components/Menus/menuEstabelecimento';
+import NovaTransGreenForm from '../components/Forms/NovaTransGreenForm';
+import { mainListItems } from '../components/Menus/menuGreenneat';
+import { useNavigate } from 'react-router-dom';
 
 const settings = [
   { name: 'Meu Perfil' },
@@ -80,7 +81,14 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 
-export default function CarteiraEstabelecimento() {
+export default function NovaTransacaoGreenneat() {
+  const navigate = useNavigate();
+
+  const redirectToTransacoesGreenneat = (event) => {
+    event.preventDefault();
+    navigate('/transacoes-greenneat');
+  };
+
   const [open, setOpen] = React.useState(false);
   const toggleDrawer = () => {
     setOpen(!open);
@@ -132,7 +140,7 @@ export default function CarteiraEstabelecimento() {
                   <Box sx={{ flexGrow: 0 }}>
                     <Tooltip title="Abrir configurações">
                     <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                        <Avatar sx={{ bgcolor: 'white', color: '#0E681D' }}>E</Avatar>
+                        <Avatar sx={{ bgcolor: 'white', color: '#0E681D' }}>G</Avatar>
                     </IconButton>
                     </Tooltip>
                     <Menu
@@ -153,7 +161,7 @@ export default function CarteiraEstabelecimento() {
                     >
                     <div style={{ margin: '5px 20px 10px 20px', color:'#0E681D' }}>
                         <strong>
-                            Estabelecimento
+                            Greenneat
                         </strong>
                     </div>
                     <Divider />
@@ -216,14 +224,17 @@ export default function CarteiraEstabelecimento() {
         >
           <Toolbar />
           <Container maxWidth="lg" sx={{ m: 'auto', backgroundColor: 'white', borderRadius: 1, marginTop: '40px', marginBottom: '16px', overflow: 'auto'}}>
-            <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{marginBottom: '20px', marginTop: '20px' }}>
-              <Grid item xs={6}>
-                <Title>Enviar Crédito</Title>
-                <SubTitle>Greeneat</SubTitle>
+            <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{ marginBottom: '20px', marginTop: '20px' }}>
+              <Grid item xs={6} sx={{ display: 'flex', alignItems: 'center', marginBottom: '20px', marginTop: '10px' }}>
+                <ArrowBackIcon color="success" onClick={redirectToTransacoesGreenneat} style={{ cursor: 'pointer', marginRight: '5px', marginBottom: '30px' }} />
+                <div>
+                  <Title>Enviar Crédito</Title>
+                  <SubTitle>Parceiro Cooperativo</SubTitle>
+                </div>
               </Grid>
               <Grid item xs={6}>
                 <Box display="flex" justifyContent="flex-end" alignItems="center">
-                  <Title>$30</Title>
+                  <Title>$500</Title>
                 </Box>
                 <Box textAlign="right">
                   <SubTitle>Moedas Greenneat</SubTitle>
@@ -233,7 +244,7 @@ export default function CarteiraEstabelecimento() {
             <Divider />
             <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{marginBottom: '20px', marginTop: '10px' }}>
               <Grid item xs={6}>
-                <CarteiraEstabForm/>
+                <NovaTransGreenForm />
               </Grid>
               <Grid item xs={6}>
               </Grid>

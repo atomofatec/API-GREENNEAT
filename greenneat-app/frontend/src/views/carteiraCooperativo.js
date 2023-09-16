@@ -16,10 +16,15 @@ import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import Divider from '@mui/material/Divider';
-import Skeleton from '@mui/material/Skeleton';
-import PropTypes from 'prop-types';
 import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
+import SolicitarCredButton from '../components/Buttons/SolicitarCredButton';
+import EnviarCredButton from '../components/Buttons/EnviarCredButton';
+import EnviarButton from '../components/Buttons/EnviarButton';
+import Title from '../components/Outros/Title';
+import SubTitle from '../components/Outros/SubTitle';
+import CarteiraCoopSolForm from '../components/Forms/CarteiraCoopSolForm';
+import CarteiraCoopEnvForm from '../components/Forms/CarteiraCoopEnvForm';
 import { mainListItems } from '../components/Menus/menuCooperativo';
 
 const settings = [
@@ -77,43 +82,16 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 
-//Retangulos
-function Media(props) {
-  const { loading = false } = props;
-
-  return (
-    <Container maxWidth="lg">
-      <Grid container spacing={2} justify="center">
-        {(loading ? Array.from(new Array(3)) : []).map((item, index) => (
-          <Grid item xs={12} sm={6} md={4} lg={3} key={index} sx={{ mx: 3 }}>
-            <Box sx={{ width: '100%', my: 2 }}>
-              {item ? (
-                <img
-                  style={{ width: 300, height: 200 }}
-                />
-              ) : (
-                <Skeleton variant="rectangular" width={300} height={200} />
-              )}
-            </Box>
-          </Grid>
-        ))}
-      </Grid>
-    </Container>
-  );
-}
-
-Media.propTypes = {
-  loading: PropTypes.bool,
-};
-//Fim Retangulos
-
 export default function CarteiraCooperativo() {
   const [open, setOpen] = React.useState(false);
+  const [showSolicitarCredito, setShowSolicitarCredito] = useState(true);
+  const [showEnviarCredito, setShowEnviarCredito] = useState(false);
+
+  const [anchorElUser, setAnchorElUser] = React.useState(null);
+  
   const toggleDrawer = () => {
     setOpen(!open);
   };
-
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
@@ -121,6 +99,16 @@ export default function CarteiraCooperativo() {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+  };
+
+  const handleShowSolicitarCredito = () => {
+    setShowSolicitarCredito(true);
+    setShowEnviarCredito(false);
+  };
+
+  const handleShowEnviarCredito = () => {
+    setShowSolicitarCredito(false);
+    setShowEnviarCredito(true);
   };
 
   return (
@@ -242,10 +230,90 @@ export default function CarteiraCooperativo() {
         }}
         >
           <Toolbar />
-          <Box sx={{ overflow: 'hidden' }}>
-            <Media loading /> {/*Retangulos*/}
-            <Media loading /> {/*Retangulos*/}
-          </Box>
+          <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{ marginBottom: '5px', marginTop: '40px', marginRight: '15%' }}>
+            <Grid item xs={6}>
+              {}
+            </Grid>
+            <Grid item xs={6}>
+              <Box display="flex" justifyContent="flex-end" alignItems="center">
+                <div style={{ marginRight: '10px' }}>
+                  <SolicitarCredButton onClick={handleShowSolicitarCredito} />
+                </div>
+                <div style={{ marginRight: '10px' }}>
+                  <EnviarCredButton onClick={handleShowEnviarCredito} />
+                </div>
+              </Box>
+            </Grid>
+          </Grid>
+
+
+          {showSolicitarCredito && (
+          <Container maxWidth="lg" sx={{ m: 'auto', backgroundColor: 'white', borderRadius: 1, marginTop: '20px', marginBottom: '16px', overflow: 'auto'}}>
+              <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{marginBottom: '20px', marginTop: '20px' }}>
+                <Grid item xs={6}>
+                  <Title>Solicitar Crédito</Title>
+                  <SubTitle>Greeneat</SubTitle>
+                </Grid>
+                <Grid item xs={6}>
+                  <Box display="flex" justifyContent="flex-end" alignItems="center">
+                    <Title>$100</Title>
+                  </Box>
+                  <Box textAlign="right">
+                    <SubTitle>Moedas Greenneat</SubTitle>
+                  </Box>
+                </Grid>
+              </Grid>
+              <Divider />
+              <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{marginBottom: '20px', marginTop: '10px' }}>
+                <Grid item xs={6}>
+                  <CarteiraCoopSolForm />
+                </Grid>
+                <Grid item xs={6}>
+                </Grid>
+              </Grid>
+              <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{marginBottom: '20px', marginTop: '10px' }}>
+                <Grid item xs={6}>
+                </Grid>
+                <Grid item xs={6}>
+                  <EnviarButton />
+                </Grid>
+              </Grid>
+          </Container>
+          )}
+
+          {showEnviarCredito && (
+          <Container maxWidth="lg" sx={{ m: 'auto', backgroundColor: 'white', borderRadius: 1, marginTop: '20px', marginBottom: '16px', overflow: 'auto'}}>
+            <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{marginBottom: '20px', marginTop: '20px' }}>
+              <Grid item xs={6}>
+                <Title>Enviar Crédito</Title>
+                <SubTitle>Estabelecimento</SubTitle>
+              </Grid>
+              <Grid item xs={6}>
+                <Box display="flex" justifyContent="flex-end" alignItems="center">
+                  <Title>$100</Title>
+                </Box>
+                <Box textAlign="right">
+                  <SubTitle>Moedas Greenneat</SubTitle>
+                </Box>
+              </Grid>
+            </Grid>
+            <Divider />
+            <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{marginBottom: '20px', marginTop: '10px' }}>
+              <Grid item xs={6}>
+                <CarteiraCoopEnvForm />
+              </Grid>
+              <Grid item xs={6}>
+              </Grid>
+            </Grid>
+            <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{marginBottom: '20px', marginTop: '10px' }}>
+              <Grid item xs={6}>
+              </Grid>
+              <Grid item xs={6}>
+                <EnviarButton />
+              </Grid>
+            </Grid>
+          </Container>
+          )}
         </Box>
       </Box>
     </ThemeProvider>
