@@ -13,14 +13,18 @@ import List from '@mui/material/List';
 import Link from '@mui/material/Link';
 import Menu from '@mui/material/Menu';
 import Avatar from '@mui/material/Avatar';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import Divider from '@mui/material/Divider';
-import Skeleton from '@mui/material/Skeleton';
-import PropTypes from 'prop-types';
 import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
+import EnviarButton from '../components/Buttons/EnviarButton';
+import Title from '../components/Outros/Title';
+import SubTitle from '../components/Outros/SubTitle';
+import NovaTransGreenForm from '../components/Forms/NovaTransGreenForm';
 import { mainListItems } from '../components/Menus/menuGreenneat';
+import { useNavigate } from 'react-router-dom';
 
 const settings = [
   { name: 'Meu Perfil' },
@@ -77,37 +81,14 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 
-//Retangulos
-function Media(props) {
-  const { loading = false } = props;
+export default function NovaTransacaoGreenneat() {
+  const navigate = useNavigate();
 
-  return (
-    <Container maxWidth="lg">
-      <Grid container spacing={2} justify="center">
-        {(loading ? Array.from(new Array(3)) : []).map((item, index) => (
-          <Grid item xs={12} sm={6} md={4} lg={3} key={index} sx={{ mx: 3 }}>
-            <Box sx={{ width: '100%', my: 2 }}>
-              {item ? (
-                <img
-                  style={{ width: 300, height: 200 }}
-                />
-              ) : (
-                <Skeleton variant="rectangular" width={300} height={200} />
-              )}
-            </Box>
-          </Grid>
-        ))}
-      </Grid>
-    </Container>
-  );
-}
+  const redirectToTransacoesGreenneat = (event) => {
+    event.preventDefault();
+    navigate('/transacoes-greenneat');
+  };
 
-Media.propTypes = {
-  loading: PropTypes.bool,
-};
-//Fim Retangulos
-
-export default function DashboardGreenneat() {
   const [open, setOpen] = React.useState(false);
   const toggleDrawer = () => {
     setOpen(!open);
@@ -242,10 +223,40 @@ export default function DashboardGreenneat() {
         }}
         >
           <Toolbar />
-          <Box sx={{ overflow: 'hidden' }}>
-            <Media loading /> {/*Retangulos*/}
-            <Media loading /> {/*Retangulos*/}
-          </Box>
+          <Container maxWidth="lg" sx={{ m: 'auto', backgroundColor: 'white', borderRadius: 1, marginTop: '40px', marginBottom: '16px', overflow: 'auto'}}>
+            <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{ marginBottom: '20px', marginTop: '20px' }}>
+              <Grid item xs={6} sx={{ display: 'flex', alignItems: 'center', marginBottom: '20px', marginTop: '10px' }}>
+                <ArrowBackIcon color="success" onClick={redirectToTransacoesGreenneat} style={{ cursor: 'pointer', marginRight: '5px', marginBottom: '30px' }} />
+                <div>
+                  <Title>Enviar Crédito</Title>
+                  <SubTitle>Parceiro Cooperativo</SubTitle>
+                </div>
+              </Grid>
+              <Grid item xs={6}>
+                <Box display="flex" justifyContent="flex-end" alignItems="center">
+                  <Title>$500</Title>
+                </Box>
+                <Box textAlign="right">
+                  <SubTitle>Moedas Greenneat</SubTitle>
+                </Box>
+              </Grid>
+            </Grid>
+            <Divider />
+            <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{marginBottom: '20px', marginTop: '10px' }}>
+              <Grid item xs={6}>
+                <NovaTransGreenForm />
+              </Grid>
+              <Grid item xs={6}>
+              </Grid>
+            </Grid>
+            <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{marginBottom: '20px', marginTop: '10px' }}>
+              <Grid item xs={6}>
+              </Grid>
+              <Grid item xs={6}>
+                <EnviarButton />
+              </Grid>
+            </Grid>
+          </Container>
         </Box>
       </Box>
     </ThemeProvider>

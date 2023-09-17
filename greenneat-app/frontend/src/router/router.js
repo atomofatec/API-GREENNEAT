@@ -6,6 +6,7 @@ import TransacoesGreenneat from '../views/transacoesGreenneat';
 import CarteiraCooperativo from '../views/carteiraCooperativo';
 import CarteiraEstabelecimento from '../views/carteiraEstabelecimento';
 import DashboardCooperativo from '../views/dashboardCooperativo';
+import NovaTransacaoGreenneat from '../views/novaTransacaoGreenneat.js';
 
 function Router() {
     return(
@@ -18,6 +19,7 @@ function Router() {
             <Route path='/transacoes-greenneat' element={<TransacoesGreenneat />}/>
             <Route path='/carteira-cooperativo' element={<CarteiraCooperativo />}/>
             <Route path='/carteira-estabelecimento' element={<CarteiraEstabelecimento />}/>
+            <Route path='/nova-transacao-Greenneat' element={<NovaTransacaoGreenneat />}/>
         </Routes>
         </BrowserRouter>
     )
