@@ -9,6 +9,10 @@ export default function RegisterPartnerForm() {
         setSelectedOption(option);
     };
 
+    
+
+    
+
     return (
         <>
             {/* campos comuns (aparecem em cnpj e cpf) */}
@@ -160,6 +164,7 @@ export default function RegisterPartnerForm() {
                         variant="contained"
                         color="success"
                         sx={{ mt: 3, mb: 2, backgroundColor: '#136935' }}
+                        
                     >
                         Cadastrar
                     </Button>
