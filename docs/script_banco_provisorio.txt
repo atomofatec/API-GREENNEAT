@@ -1,50 +1,17 @@
-CREATE TABLE partners_users (
-id_partner SERIAL PRIMARY KEY,
+CREATE TABLE users (
+id SERIAL PRIMARY KEY,
 type_user VARCHAR (30),
-cnpj_partner NUMERIC (14) UNIQUE,
-cpf_partner NUMERIC (11) UNIQUE,
-email_partner VARCHAR (30) UNIQUE,
-password_partner VARCHAR (30),
-contact_partner NUMERIC (12),
-district_partner VARCHAR (50),
-address_partner VARCHAR (50),
-num_address_partner NUMERIC (5),
-company_name_partner VARCHAR (50),
-fantasy_name_partner VARCHAR (50),
+cnpj NUMERIC (14) UNIQUE,
+cpf NUMERIC (11) UNIQUE,
+email VARCHAR (30) UNIQUE,
+password VARCHAR (30),
+contact NUMERIC (12),
+district VARCHAR (50),
+address VARCHAR (50),
+num_address NUMERIC (5),
+company_name VARCHAR (50),
+fantasy_name VARCHAR (50),
 balance NUMERIC (10),
 createdat VARCHAR (30),
 updatedat VARCHAR (30)
-);
-
-CREATE TABLE suppliers_users (
-id_supplier SERIAL PRIMARY KEY,
-type_user VARCHAR (30),
-cnpj_supplier NUMERIC (14) UNIQUE,
-email_supplier VARCHAR (30) UNIQUE,
-password_supplier VARCHAR (30),
-contact_supplier NUMERIC (12),
-district_supplier VARCHAR (50),
-address_supplier VARCHAR (50),
-num_address_supplier NUMERIC (5),
-company_name_supplier VARCHAR (50),
-fantasy_name_supplier VARCHAR (50),
-balance NUMERIC (10),
-createdat VARCHAR (30),
-updatedat VARCHAR (30)
-);
-
-CREATE TABLE admin_users (
-id_adm SERIAL PRIMARY KEY,
-type_adm VARCHAR (30),
-email_adm VARCHAR (30),
-password_adm VARCHAR (30),
-cpf_adm NUMERIC (11),
-balance NUMERIC (10)
-);
-
-CREATE TABLE users_login (
-id_user SERIAL PRIMARY KEY,
-type_user VARCHAR (30),
-email_user VARCHAR (30) UNIQUE,
-password_user VARCHAR (30)
 );
