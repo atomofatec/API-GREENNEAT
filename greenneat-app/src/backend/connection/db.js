@@ -1,20 +1,7 @@
-// configuração do servidor
-const express = require("express");
-const app = express();
-const { Pool } = require("pg");
+const app = require("../routes/routes");
 
-// cria instância de conexão com o banco
-const cliente = new Pool({
-    host: 'localhost',
-    user: 'postgres',
-    password: 'fatec',
-    database: '007'
-})
+const PORT = process.env.PORT || 3001;
 
-// testa o servidor
-app.listen(3001, () => {
+app.listen(PORT, () => {
     console.log("Servidor sendo executado");
 });
-
-module.exports = { app }
-module.exports = { cliente }
