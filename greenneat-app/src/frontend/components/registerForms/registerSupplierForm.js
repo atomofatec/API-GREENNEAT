@@ -1,7 +1,7 @@
 import { Button, Grid, TextField } from "@mui/material";
 import axios from 'axios';
 import { useState } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 
 export default function RegisterSupplierForm() {
@@ -9,10 +9,12 @@ export default function RegisterSupplierForm() {
     const handleClickButton = () =>{
         const createdat = new Date().toLocaleString(); 
         const updatedat = new Date().toLocaleString();
-        const type = "Estabelecimento";
-        const balance = "0";
+        const type = "supplier";
+        const balance = 0;
+        const cpf = 0;
         axios.post("http://localhost:3001/registerSupplier", 
         {   cnpj: values.cnpj, 
+            cpf: cpf,
             email: values.email, 
             password: values.password, 
             telefone: values.telefone, 
@@ -39,7 +41,7 @@ export default function RegisterSupplierForm() {
         cnpj: 0, 
         email: '', 
         password: '', 
-        telefone: '', 
+        telefone: 0, 
         bairro: '', 
         endereco: '', 
         numero: 0, 

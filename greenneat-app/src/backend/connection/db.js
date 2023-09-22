@@ -26,12 +26,26 @@ app.post('/registerSupplier', registerSupplier);
 
 async function existentSupplierCNPJRegister(cnpj){
     const res = await cliente.query(
-        `SELECT * FROM suppliers_users WHERE cnpj_supplier = '${cnpj}'`);
+        `SELECT * FROM users WHERE cnpj = '${cnpj}'`);
 
         var response = false
         res.rows.forEach( register => {
-            if (register.cnpj_supplier === cnpj) {
+            if (register.cnpj === !null && register.cnpj === cnpj ) {
                 console.log("Já existe um cadastro no CNPJ informado. Por favor digite outro CNPJ.");
+                response = true;
+            }
+        });
+        return response;
+}
+
+async function existentSupplierCPFRegister(cpf){
+    const res = await cliente.query(
+        `SELECT * FROM users WHERE cpf = '${cpf}'`);
+
+        var response = false
+        res.rows.forEach( register => {
+            if (register.cpf === !null && register.cpf === cpf ) {
+                console.log("Já existe um cadastro no CPF informado. Por favor digite outro CPF.");
                 response = true;
             }
         });
@@ -40,11 +54,11 @@ async function existentSupplierCNPJRegister(cnpj){
 
 async function existentSupplierEmailRegister(email){
     const res = await cliente.query(
-        `SELECT * FROM suppliers_users WHERE email_supplier = '${email}'`);
+        `SELECT * FROM users WHERE email = '${email}'`);
 
         var response = false
         res.rows.forEach( register => {
-            if (register.email_supplier === cnpj) {
+            if (register.email === email) {
                 console.log("Já existe um cadastro no email informado. Por favor digite outro email.");
                 response = true;
             }
@@ -53,14 +67,19 @@ async function existentSupplierEmailRegister(email){
 }
 
 async function registerSupplier(req, res){
-    const {type,cnpj, email, password, telefone, bairro, endereco, numero, rSocial, nFantasia, balance, createdat, updatedat} = req.body;
+    const {type, cnpj, cpf, email, password, telefone, bairro, endereco, numero, rSocial, nFantasia, balance, createdat, updatedat} = req.body;
     console.log(req.body)
 
     const existentCnpj = await existentSupplierCNPJRegister(cnpj);
     const existentEmail = await existentSupplierEmailRegister(email);
+    const existentCpf = await existentSupplierCPFRegister(cpf);
 
     if (existentCnpj) {
         res.status(409).send({ msg: "Já existe um registro no CNPJ informado." });
+    }
+
+    if (existentCpf) {
+        res.status(409).send({ msg: "Já existe um registro no CPF informado." });
     }
 
     if (existentEmail) {
@@ -69,8 +88,8 @@ async function registerSupplier(req, res){
         try {
             const SQL = `
                 INSERT INTO
-                suppliers_users("type_user","cnpj_supplier","email_supplier","password_supplier","contact_supplier", "district_supplier","address_supplier","num_address_supplier","company_name_supplier", "fantasy_name_supplier", "balance_supplier", "createdat", "updatedat")
-                VALUES ('${type}','${cnpj}','${email}','${password}','${telefone}', '${bairro}','${endereco}','${numero}', '${rSocial}',' ${nFantasia}', '${balance}', '${createdat}', '${updatedat}')`
+                users("type_user","cnpj", "cpf", "email","password","contact", "district","address","num_address","company_name", "fantasy_name", "balance", "createdat", "updatedat")
+                VALUES ('${type}','${cnpj}','${cpf}','${email}','${password}','${telefone}', '${bairro}','${endereco}','${numero}', '${rSocial}',' ${nFantasia}', '${balance}', '${createdat}', '${updatedat}')`
             const resultado = await cliente.query(SQL);
             console.log("Cadastro realizado com sucesso!");
             res.send({ msg: "Cadastro realizado com sucesso!" });

@@ -1,5 +1,7 @@
 import { Button, Grid, TextField, Typography } from "@mui/material";
+import axios from 'axios';
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function RegisterPartnerForm() {
     const [selectedOption, setSelectedOption] = useState('cpf'); // estado para armezenar escolha (cpf ou cnpj)
@@ -9,7 +11,57 @@ export default function RegisterPartnerForm() {
         setSelectedOption(option);
     };
 
-    
+    const navigate = useNavigate();
+    const handleClickButton = () =>{
+        const createdat = new Date().toLocaleString(); 
+        const updatedat = new Date().toLocaleString();
+        const type = "partner";
+        const balance = 0;
+        axios.post("http://localhost:3001/registerSupplier", 
+        {   cnpj: values.cnpj || null, 
+            cpf: values.cpf || null, 
+            email: values.email, 
+            password: values.password, 
+            telefone: values.telefone, 
+            bairro: values.bairro || null, 
+            endereco: values.endereco || null, 
+            numero: values.numero || null, 
+            rSocial: values.rSocial || null, 
+            nFantasia: values.nFantasia || null,
+            createdat: createdat,
+            updatedat: updatedat,
+            type: type,
+            balance: balance
+
+    }).then(
+        (response) => {
+            alert("Cadastro realizado com sucesso!")
+            navigate("/");
+        }
+    )
+ }
+
+
+    const [values, setValues] = useState({ 
+        cnpj: 0, 
+        cpf: 0, 
+        email: '', 
+        password: '', 
+        telefone: 0, 
+        bairro: '', 
+        endereco: '', 
+        numero: 0, 
+        rSocial: '', 
+        nFantasia: '' 
+    });
+
+const handleChangeValues = (event) => { 
+    const { name, value } = event.target; 
+    setValues(prevValues => ({ 
+      ...prevValues, 
+      [name]: value 
+    })); 
+  };
 
     
 
@@ -28,6 +80,7 @@ export default function RegisterPartnerForm() {
                         autoComplete="cpf"
                         required
                         autoFocus
+                        onChange={handleChangeValues}
                         style={{ backgroundColor: 'white', display: selectedOption === 'cpf' ? 'block' : 'none' }}
                     />
                     <TextField
@@ -40,6 +93,7 @@ export default function RegisterPartnerForm() {
                         autoComplete="cnpj"
                         required
                         autoFocus
+                        onChange={handleChangeValues}
                         style={{ backgroundColor: 'white', display: selectedOption === 'cnpj' ? 'block' : 'none' }}
                     />
                     {/* botão que altera de cpf para cnpj */}
@@ -63,6 +117,7 @@ export default function RegisterPartnerForm() {
                         id="email"
                         autoComplete="email"
                         required
+                        onChange={handleChangeValues}
                         style={{ backgroundColor: 'white' }}
                     />
                 </Grid>
@@ -77,6 +132,7 @@ export default function RegisterPartnerForm() {
                         id="password"
                         autoComplete="current-password"
                         required
+                        onChange={handleChangeValues}
                         style={{ backgroundColor: 'white' }}
                     />
                 </Grid>
@@ -89,6 +145,7 @@ export default function RegisterPartnerForm() {
                         label="Telefone"
                         id="telefone"
                         required
+                        onChange={handleChangeValues}
                         style={{ backgroundColor: 'white' }}
                     />
                 </Grid>
@@ -104,6 +161,7 @@ export default function RegisterPartnerForm() {
                                 label="Bairro"
                                 id="bairro"
                                 required
+                                onChange={handleChangeValues}
                                 style={{ backgroundColor: 'white' }}
                             />
                         </Grid>
@@ -116,6 +174,7 @@ export default function RegisterPartnerForm() {
                                 label="Endereço"
                                 id="endereco"
                                 required
+                                onChange={handleChangeValues}
                                 style={{ backgroundColor: 'white' }}
                             />
                         </Grid>
@@ -128,6 +187,7 @@ export default function RegisterPartnerForm() {
                                 label="Número"
                                 id="numero"
                                 required
+                                onChange={handleChangeValues}
                                 style={{ backgroundColor: 'white' }}
                             />
                         </Grid>
@@ -140,6 +200,7 @@ export default function RegisterPartnerForm() {
                                 label="Razão Social"
                                 id="rSocial"
                                 required
+                                onChange={handleChangeValues}
                                 style={{ backgroundColor: 'white' }}
                             />
                         </Grid>
@@ -152,6 +213,7 @@ export default function RegisterPartnerForm() {
                                 label="Nome Fantasia"
                                 id="nFantasia"
                                 required
+                                onChange={handleChangeValues}
                                 style={{ backgroundColor: 'white' }}
                             />
                         </Grid>
@@ -164,7 +226,7 @@ export default function RegisterPartnerForm() {
                         variant="contained"
                         color="success"
                         sx={{ mt: 3, mb: 2, backgroundColor: '#136935' }}
-                        
+                        onClick={handleClickButton}
                     >
                         Cadastrar
                     </Button>
