@@ -9,6 +9,8 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Triangle from '../components/visualElements/triangle';
+import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
 
 const defaultTheme = createTheme();
 
@@ -116,7 +118,8 @@ export default function Login() {
                     Seja bem-vindo!
                 </strong>
             </Typography>
-            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+            {/* onSubmit={handleSubmit} */}
+            <Box component="form" noValidate sx={{ mt: 1 }}>
                 <TextField
                 margin="normal"
                 color="success"
@@ -128,6 +131,7 @@ export default function Login() {
                 required
                 autoFocus
                 style={{ backgroundColor: 'white' }}
+                onChange={handleChangeValues}
               />
               <TextField
                 margin="normal"
@@ -140,9 +144,9 @@ export default function Login() {
                 autoComplete="current-password"
                 required
                 style={{ backgroundColor: 'white' }}
+                onChange={handleChangeValues}
               />
               <Button
-                type="submit"
                 fullWidth
                 variant="contained"
                 color="success"

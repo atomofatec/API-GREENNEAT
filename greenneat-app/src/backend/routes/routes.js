@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const { transfer } = require("../functions/transfer/transfer.functions")
 const { registerFunction } = require("../functions/register/register.functions");
+const { login } = require("../functions/login/login.functions");
 const app = express();
 
 app.use(cors());
