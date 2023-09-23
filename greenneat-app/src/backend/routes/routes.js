@@ -10,6 +10,16 @@ app.use(express.json());
 //rota cadastro
 app.post('/registerUser', registerFunction);
 
+//rota de login
+app.post("/", (req, res) => {
+    // extrai os dados enviados pelo cliente no corpo da requisição e os armazena
+    const email = req.body.email
+    const password = req.body.password
+
+    // invoca a função de login e utiliza os valores da rota como argumentos
+    login(email, password, res)
+});
+
 // Rota para transferencia
 app.post('/transfer', async (req, res) => {
     try {

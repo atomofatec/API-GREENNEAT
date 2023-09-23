@@ -21,14 +21,70 @@ const fontColor = {
 };
 
 export default function Login() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+  React.useEffect(() => {
+    localStorage.clear()
+  })
+
+  const [values, setValues] = React.useState();
+  const navigate = useNavigate();
+
+  const handleChangeValues = (value) => {
+    setValues(prevValue => ({
+      ...prevValue,
+      [value.target.name]: value.target.value,
+    }))
   };
+
+  const checkEmpty = () => {
+    let isVazio = false
+    if (document.getElementById('email').value === '') {
+      isVazio = true
+      return isVazio
+    }
+    if (document.getElementById('password').value === '') {
+      isVazio = true
+      return isVazio
+    }
+  }
+
+  const handleClickButton = () => {
+    if (!checkEmpty()) {
+      axios.post("http://localhost:3001/", {
+        email: values.email,
+        password: values.password,
+      }).then((response) => {
+        console.log(response.data)
+        if (response.data.msg === "Usuário logado") {
+          localStorage.setItem('user', response.data.id)
+          localStorage.setItem('tipo', response.data.type_user)
+          localStorage.setItem('email', response.data.email)
+          localStorage.setItem('senha', response.data.password)
+          if (response.data.type_user === "supplier") {
+            navigate('/carteira-estabelecimento')
+          }
+          else if (response.data.type_user === "partner") {
+            navigate('/dashboard-cooperativo')
+          }
+          else if (response.data.type_user === "admin") {
+            navigate('/dashboard-greenneat')
+          }
+        } else {
+          alert('Não foi possível logar')
+        }
+      })
+    } else {
+      alert('Preencha todos os campos')
+    }
+  }
+
+  /*  const handleSubmit = (event) => {
+      event.preventDefault();
+      const data = new FormData(event.currentTarget);
+      console.log({
+        email: data.get('email'),
+        password: data.get('password'),
+      });
+    };*/
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -90,6 +146,7 @@ export default function Login() {
                 fullWidth
                 variant="contained"
                 color="success"
+                onClick={handleClickButton}
                 sx={{ mt: 3, mb: 2, backgroundColor: '#136935'}}
               >
                 Entrar
