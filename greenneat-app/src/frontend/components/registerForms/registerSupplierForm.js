@@ -1,6 +1,82 @@
 import { Button, Grid, TextField } from "@mui/material";
+import axios from 'axios';
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function RegisterSupplierForm() {
+    const navigate = useNavigate();
+
+    const checkEmpty = () => {
+        const requiredFields = ['cnpj', 'email', 'password', 'telefone', 'bairro', 'endereco', 'numero', 'rSocial', 'nFantasia'];
+        let isVazio = false;
+
+        for (const fieldId of requiredFields) {
+            const fieldValue = document.getElementById(fieldId).value.trim();
+            if (fieldValue === '') {
+                isVazio = true;
+                break;
+            }
+        }
+
+        return isVazio;
+    };
+
+    const handleClickButton = () => {
+        if (!checkEmpty()) {
+            const createdat = new Date().toLocaleString();
+            const updatedat = new Date().toLocaleString();
+            const type = "supplier";
+            const balance = 0;
+            const cpf = 0;
+            axios.post("http://localhost:3001/registerUser",
+                {
+                    cnpj: values.cnpj,
+                    cpf: cpf,
+                    email: values.email,
+                    password: values.password,
+                    telefone: values.telefone,
+                    bairro: values.bairro,
+                    endereco: values.endereco,
+                    numero: values.numero,
+                    rSocial: values.rSocial,
+                    nFantasia: values.nFantasia,
+                    createdat: createdat,
+                    updatedat: updatedat,
+                    type: type,
+                    balance: balance
+
+                }).then(
+                    (response) => {
+                        alert("Cadastro realizado com sucesso!")
+                        navigate("/");
+                    }
+                )
+        } else {
+            alert('Preencha todos os campos')
+        }
+    }
+
+
+    const [values, setValues] = useState({
+        cnpj: 0,
+        email: '',
+        password: '',
+        telefone: 0,
+        bairro: '',
+        endereco: '',
+        numero: 0,
+        rSocial: '',
+        nFantasia: ''
+    });
+
+    const handleChangeValues = (event) => {
+        const { name, value } = event.target;
+        setValues(prevValues => ({
+            ...prevValues,
+            [name]: value
+        }));
+    };
+
     return (
         <>
             <Grid container spacing={2}>
@@ -16,6 +92,7 @@ export default function RegisterSupplierForm() {
                         required
                         autoFocus
                         style={{ backgroundColor: 'white' }}
+                        onChange={handleChangeValues}
                     />
                 </Grid>
                 <Grid item xs={12}>
@@ -29,6 +106,7 @@ export default function RegisterSupplierForm() {
                         autoComplete="email"
                         required
                         style={{ backgroundColor: 'white' }}
+                        onChange={handleChangeValues}
                     />
                 </Grid>
                 <Grid item xs={12}>
@@ -43,6 +121,7 @@ export default function RegisterSupplierForm() {
                         autoComplete="current-password"
                         required
                         style={{ backgroundColor: 'white' }}
+                        onChange={handleChangeValues}
                     />
                 </Grid>
                 <Grid item xs={12}>
@@ -55,6 +134,7 @@ export default function RegisterSupplierForm() {
                         id="telefone"
                         required
                         style={{ backgroundColor: 'white' }}
+                        onChange={handleChangeValues}
                     />
                 </Grid>
                 <Grid item xs={12}>
@@ -67,6 +147,7 @@ export default function RegisterSupplierForm() {
                         id="bairro"
                         required
                         style={{ backgroundColor: 'white' }}
+                        onChange={handleChangeValues}
                     />
                 </Grid>
                 <Grid item xs={8}>
@@ -79,6 +160,7 @@ export default function RegisterSupplierForm() {
                         id="endereco"
                         required
                         style={{ backgroundColor: 'white' }}
+                        onChange={handleChangeValues}
                     />
                 </Grid>
                 <Grid item xs={4}>
@@ -91,6 +173,7 @@ export default function RegisterSupplierForm() {
                         id="numero"
                         required
                         style={{ backgroundColor: 'white' }}
+                        onChange={handleChangeValues}
                     />
                 </Grid>
                 <Grid item xs={12}>
@@ -103,6 +186,7 @@ export default function RegisterSupplierForm() {
                         id="rSocial"
                         required
                         style={{ backgroundColor: 'white' }}
+                        onChange={handleChangeValues}
                     />
                 </Grid>
                 <Grid item xs={12}>
@@ -115,15 +199,16 @@ export default function RegisterSupplierForm() {
                         id="nFantasia"
                         required
                         style={{ backgroundColor: 'white' }}
+                        onChange={handleChangeValues}
                     />
                 </Grid>
                 <Grid item xs={12}>
                     <Button
-                        type="submit"
                         fullWidth
                         variant="contained"
                         color="success"
                         sx={{ mt: 3, mb: 2, backgroundColor: '#136935' }}
+                        onClick={handleClickButton}
                     >
                         Cadastrar
                     </Button>

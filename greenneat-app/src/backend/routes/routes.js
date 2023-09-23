@@ -1,10 +1,14 @@
 const express = require("express");
 const cors = require("cors");
 const { transfer } = require("../functions/transfer/transfer.functions")
+const { registerFunction } = require("../functions/register/register.functions");
 const app = express();
 
 app.use(cors());
 app.use(express.json());
+
+//rota cadastro
+app.post('/registerUser', registerFunction);
 
 // Rota para transferencia
 app.post('/transfer', async (req, res) => {
