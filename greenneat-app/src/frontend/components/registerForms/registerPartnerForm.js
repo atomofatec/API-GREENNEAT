@@ -5,65 +5,122 @@ import { useNavigate } from "react-router-dom";
 
 export default function RegisterPartnerForm() {
     const [selectedOption, setSelectedOption] = useState('cpf'); // estado para armezenar escolha (cpf ou cnpj)
+    const navigate = useNavigate();
+    const [values, setValues] = useState({
+        cnpj: '',
+        cpf: '',
+        email: '',
+        password: '',
+        telefone: '',
+        bairro: '',
+        endereco: '',
+        numero: '',
+        rSocial: '',
+        nFantasia: ''
+    });
 
     // função de escolha
     const toggleOption = (option) => {
         setSelectedOption(option);
     };
 
-    const navigate = useNavigate();
-    const handleClickButton = () =>{
-        const createdat = new Date().toLocaleString(); 
-        const updatedat = new Date().toLocaleString();
-        const type = "partner";
-        const balance = 0;
-        axios.post("http://localhost:3001/registerSupplier", 
-        {   cnpj: values.cnpj || null, 
-            cpf: values.cpf || null, 
-            email: values.email, 
-            password: values.password, 
-            telefone: values.telefone, 
-            bairro: values.bairro || null, 
-            endereco: values.endereco || null, 
-            numero: values.numero || null, 
-            rSocial: values.rSocial || null, 
-            nFantasia: values.nFantasia || null,
-            createdat: createdat,
-            updatedat: updatedat,
-            type: type,
-            balance: balance
+    const handleChangeValues = (event) => {
+        const { name, value } = event.target;
+        setValues(prevValues => ({
+            ...prevValues,
+            [name]: value
+        }));
+    };
 
-    }).then(
-        (response) => {
-            alert("Cadastro realizado com sucesso!")
-            navigate("/");
+    const handleClickButton = () => {
+        if (checkEmpty()) {
+            const createdat = new Date().toLocaleString();
+            const updatedat = new Date().toLocaleString();
+            const type = "partner";
+            const balance = 0;
+            axios.post("http://localhost:3001/registerUser",
+                {
+                    cnpj: values.cnpj || null,
+                    cpf: values.cpf || null,
+                    email: values.email,
+                    password: values.password,
+                    telefone: values.telefone,
+                    bairro: values.bairro || null,
+                    endereco: values.endereco || null,
+                    numero: values.numero || null,
+                    rSocial: values.rSocial || null,
+                    nFantasia: values.nFantasia || null,
+                    createdat: createdat,
+                    updatedat: updatedat,
+                    type: type,
+                    balance: balance
+
+                }).then(
+                    (response) => {
+                        alert("Cadastro realizado com sucesso!")
+                        navigate("/");
+                    }
+                )
+        } else {
+            alert('Preencha todos os campos')
         }
-    )
- }
 
+    }
 
-    const [values, setValues] = useState({ 
-        cnpj: 0, 
-        cpf: 0, 
-        email: '', 
-        password: '', 
-        telefone: 0, 
-        bairro: '', 
-        endereco: '', 
-        numero: 0, 
-        rSocial: '', 
-        nFantasia: '' 
-    });
+    const handleClearField = () => {
+        if (selectedOption === "cpf") {
+            setValues({
+                cnpj: '',
+                cpf: '',
+                email: '',
+                password: '',
+                telefone: '',
+                bairro: '',
+                endereco: '',
+                numero: '',
+                rSocial: '',
+                nFantasia: ''
+            });
+        } else {
+            setValues({
+                cnpj: '',
+                cpf: '',
+                email: '',
+                password: '',
+                telefone: '',
+                bairro: '',
+                endereco: '',
+                numero: '',
+                rSocial: '',
+                nFantasia: ''
+            });
+        }
+    };
 
-const handleChangeValues = (event) => { 
-    const { name, value } = event.target; 
-    setValues(prevValues => ({ 
-      ...prevValues, 
-      [name]: value 
-    })); 
-  };
+    //função para checar se todos os campos estão preenchidos
+    const checkEmpty = () => {
+        if (selectedOption === "cpf") {
+            const requiredFields = ['cpf', 'email', 'password', 'telefone'];
 
-    
+            for (const fieldId of requiredFields) {
+                const fieldValue = values[fieldId].trim();
+                if (fieldValue === '') {
+                    return false; // Retorna false se algum campo obrigatório estiver vazio
+                }
+            }
+        } else {
+            const requiredFields = ['cnpj', 'email', 'password', 'telefone', 'bairro', 'endereco', 'numero', 'rSocial', 'nFantasia'];
+
+            for (const fieldId of requiredFields) {
+                const fieldValue = values[fieldId].trim();
+                if (fieldValue === '') {
+                    return false; // Retorna false se algum campo obrigatório estiver vazio
+                }
+            }
+        }
+
+        return true; // Retorna true se todos os campos estiverem preenchidos corretamente
+    };
 
     return (
         <>
@@ -100,8 +157,11 @@ const handleChangeValues = (event) => {
                     <Typography
                         variant="body2"
                         color="#3B8F5C"
-                        style={{ cursor: 'pointer' }}
-                        onClick={() => toggleOption(selectedOption === 'cpf' ? 'cnpj' : 'cpf')}
+                        style={{ cursor: "pointer" }}
+                        onClick={() => {
+                            toggleOption(selectedOption === "cpf" ? "cnpj" : "cpf");
+                            handleClearField();
+                        }}
                     >
                         {/* alterna o texto para ficar coerente de acordo com a opção já selecionada */}
                         {selectedOption === 'cpf' ? 'Entrar com CNPJ' : 'Entrar com CPF'}
@@ -221,7 +281,6 @@ const handleChangeValues = (event) => {
                 )}
                 <Grid item xs={12}>
                     <Button
-                        type="submit"
                         fullWidth
                         variant="contained"
                         color="success"

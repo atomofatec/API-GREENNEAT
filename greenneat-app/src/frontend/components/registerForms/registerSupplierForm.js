@@ -3,59 +3,79 @@ import axios from 'axios';
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-
 export default function RegisterSupplierForm() {
     const navigate = useNavigate();
-    const handleClickButton = () =>{
-        const createdat = new Date().toLocaleString(); 
-        const updatedat = new Date().toLocaleString();
-        const type = "supplier";
-        const balance = 0;
-        const cpf = 0;
-        axios.post("http://localhost:3001/registerSupplier", 
-        {   cnpj: values.cnpj, 
-            cpf: cpf,
-            email: values.email, 
-            password: values.password, 
-            telefone: values.telefone, 
-            bairro: values.bairro, 
-            endereco: values.endereco, 
-            numero: values.numero, 
-            rSocial: values.rSocial, 
-            nFantasia: values.nFantasia,
-            createdat: createdat,
-            updatedat: updatedat,
-            type: type,
-            balance: balance
 
-    }).then(
-        (response) => {
-            alert("Cadastro realizado com sucesso!")
-            navigate("/");
+    const checkEmpty = () => {
+        const requiredFields = ['cnpj', 'email', 'password', 'telefone', 'bairro', 'endereco', 'numero', 'rSocial', 'nFantasia'];
+        let isVazio = false;
+
+        for (const fieldId of requiredFields) {
+            const fieldValue = document.getElementById(fieldId).value.trim();
+            if (fieldValue === '') {
+                isVazio = true;
+                break;
+            }
         }
-    )
- }
+
+        return isVazio;
+    };
+
+    const handleClickButton = () => {
+        if (!checkEmpty()) {
+            const createdat = new Date().toLocaleString();
+            const updatedat = new Date().toLocaleString();
+            const type = "supplier";
+            const balance = 0;
+            const cpf = 0;
+            axios.post("http://localhost:3001/registerUser",
+                {
+                    cnpj: values.cnpj,
+                    cpf: cpf,
+                    email: values.email,
+                    password: values.password,
+                    telefone: values.telefone,
+                    bairro: values.bairro,
+                    endereco: values.endereco,
+                    numero: values.numero,
+                    rSocial: values.rSocial,
+                    nFantasia: values.nFantasia,
+                    createdat: createdat,
+                    updatedat: updatedat,
+                    type: type,
+                    balance: balance
+
+                }).then(
+                    (response) => {
+                        alert("Cadastro realizado com sucesso!")
+                        navigate("/");
+                    }
+                )
+        } else {
+            alert('Preencha todos os campos')
+        }
+    }
 
 
-    const [values, setValues] = useState({ 
-        cnpj: 0, 
-        email: '', 
-        password: '', 
-        telefone: 0, 
-        bairro: '', 
-        endereco: '', 
-        numero: 0, 
-        rSocial: '', 
-        nFantasia: '' 
+    const [values, setValues] = useState({
+        cnpj: 0,
+        email: '',
+        password: '',
+        telefone: 0,
+        bairro: '',
+        endereco: '',
+        numero: 0,
+        rSocial: '',
+        nFantasia: ''
     });
 
-const handleChangeValues = (event) => { 
-    const { name, value } = event.target; 
-    setValues(prevValues => ({ 
-      ...prevValues, 
-      [name]: value 
-    })); 
-  };
+    const handleChangeValues = (event) => {
+        const { name, value } = event.target;
+        setValues(prevValues => ({
+            ...prevValues,
+            [name]: value
+        }));
+    };
 
     return (
         <>
