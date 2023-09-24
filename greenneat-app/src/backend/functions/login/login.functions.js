@@ -22,8 +22,10 @@ function login(email, password, res) {
             const tipoUser = result.rows.values().next().value.type_user;
             const emailUser = result.rows.values().next().value.email;
             const passwordUser = result.rows.values().next().value.password;
+            const cpfUser = result.rows.values().next().value.cpf;
+            const cnpjUser = result.rows.values().next().value.cnpj;
             const mensagem = 'Usuário logado'
-            const data = { msg: mensagem, id: idUser, type_user: tipoUser, email: emailUser, password: passwordUser }
+            const data = { msg: mensagem, id: idUser, type_user: tipoUser, email: emailUser, password: passwordUser, cpf: cpfUser, cnpj: cnpjUser }
             res.send(data)
         } else {
             res.send({ msg: "Usuário não cadastrado/Informações estão incorretas" })

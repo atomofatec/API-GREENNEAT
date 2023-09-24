@@ -123,6 +123,13 @@ export default function DashboardCooperativo() {
     setAnchorElUser(null);
   };
 
+  //localStorage
+  console.log(localStorage.getItem('user'))
+  console.log(localStorage.getItem('tipo'))
+  console.log(localStorage.getItem('email'))
+  console.log(localStorage.getItem('cpf'))
+  console.log(localStorage.getItem('cnpj'))
+
   return (
     <ThemeProvider theme={defaultTheme}>
       <Box sx={{ display: 'flex' }}>

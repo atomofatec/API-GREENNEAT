@@ -107,6 +107,13 @@ Media.propTypes = {
 };
 //Fim Retangulos
 
+//localStorage
+console.log(localStorage.getItem('user'))
+console.log(localStorage.getItem('tipo'))
+console.log(localStorage.getItem('email'))
+console.log(localStorage.getItem('cpf'))
+console.log(localStorage.getItem('cnpj'))
+
 export default function DashboardGreenneat() {
   const [open, setOpen] = React.useState(false);
   const toggleDrawer = () => {
