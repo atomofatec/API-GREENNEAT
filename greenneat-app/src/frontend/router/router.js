@@ -19,7 +19,7 @@ function Router() {
             <Route path='/transacoes-greenneat' element={<TransactionsGreenneat />}/>
             <Route path='/carteira-cooperativo' element={<WalletPartner />}/>
             <Route path='/carteira-estabelecimento' element={<WalletSupplier />}/>
-            <Route path='/nova-transacao-Greenneat' element={<NovaTransacaoGreenneat />}/>
+            <Route path='/nova-transacao-greenneat' element={<NovaTransacaoGreenneat />}/>
         </Routes>
         </BrowserRouter>
     )

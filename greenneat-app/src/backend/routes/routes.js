@@ -5,8 +5,13 @@ const { registerFunction } = require("../functions/register/register.functions")
 const { login } = require("../functions/login/login.functions");
 const app = express();
 
-app.use(cors());
 app.use(express.json());
+
+var corsOptions = {
+    origin: "http://localhost:3000" //front
+  };
+  
+app.use(cors(corsOptions));
 
 //rota cadastro
 app.post('/registerUser', registerFunction);
