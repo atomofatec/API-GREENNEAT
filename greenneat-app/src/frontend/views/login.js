@@ -60,7 +60,8 @@ export default function Login() {
           localStorage.setItem('user', response.data.id)
           localStorage.setItem('tipo', response.data.type_user)
           localStorage.setItem('email', response.data.email)
-          localStorage.setItem('senha', response.data.password)
+          localStorage.setItem('cpf', response.data.cpf)
+          localStorage.setItem('cnpj', response.data.cnpj)
           if (response.data.type_user === "supplier") {
             navigate('/carteira-estabelecimento')
           }
