@@ -105,9 +105,11 @@ export default function NovaTransacaoGreenneat() {
     setAnchorElUser(null);
   };
 
-  const [values, setValues] = React.useState();
+  //const [values, setValues] = React.useState();
   const [cnpj, setCnpj] = useState("");
   const [valor, setValor] = useState("");
+  //const [user, setUser] = useState("");
+  //const [email, setEmail] = useState("");
 
   const handleCnpjChange = (event) => {
     let input = event.target.value;
@@ -128,30 +130,45 @@ export default function NovaTransacaoGreenneat() {
   };
 
   const handleSubmit = async () => {
+    console.log("teste")
     try {
+      
+      const cnpjValue = cnpj;
+      const valorValue = valor;
+
+      console.log("Dados antes de enviar a solicitação:");
+      console.log("CNPJ:", cnpj);
+      console.log("Valor:", valor);
+  
+     
       const requestData = {
-        uniqueKey: cnpj,
-        transferValue: valor,
+        uniqueKey: cnpjValue,
+        transferValue: valorValue,
       };
-      // Armazene os valores em localStorage
+
       localStorage.setItem("cnpj", cnpj);
       localStorage.setItem("valor", valor);
 
+      
+  
       const response = await axios.post(
         "http://localhost:3001/transfer",
         requestData
       );
-      console.log(cnpj);
-      console.log(valor);
 
-      console.log(cnpj);
-      console.log(valor);
+      console.log(response)
+      console.log(requestData)
 
-      // Faça a solicitação POST para o servidor Node.js
-
+  
+      // Remova os valores do localStorage após o envio
+      localStorage.removeItem("cnpj");
+      localStorage.removeItem("valor");
+      localStorage.removeItem("email");
+      localStorage.removeItem("user");
+  
       setValor("");
       setCnpj("");
-
+  
       if (response.status === 200) {
         alert("Transferência concluída com sucesso.");
       } else {
@@ -170,7 +187,10 @@ export default function NovaTransacaoGreenneat() {
       alert("Ocorreu um erro ao realizar a transferência.");
     }
   };
-
+  
+ 
+  
+  
   return (
     <ThemeProvider theme={defaultTheme}>
       <Box sx={{ display: "flex" }}>

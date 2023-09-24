@@ -1,14 +1,8 @@
 import React, { useState } from 'react';
 import TextField from '@mui/material/TextField';
 
-function CarteiraEstabForm({ style }) {
-  const [valor, setValor] = useState("");
-
-  const handleValorChange = (event) => {
-    const input = event.target.value;
-    const numericValue = input.replace(/[^0-9]/g, "").replace(/^0+/, "");
-    setValor(numericValue || "0");
-  };
+function CarteiraEstabForm(props) {
+  
 
   return (
     <>
@@ -35,8 +29,8 @@ function CarteiraEstabForm({ style }) {
         required
         autoFocus
         style={{ backgroundColor: 'white' }}
-        value={valor}
-        onChange={handleValorChange}
+        value={props.value}
+        onChange={props.onChange}
       />
     </>
   );

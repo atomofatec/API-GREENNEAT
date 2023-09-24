@@ -34,7 +34,7 @@ app.post('/transfer', async (req, res) => {
         // Chama a função transfer com os parâmetros fornecidos
         await transfer(senderType, senderId, receiverType, uniqueKey, transferValue);
 
-        res.status(200).json({ message: 'Transferência concluída com sucesso.' });
+        res.status(200).json({ message: 'Transferência concluída com sucesso!!!!' });
     } catch (error) {
         return res.status(500).json({ error: error.message });
     }
