@@ -12,7 +12,8 @@
   <br>
   <a href ="#cronograma-das-sprints"> Cronograma das Sprints </a> • 
   <a href ="#burndown-das-sprints"> Burndown das Sprints </a>  •
-  <a href ="#equipe">Equipe</a> 
+  <a href ="#equipe">Equipe</a>  •
+  <a href ="#review">Sprint Reviews</a> 
 </p>
 
 <br>
@@ -108,10 +109,11 @@ O desafio consiste em criar uma plataforma que gerencie os créditos a serem usa
   
 <h3>1ª Sprint</h3>
 
-<h1 align="center"> </h1> 
+<h1 align="center"><img src="https://github.com/atomofatec/API-GREENNEAT/blob/main/imagens/burndown_sprint1.png" alt="Burndown da Sprint 1"/> </h1> 
 
 <br>
 
+<!-- //
 <h3>2ª Sprint</h3>
 
 <h1 align="center"></h1> 
@@ -129,6 +131,17 @@ O desafio consiste em criar uma plataforma que gerencie os créditos a serem usa
 <h1 align="center"></h1> 
 
 <br>
+// -->
+
+<span id="review">
+
+## :camera_flash: Sprint Reviews
+
+<h3>Video Sprint Review 1</h3>
+
+**:link: Clique no link abaixo para assistir ao vídeo da Sprint Review 1.**  
+> [Sprint Review 1]()
+
 <!-- //
 <span id="produto">
 
