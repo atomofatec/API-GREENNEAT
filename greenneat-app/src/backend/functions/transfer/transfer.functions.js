@@ -1,60 +1,100 @@
 const { Pool } = require("pg");
 
 const cliente = new Pool({
-    host: 'localhost',
-    user: 'postgres',
-    password: 'fatec',
-    database: 'greenneat'
+  host: "localhost",
+  user: "postgres",
+  password: "simone",
+  database: "007",
 });
 
-// Função para realizar a transferencia
-async function transfer(senderType, senderId, receiverType, uniqueKey, transferValue) {
-    try {
-        // Faz a busca no banco de acordo com os parametros passados
-        let sender = await cliente.query(`SELECT * FROM users WHERE id = $1`, [senderId]);
-        let receiver = await cliente.query(`SELECT * FROM users WHERE cnpj = $1 OR cpf = $1`, [uniqueKey]);
-        
-        // Verifica se a busca encontrou sender ou receiver, se nao encontrou printa msg de erro
-        if (sender.rows.length === 0 || receiver.rows.length === 0) {
-            throw new Error('O remetente ou o destinatário não existe.');
-        }
-        // Verifique se o remetente tem permissão para transferir
-        if ((senderType === 'admin' && receiverType === 'partner') ||
-            (senderType === 'partner' && receiverType === 'supplier') ||
-            (senderType === 'supplier' && receiverType === 'admin')) {
+async function transfer(senderId, uniqueKey, transferValue) {
+  try {
+    console.log(typeof uniqueKey, typeof transferValue, typeof senderId);
+    console.log(
+      "uniquekey:" +
+        uniqueKey +
+        " transferValue:" +
+        transferValue +
+        " senderId:" +
+        senderId
+    );
 
-            // Inicie uma transação
-            await cliente.query('BEGIN');
+    // Faz a busca no banco de acordo com os parametros passados
+    let sender = await cliente.query(
+      `SELECT * FROM Users WHERE id = '${senderId}'`
+    );
+    let receiver = await cliente.query(
+      `SELECT * FROM UserDetails WHERE document = '${uniqueKey}'`
+    );
 
-            // 1. Puxar o balance do 'sender'
-            let senderBalanceQueryResp = await cliente.query(`SELECT balance FROM users WHERE id = $1`, [senderId]);
-            
-            const senderBalance = senderBalanceQueryResp.rows[0].balance;
+    let receiverType = await cliente.query(
+      `SELECT U.idUserType FROM Users U JOIN UserDetails UD ON U.id = UD.idUser WHERE UD.document = '${uniqueKey}'`
+    );
 
-            // 2. Verificar se o balance é maior que 'transferValue'
-            if (senderBalance < transferValue) {
-                throw new Error('A transferência não é permitida. Saldo insuficiente');
-            }
+    receiverType = receiverType.rows[0].idusertype;
 
-            // 3. Atualizar o balance - transferValue
-            const newSenderBalance = parseInt(senderBalance) - parseInt(transferValue);
-            await cliente.query(`UPDATE users SET balance = $1 WHERE id = $2`, [newSenderBalance, senderId]);
+    console.log(receiverType);
 
-            // 4. Atualiza o balance do receiver somando o valor de transferValue
-            await cliente.query(`UPDATE users SET balance = balance + $1 WHERE cnpj = $2 OR cpf = $2`, [transferValue, uniqueKey]);
+    // Verifica se a busca encontrou sender ou receiver, se nao encontrou printa msg de erro
+    if (sender.rows.length === 0 || receiver.rows.length === 0) {
+      throw new Error("O remetente ou o destinatário não existe.");
+    }
+    // Verifique se o remetente tem permissão para transferir
+    //admin = 1; supplier = 2; partner = 3
+    if (
+      (senderId === 1 && receiverType === 3) ||
+      (senderId === 3 && receiverType === 2) ||
+      (senderId === 2 && receiverType === 1)
+    ) {
+      // Inicie uma transação
+      await cliente.query("BEGIN");
 
-            // Comita a transação
-            await cliente.query('COMMIT');
-            console.log('Transferência concluída com sucesso.');
+      // 1. Puxar o balance do 'sender'
+      let senderBalanceQueryResp = await cliente.query(
+        `SELECT balance FROM Users WHERE id ='${senderId}'`
+      );
 
-        } else {
-            throw new Error('A transferência não é permitida para os tipos de remetente e destinatário fornecidos.');
-        }
-    } catch (error) {
+      const senderBalance = senderBalanceQueryResp.rows[0].balance;
 
-        // Em caso de erro, faça um rollback na transação
-        console.error('Erro durante a transferência:', error.message);
-        await cliente.query('ROLLBACK');
-    } 
+      console.log(senderBalance);
+
+      // 2. Verificar se o balance é maior que 'transferValue'
+      if (senderBalance < transferValue) {
+        throw new Error("A transferência não é permitida. Saldo insuficiente");
+      }
+
+      console.log(senderBalance);
+      console.log(transferValue);
+
+      // 3. Atualizar o balance - transferValue
+      const newSenderBalance =
+        parseInt(senderBalance) - parseInt(transferValue);
+      await cliente.query(
+        `UPDATE Users SET balance = '${newSenderBalance}' WHERE id = '${senderId}'`
+      );
+
+      // 4. Atualiza o balance do receiver somando o valor de transferValue
+      await cliente.query(
+        `UPDATE Users SET balance = balance + '${transferValue}' 
+        FROM UserDetails 
+        WHERE document = '${uniqueKey}' 
+        AND Users.id = UserDetails.idUser`
+      );
+
+
+      // Comita a transação
+      await cliente.query("COMMIT");
+      console.log("Transferência concluída com sucesso.");
+    } else {
+      throw new Error(
+        "A transferência não é permitida para os tipos de remetente e destinatário fornecidos."
+      );
+    }
+  } catch (error) {
+    // Em caso de erro, faça um rollback na transação
+    console.error("Erro durante a transferência:", error.message);
+    await cliente.query("ROLLBACK");
+  }
 }
-module.exports = { transfer }
+
+module.exports = { transfer };

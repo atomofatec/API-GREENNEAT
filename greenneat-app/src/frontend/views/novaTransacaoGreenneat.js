@@ -105,10 +105,10 @@ export default function NovaTransacaoGreenneat() {
     setAnchorElUser(null);
   };
 
-  //const [values, setValues] = React.useState();
+  const [values, setValues] = React.useState();
   const [cnpj, setCnpj] = useState("");
   const [valor, setValor] = useState("");
-  //const [user, setUser] = useState("");
+  const [user, setUser] = useState("");
   //const [email, setEmail] = useState("");
 
   const handleCnpjChange = (event) => {
@@ -133,21 +133,26 @@ export default function NovaTransacaoGreenneat() {
     console.log("teste")
     try {
       
-      const cnpjValue = cnpj;
-      const valorValue = valor;
+      const cnpjValue = parseInt(cnpj);
+      const valorValue = parseInt(valor);
+      const userValueString = localStorage.getItem("user_id", user);
+      const userValue = parseInt(userValueString);
 
       console.log("Dados antes de enviar a solicitação:");
       console.log("CNPJ:", cnpj);
       console.log("Valor:", valor);
+      console.log("Valor:", user);
   
      
       const requestData = {
+        senderId: userValue,
         uniqueKey: cnpjValue,
         transferValue: valorValue,
       };
 
       localStorage.setItem("cnpj", cnpj);
       localStorage.setItem("valor", valor);
+      localStorage.setItem("user_id", user);
 
       
   
@@ -164,7 +169,6 @@ export default function NovaTransacaoGreenneat() {
       localStorage.removeItem("cnpj");
       localStorage.removeItem("valor");
       localStorage.removeItem("email");
-      localStorage.removeItem("user");
   
       setValor("");
       setCnpj("");

@@ -1,84 +1,85 @@
-import * as React from 'react';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import Link from '@mui/material/Link';
-import Paper from '@mui/material/Paper';
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import Triangle from '../components/visualElements/triangle';
-import { useNavigate } from 'react-router-dom'
-import axios from 'axios'
+import * as React from "react";
+import Button from "@mui/material/Button";
+import CssBaseline from "@mui/material/CssBaseline";
+import TextField from "@mui/material/TextField";
+import Link from "@mui/material/Link";
+import Paper from "@mui/material/Paper";
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import Triangle from "../components/visualElements/triangle";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const defaultTheme = createTheme();
 
 const backgroundColor = {
-    backgroundColor: '#F6F2C7'
+  backgroundColor: "#F6F2C7",
 };
 
 const fontColor = {
-    color: '#0E681D'
+  color: "#0E681D",
 };
 
 export default function Login() {
   React.useEffect(() => {
-    localStorage.clear()
-  })
+    localStorage.clear();
+  });
 
   const [values, setValues] = React.useState();
   const navigate = useNavigate();
 
   const handleChangeValues = (value) => {
-    setValues(prevValue => ({
+    setValues((prevValue) => ({
       ...prevValue,
       [value.target.name]: value.target.value,
-    }))
+    }));
   };
 
   const checkEmpty = () => {
-    let isVazio = false
-    if (document.getElementById('email').value === '') {
-      isVazio = true
-      return isVazio
+    let isVazio = false;
+    if (document.getElementById("email").value === "") {
+      isVazio = true;
+      return isVazio;
     }
-    if (document.getElementById('password').value === '') {
-      isVazio = true
-      return isVazio
+    if (document.getElementById("password").value === "") {
+      isVazio = true;
+      return isVazio;
     }
-  }
+  };
 
   const handleClickButton = () => {
     if (!checkEmpty()) {
-      axios.post("http://localhost:3001/", {
-        email: values.email,
-        password: values.password,
-      }).then((response) => {
-        console.log(response.data)
-        if (response.data.msg === "Usuário logado") {
-          localStorage.setItem('user', response.data.id)
-          localStorage.setItem('tipo', response.data.type_user)
-          localStorage.setItem('email', response.data.email)
-          localStorage.setItem('cpf', response.data.cpf)
-          localStorage.setItem('cnpj', response.data.cnpj)
-          if (response.data.type_user === "supplier") {
-            navigate('/carteira-estabelecimento')
+      axios
+        .post("http://localhost:3001/", {
+          email: values.email,
+          password: values.password,
+        })
+        .then((response) => {
+          console.log(response.data);
+          if (response.data.msg === "Usuário logado") {
+            localStorage.setItem("user_id", response.data.id);
+            localStorage.setItem("user_type", response.data.type_user);
+            localStorage.setItem("user_email", response.data.email);
+            localStorage.setItem("user_document", response.data.document);
+
+            console.log(response.data.type_user)
+            if (response.data.type_user === 2) {
+              navigate("/carteira-estabelecimento");
+            } else if (response.data.type_user === 3) {
+              navigate("/dashboard-cooperativo");
+            } else if (response.data.type_user === 1) {
+              navigate("/dashboard-greenneat");
+            }
+          } else {
+            alert("Não foi possível logar");
           }
-          else if (response.data.type_user === "partner") {
-            navigate('/dashboard-cooperativo')
-          }
-          else if (response.data.type_user === "admin") {
-            navigate('/dashboard-greenneat')
-          }
-        } else {
-          alert('Não foi possível logar')
-        }
-      })
+        });
     } else {
-      alert('Preencha todos os campos')
+      alert("Preencha todos os campos");
     }
-  }
+  };
 
   /*  const handleSubmit = (event) => {
       event.preventDefault();
@@ -91,37 +92,40 @@ export default function Login() {
 
   return (
     <ThemeProvider theme={defaultTheme}>
-      <Grid container component="main" sx={{ height: '100vh' }} style={backgroundColor}>
+      <Grid
+        container
+        component="main"
+        sx={{ height: "100vh" }}
+        style={backgroundColor}
+      >
         <CssBaseline />
+        <Grid item xs={false} sm={4} md={7} sx={{}} />
+        <Triangle />
         <Grid
           item
-          xs={false}
-          sm={4}
-          md={7}
-          sx={{
-
-          }}
-        />
-        <Triangle />
-        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={0} style={backgroundColor}>
+          xs={12}
+          sm={8}
+          md={5}
+          component={Paper}
+          elevation={0}
+          style={backgroundColor}
+        >
           <Box
             sx={{
               my: 20,
               mx: 4,
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              backgroundColor: '#F6F2C7',
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              backgroundColor: "#F6F2C7",
             }}
           >
             <Typography component="h1" variant="h5" style={fontColor}>
-                <strong>
-                    Seja bem-vindo!
-                </strong>
+              <strong>Seja bem-vindo!</strong>
             </Typography>
             {/* onSubmit={handleSubmit} */}
             <Box component="form" noValidate sx={{ mt: 1 }}>
-                <TextField
+              <TextField
                 margin="normal"
                 color="success"
                 fullWidth
@@ -131,7 +135,7 @@ export default function Login() {
                 autoComplete="email"
                 required
                 autoFocus
-                style={{ backgroundColor: 'white' }}
+                style={{ backgroundColor: "white" }}
                 onChange={handleChangeValues}
               />
               <TextField
@@ -144,7 +148,7 @@ export default function Login() {
                 id="password"
                 autoComplete="current-password"
                 required
-                style={{ backgroundColor: 'white' }}
+                style={{ backgroundColor: "white" }}
                 onChange={handleChangeValues}
               />
               <Button
@@ -152,18 +156,26 @@ export default function Login() {
                 variant="contained"
                 color="success"
                 onClick={handleClickButton}
-                sx={{ mt: 3, mb: 2, backgroundColor: '#136935'}}
+                sx={{ mt: 3, mb: 2, backgroundColor: "#136935" }}
               >
                 Entrar
               </Button>
               <Grid container>
                 <Grid item xs>
-                  <Link href="#" variant="body2" style={{ textDecoration: 'none', ...fontColor }}>
+                  <Link
+                    href="#"
+                    variant="body2"
+                    style={{ textDecoration: "none", ...fontColor }}
+                  >
                     Esqueceu a senha?
                   </Link>
                 </Grid>
                 <Grid item>
-                  <Link href="/cadastro" variant="body2" style={{ textDecoration: 'none', ...fontColor }}>
+                  <Link
+                    href="/cadastro"
+                    variant="body2"
+                    style={{ textDecoration: "none", ...fontColor }}
+                  >
                     Crie a sua conta aqui
                   </Link>
                 </Grid>

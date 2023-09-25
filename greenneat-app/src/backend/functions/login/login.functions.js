@@ -3,34 +3,43 @@ const { Pool } = require("pg");
 const cliente = new Pool({
     host: 'localhost',
     user: 'postgres',
-    password: 'fatec',
-    database: 'greenneat'
+    password: 'simone',
+    database: '007'
 });
 
 // função login
-function login(email, password, res) {
-    // executa consulta SQL e seleciona usuário onde campos 'email' e 'password_user' são iguais aos recebidos
-    cliente.query("SELECT * FROM users WHERE email = '" + email + "' AND password = '" + password + "' ;", (err, result) => {
-        if (err) {
-            // retorna erro
-            console.log('erro query:', err);
-        }
-        // se a linha encontrada for igual a 1 (ou seja, se o usuário existir)...
+async function login(email, password, res) {
+    try {
+        // Executa uma consulta SQL parametrizada para evitar injeção de SQL
+        const result = await cliente.query({
+            text: `
+                SELECT u.id, u.idUserType, u.email, u.password, ud.document
+                FROM Users AS u
+                LEFT JOIN UserDetails AS ud ON u.id = ud.idUser
+                WHERE u.email = $1 AND u.password = $2
+            `,
+            values: [email, password]
+        });
+
+        // Verifica se encontrou um usuário correspondente
         if (result.rows.length === 1) {
-            // armazena os dados do usuário no objeto 'data' e retorna seu valor, ou retorna erro
-            const idUser = result.rows.values().next().value.id;
-            const tipoUser = result.rows.values().next().value.type_user;
-            const emailUser = result.rows.values().next().value.email;
-            const passwordUser = result.rows.values().next().value.password;
-            const cpfUser = result.rows.values().next().value.cpf;
-            const cnpjUser = result.rows.values().next().value.cnpj;
-            const mensagem = 'Usuário logado'
-            const data = { msg: mensagem, id: idUser, type_user: tipoUser, email: emailUser, password: passwordUser, cpf: cpfUser, cnpj: cnpjUser }
-            res.send(data)
+            const user = result.rows[0];
+            const data = {
+                msg: 'Usuário logado',
+                id: user.id,
+                type_user: user.idusertype,
+                email: user.email,
+                password: user.password,
+                document: user.document // Ambos CPF e CNPJ estão na mesma coluna
+            };
+            res.send(data);
         } else {
-            res.send({ msg: "Usuário não cadastrado/Informações estão incorretas" })
+            res.send({ msg: "Usuário não cadastrado/Informações estão incorretas" });
         }
-    })
+    } catch (error) {
+        console.error('Erro ao realizar o login:', error);
+        res.status(500).send({ msg: 'Erro ao realizar o login' });
+    }
 }
 
-module.exports = { login }
+module.exports = { login };
