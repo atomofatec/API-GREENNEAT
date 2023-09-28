@@ -23,14 +23,14 @@ export const mainListItems = (
         }
       />
     </ListItemButton>
-    <ListItemButton component={Link} to="#" sx={{ color: 'white' }}>
+    <ListItemButton component={Link} to="/solicitar-estabelecimento" sx={{ color: 'white' }}>
       <ListItemIcon>
         <CalendarTodayIcon sx={{ color: 'white' }} />
       </ListItemIcon>
       <ListItemText
         primary={
           <Typography variant="body2" style={{ fontSize: '1rem', fontFamily: "'Century Gothic', Futura, sans-serif" }}>
-            Solicitar #
+            Solicitar
           </Typography>
         }
       />

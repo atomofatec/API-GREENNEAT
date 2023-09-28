@@ -16,14 +16,13 @@ import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import Divider from '@mui/material/Divider';
-import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
+import Container from '@mui/material/Container';
+import SolicitarEstabForm from '../components/Forms/SolicitarEstabForm';
+import EnviarButton from '../components/Buttons/EnviarButton';
 import Title from '../components/Outros/Title';
 import SubTitle from '../components/Outros/SubTitle';
-import NovaTransButton from '../components/Buttons/NovaTransButton';
-import TableTransGreenneat from '../components/Tables/TableTransGreenneat';
-import { mainListItems } from '../components/menus/menuGreenneat';
-import { useNavigate } from 'react-router-dom';
+import { mainListItems } from '../components/menus/menuSupplier';
 
 const settings = [
   { name: 'Meu Perfil' },
@@ -80,14 +79,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 
-export default function TransacoesGreenneat() {
-  const navigate = useNavigate();
-
-  const redirectToNovaTransacao = (event) => {
-    event.preventDefault();
-    navigate('/nova-transacao-greenneat');
-  };
-
+export default function SolicitarEstabelecimento() {
   const [open, setOpen] = React.useState(false);
   const toggleDrawer = () => {
     setOpen(!open);
@@ -139,7 +131,7 @@ export default function TransacoesGreenneat() {
                   <Box sx={{ flexGrow: 0 }}>
                     <Tooltip title="Abrir configurações">
                     <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                        <Avatar sx={{ bgcolor: 'white', color: '#0E681D' }}>G</Avatar>
+                        <Avatar sx={{ bgcolor: 'white', color: '#0E681D' }}>E</Avatar>
                     </IconButton>
                     </Tooltip>
                     <Menu
@@ -160,7 +152,7 @@ export default function TransacoesGreenneat() {
                     >
                     <div style={{ margin: '5px 20px 10px 20px', color:'#0E681D' }}>
                         <strong>
-                            Greenneat
+                            Estabelecimento
                         </strong>
                     </div>
                     <Divider />
@@ -222,24 +214,29 @@ export default function TransacoesGreenneat() {
         }}
         >
           <Toolbar />
-          <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{ marginBottom: '5px', marginTop: '40px' }}>
-            <Grid item xs={6}>
-              <Container sx={{ m: 'auto', backgroundColor: 'white', borderRadius: 1, marginBottom: '16px', overflow: 'auto', width:'30%', marginLeft: '15%', }}>
-                <Title>$300</Title>
-                <SubTitle>Moedas Greenneat</SubTitle>
-              </Container>
+          <Container maxWidth="lg" sx={{ m: 'auto', backgroundColor: 'white', borderRadius: 1, marginTop: '40px', marginBottom: '16px', overflow: 'auto'}}>
+            <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{marginBottom: '20px', marginTop: '20px' }}>
+              <Grid item xs={6}>
+                <Title>Solicitar retirada de Óleo</Title>
+                <SubTitle>Parceiro Cooperativo</SubTitle>
+              </Grid>
             </Grid>
-            <Grid item xs={6}>
-              <Box display="flex" justifyContent="flex-end" alignItems="center" style={{ marginRight: '15%' }}>
-                <div style={{ marginRight: '10px' }}>
-                  <NovaTransButton onClick={redirectToNovaTransacao}/>
-                </div>
-              </Box>
+            <Divider />
+            <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{marginBottom: '20px', marginTop: '10px' }}>
+              <Grid item xs={6}>
+                <SolicitarEstabForm/>
+              </Grid>
+              <Grid item xs={6}>
+              </Grid>
             </Grid>
-          </Grid>
-          <Grid item xs={12}>
-            {/*<TableTransGreenneat />*/}
-          </Grid>
+            <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{marginBottom: '20px', marginTop: '10px' }}>
+              <Grid item xs={6}>
+              </Grid>
+              <Grid item xs={6}>
+                <EnviarButton />
+              </Grid>
+            </Grid>
+          </Container>
         </Box>
       </Box>
     </ThemeProvider>
