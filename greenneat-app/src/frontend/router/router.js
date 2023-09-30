@@ -8,6 +8,7 @@ import WalletPartner from '../views/walletPartner';
 import WalletSupplier from '../views/walletSupplier';
 import NovaTransacaoGreenneat from '../views/novaTransacaoGreenneat';
 import SolicitacoesCooperativo from '../views/requestsViewPartner';
+import ListaProdutos from '../views/productsList';
 
 function Router() {
     return(
@@ -22,6 +23,7 @@ function Router() {
             <Route path='/carteira-estabelecimento' element={<WalletSupplier />}/>
             <Route path='/nova-transacao-greenneat' element={<NovaTransacaoGreenneat />}/>
             <Route path='/solicitacoes-coleta-parceiro' element={<SolicitacoesCooperativo />}/>
+            <Route path='/mercado-greenneat' element={<ListaProdutos />}/>
         </Routes>
         </BrowserRouter>
     )
