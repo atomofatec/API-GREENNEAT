@@ -85,6 +85,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 export default function CarteiraEstabelecimento() {
   const [open, setOpen] = React.useState(false);
   const [valor, setValor] = useState("");
+  const [cnpj, setCnpj] = useState("");
 
   const toggleDrawer = () => {
     setOpen(!open);
@@ -117,10 +118,18 @@ export default function CarteiraEstabelecimento() {
     console.log("teste")
     try {
       // Recupere os valores do localStorage
-      const valor = localStorage.getItem("valor");
+      //const valor = localStorage.getItem("valor");
   
+      const cnpjValue = '0';
+      const valorValue = valor;
+      const receiverType = 'admin';
+
       const requestData = {
-        transferValue: valor,
+        senderType: localStorage.getItem('tipo'),
+          senderId: localStorage.getItem('user'),
+          receiverType: receiverType,
+          uniqueKey: cnpjValue,
+          transferValue: valorValue,
       };
   
       const response = await axios.post(
@@ -128,12 +137,14 @@ export default function CarteiraEstabelecimento() {
         requestData
       );
  
-      localStorage.removeItem("valor");
+      //localStorage.removeItem("valor");
   
-      setValor("");
+      //setValor("");
   
       if (response.status === 200) {
         alert("Transferência concluída com sucesso.");
+        setValor("");
+        setCnpj("");
       } else {
         if (response.status === 400) {
           alert(
@@ -334,7 +345,7 @@ export default function CarteiraEstabelecimento() {
                   justifyContent="flex-end"
                   alignItems="center"
                 >
-                  <Title>$30</Title>
+                  <Title>${localStorage.getItem('balance')}</Title>
                 </Box>
                 <Box textAlign="right">
                   <SubTitle>Moedas Greenneat</SubTitle>

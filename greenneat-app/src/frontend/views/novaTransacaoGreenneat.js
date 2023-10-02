@@ -135,6 +135,7 @@ export default function NovaTransacaoGreenneat() {
       
       const cnpjValue = cnpj;
       const valorValue = valor;
+      const receiverType = 'partner';
 
       console.log("Dados antes de enviar a solicitação:");
       console.log("CNPJ:", cnpj);
@@ -142,14 +143,15 @@ export default function NovaTransacaoGreenneat() {
   
      
       const requestData = {
+        senderType: localStorage.getItem('tipo'),
+        senderId: localStorage.getItem('user'),
+        receiverType: receiverType,
         uniqueKey: cnpjValue,
         transferValue: valorValue,
       };
 
-      localStorage.setItem("cnpj", cnpj);
-      localStorage.setItem("valor", valor);
-
-      
+      //localStorage.setItem("cnpj", cnpj);
+      //localStorage.setItem("valor", valor);      
   
       const response = await axios.post(
         "http://localhost:3001/transfer",
@@ -158,19 +160,19 @@ export default function NovaTransacaoGreenneat() {
 
       console.log(response)
       console.log(requestData)
-
   
       // Remova os valores do localStorage após o envio
-      localStorage.removeItem("cnpj");
+      /*localStorage.removeItem("cnpj");
       localStorage.removeItem("valor");
       localStorage.removeItem("email");
-      localStorage.removeItem("user");
+      localStorage.removeItem("user");*/
   
       setValor("");
       setCnpj("");
   
       if (response.status === 200) {
         alert("Transferência concluída com sucesso.");
+        window.location.reload()
       } else {
         if (response.status === 400) {
           alert(
@@ -187,9 +189,6 @@ export default function NovaTransacaoGreenneat() {
       alert("Ocorreu um erro ao realizar a transferência.");
     }
   };
-  
- 
-  
   
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -394,7 +393,7 @@ export default function NovaTransacaoGreenneat() {
                   justifyContent="flex-end"
                   alignItems="center"
                 >
-                  <Title>$500</Title>
+                  <Title>${localStorage.getItem('balance')}</Title>
                 </Box>
                 <Box textAlign="right">
                   <SubTitle>Moedas Greenneat</SubTitle>

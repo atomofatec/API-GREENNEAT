@@ -256,7 +256,7 @@ export default function TransacoesGreenneat() {
           <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{ marginBottom: '5px', marginTop: '40px' }}>
             <Grid item xs={6}>
               <Container sx={{ m: 'auto', backgroundColor: 'white', borderRadius: 1, marginBottom: '16px', overflow: 'auto', width:'30%', marginLeft: '15%', }}>
-                <Title>$300</Title>
+                <Title>${localStorage.getItem('balance')}</Title>
                 <SubTitle>Moedas Greenneat</SubTitle>
               </Container>
             </Grid>

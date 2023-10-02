@@ -21,7 +21,8 @@ async function transfer(senderType, senderId, receiverType, uniqueKey, transferV
         // Verifique se o remetente tem permissão para transferir
         if ((senderType === 'admin' && receiverType === 'partner') ||
             (senderType === 'partner' && receiverType === 'supplier') ||
-            (senderType === 'supplier' && receiverType === 'admin')) {
+            (senderType === 'supplier' && receiverType === 'admin') ||
+            (senderType === 'partner' && receiverType === 'admin')) {
 
             // Inicie uma transação
             await cliente.query('BEGIN');

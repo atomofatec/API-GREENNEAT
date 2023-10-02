@@ -62,6 +62,7 @@ export default function Login() {
           localStorage.setItem('email', response.data.email)
           localStorage.setItem('cpf', response.data.cpf)
           localStorage.setItem('cnpj', response.data.cnpj)
+          localStorage.setItem('balance', response.data.balance)
           if (response.data.type_user === "supplier") {
             navigate('/carteira-estabelecimento')
           }

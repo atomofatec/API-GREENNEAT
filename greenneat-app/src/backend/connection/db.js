@@ -1,5 +1,5 @@
 // configuração do servidor
-require("dotenv").config();
+//require("dotenv").config();
 
 const app = require("../routes/routes");
 

@@ -137,17 +137,24 @@ export default function CarteiraCooperativo() {
     try {
       const cnpjValue = cnpj;
       const valorValue = valor;
-      const numberOfItemsStored = localStorage.length;
+      const receiverType = 'supplier';
+      const senderType = 'admin';
+      const senderId = '1';
+      /*const numberOfItemsStored = localStorage.length;
       console.log(
         `Número de itens armazenados no localStorage: ${numberOfItemsStored}`
-      );
+      );*/
 
       if (showSolicitarCredito) {
         const data = {
+          senderType: senderType,
+          senderId: senderId,
+          receiverType: localStorage.getItem('tipo'),
+          uniqueKey: localStorage.getItem('cpf') || localStorage.getItem('cnpj'),
           transferValue: valorValue,
         };
 
-        localStorage.setItem("valor", valor);
+        //localStorage.setItem("valor", valor);
 
         await axios.post("http://localhost:3001/transfer", data);
 
@@ -156,12 +163,15 @@ export default function CarteiraCooperativo() {
         window.alert("Solicitação realizada!");
       } else {
         const data = {
+          senderType: localStorage.getItem('tipo'),
+          senderId: localStorage.getItem('user'),
+          receiverType: receiverType,
           uniqueKey: cnpjValue,
           transferValue: valorValue,
         };
 
-        localStorage.setItem("cnpj", cnpj);
-        localStorage.setItem("valor", valor);
+        //localStorage.setItem("cnpj", cnpj);
+        //localStorage.setItem("valor", valor);
 
         await axios.post("http://localhost:3001/transfer", data);
         window.alert("Transferencia realizada!");
@@ -379,7 +389,7 @@ export default function CarteiraCooperativo() {
                     justifyContent="flex-end"
                     alignItems="center"
                   >
-                    <Title>$100</Title>
+                    <Title>${localStorage.getItem('balance')}</Title>
                   </Box>
                   <Box textAlign="right">
                     <SubTitle>Moedas Greenneat</SubTitle>
@@ -443,7 +453,7 @@ export default function CarteiraCooperativo() {
                     justifyContent="flex-end"
                     alignItems="center"
                   >
-                    <Title>$100</Title>
+                    <Title>${localStorage.getItem('balance')}</Title>
                   </Box>
                   <Box textAlign="right">
                     <SubTitle>Moedas Greenneat</SubTitle>
