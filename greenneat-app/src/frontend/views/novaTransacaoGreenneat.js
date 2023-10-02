@@ -135,7 +135,6 @@ export default function NovaTransacaoGreenneat() {
       
       const cnpjValue = cnpj;
       const valorValue = valor;
-      const receiverType = 'partner';
 
       console.log("Dados antes de enviar a solicitação:");
       console.log("CNPJ:", cnpj);
@@ -145,7 +144,6 @@ export default function NovaTransacaoGreenneat() {
       const requestData = {
         senderType: localStorage.getItem('tipo'),
         senderId: localStorage.getItem('user'),
-        receiverType: receiverType,
         uniqueKey: cnpjValue,
         transferValue: valorValue,
       };

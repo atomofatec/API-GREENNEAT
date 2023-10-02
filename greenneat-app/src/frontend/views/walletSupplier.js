@@ -120,16 +120,14 @@ export default function CarteiraEstabelecimento() {
       // Recupere os valores do localStorage
       //const valor = localStorage.getItem("valor");
   
-      const cnpjValue = '0';
+      const cnpjValue = '1';
       const valorValue = valor;
-      const receiverType = 'admin';
 
       const requestData = {
         senderType: localStorage.getItem('tipo'),
-          senderId: localStorage.getItem('user'),
-          receiverType: receiverType,
-          uniqueKey: cnpjValue,
-          transferValue: valorValue,
+        senderId: localStorage.getItem('user'),
+        uniqueKey: cnpjValue,
+        transferValue: valorValue,
       };
   
       const response = await axios.post(

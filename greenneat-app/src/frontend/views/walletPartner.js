@@ -137,7 +137,6 @@ export default function CarteiraCooperativo() {
     try {
       const cnpjValue = cnpj;
       const valorValue = valor;
-      const receiverType = 'supplier';
       const senderType = 'admin';
       const senderId = '1';
       /*const numberOfItemsStored = localStorage.length;
@@ -149,7 +148,6 @@ export default function CarteiraCooperativo() {
         const data = {
           senderType: senderType,
           senderId: senderId,
-          receiverType: localStorage.getItem('tipo'),
           uniqueKey: localStorage.getItem('cpf') || localStorage.getItem('cnpj'),
           transferValue: valorValue,
         };
@@ -165,7 +163,6 @@ export default function CarteiraCooperativo() {
         const data = {
           senderType: localStorage.getItem('tipo'),
           senderId: localStorage.getItem('user'),
-          receiverType: receiverType,
           uniqueKey: cnpjValue,
           transferValue: valorValue,
         };
