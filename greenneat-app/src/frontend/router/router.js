@@ -6,7 +6,8 @@ import DashboardPartner from '../views/dashboardPartner';
 import TransactionsGreenneat from '../views/transactionsGreenneat';
 import WalletPartner from '../views/walletPartner';
 import WalletSupplier from '../views/walletSupplier';
-import NewTransactionGreenneat from '../views/NewTransactionGreenneat';
+import NewTransactionGreenneat from '../views/newTransactionGreenneat';
+import UsersGreenneat from '../views/usersGreenneat';
 import RequestSupplier from '../views/requestSupplier';
 
 function Router() {
@@ -21,6 +22,7 @@ function Router() {
             <Route path='/carteira-cooperativo' element={<WalletPartner />}/>
             <Route path='/carteira-estabelecimento' element={<WalletSupplier />}/>
             <Route path='/nova-transacao-Greenneat' element={<NewTransactionGreenneat />}/>
+            <Route path='/usuarios-Greenneat' element={<UsersGreenneat />}/>
             <Route path='/solicitar-estabelecimento' element={<RequestSupplier />}/>
         </Routes>
         </BrowserRouter>

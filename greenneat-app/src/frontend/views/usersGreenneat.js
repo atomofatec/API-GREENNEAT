@@ -16,13 +16,16 @@ import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import Divider from '@mui/material/Divider';
-import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
-import Title from '../components/Outros/Title';
-import SubTitle from '../components/Outros/SubTitle';
+import Skeleton from '@mui/material/Skeleton';
 import NovaTransButton from '../components/Buttons/NovaTransButton';
+import Grid from '@mui/material/Grid';
+import Container from '@mui/material/Container';
+import TableUsersGreenneat from '../components/Tables/TableUsersGreenneat';
+import Badge from '@mui/material/Badge';
+import MailIcon from '@mui/icons-material/Mail';
+import NotificationsIcon from '@mui/icons-material/Notifications';
 import { mainListItems } from '../components/menus/menuGreenneat';
-import { useNavigate } from 'react-router-dom';
+
 
 const settings = [
   { name: 'Meu Perfil' },
@@ -79,14 +82,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 
-export default function TransacoesGreenneat() {
-  const navigate = useNavigate();
-
-  const redirectToNovaTransacao = (event) => {
-    event.preventDefault();
-    navigate('/nova-transacao-greenneat');
-  };
-
+export default function UsuariosGreenneat() {
   const [open, setOpen] = React.useState(false);
   const toggleDrawer = () => {
     setOpen(!open);
@@ -127,6 +123,11 @@ export default function TransacoesGreenneat() {
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
               <strong><h2>GREENNEAT</h2></strong>
             </Box>
+            <Box sx={{ flexGrow: 1 }}></Box>
+            <Box sx={{ color: 'action.active', display: 'flex', alignItems: 'center' }}>
+                <Badge color="warning" variant="dot" sx={{ marginRight: '10px' }}>
+                    <MailIcon sx={{ color: 'white' }}/>
+                </Badge>  
             <IconButton color="white" sx={{ marginLeft: 'auto', borderRadius: '0' }}>
               <Link href='#' sx={{
                 textDecoration: 'none',
@@ -134,8 +135,7 @@ export default function TransacoesGreenneat() {
                   color: 'inherit',
                 },
               }}>
-                <Typography variant="body2" color="white" fontFamily="'Century Gothic', Futura, sans-serif">
-                  <Box sx={{ flexGrow: 0 }}>
+                <Typography variant="body2" color="white" fontFamily="'Century Gothic', Futura, sans-serif"> 
                     <Tooltip title="Abrir configurações">
                     <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                         <Avatar sx={{ bgcolor: 'white', color: '#0E681D' }}>G</Avatar>
@@ -174,10 +174,10 @@ export default function TransacoesGreenneat() {
                     )
                     ))}
                     </Menu>
-                  </Box>
                 </Typography>
               </Link>
             </IconButton>
+            </Box>
           </Toolbar>
         </AppBar>
         <Drawer variant="permanent" open={open}>
@@ -224,18 +224,18 @@ export default function TransacoesGreenneat() {
           <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{ marginBottom: '5px', marginTop: '40px' }}>
             <Grid item xs={6}>
               <Container sx={{ m: 'auto', backgroundColor: 'white', borderRadius: 1, marginBottom: '16px', overflow: 'auto', width:'30%', marginLeft: '15%', }}>
-                <Title>$300</Title>
-                <SubTitle>Moedas Greenneat</SubTitle>
+
               </Container>
             </Grid>
             <Grid item xs={6}>
               <Box display="flex" justifyContent="flex-end" alignItems="center" style={{ marginRight: '15%' }}>
                 <div style={{ marginRight: '10px' }}>
-                  <NovaTransButton onClick={redirectToNovaTransacao}/>
+                  <NovaTransButton/>
                 </div>
               </Box>
             </Grid>
-          </Grid>
+          </Grid>      
+            <TableUsersGreenneat />
         </Box>
       </Box>
     </ThemeProvider>
