@@ -212,7 +212,7 @@ export default function TransacoesGreenneat() {
         <Box
           component="main"
           sx={{
-            backgroundColor: '#F6F2C7',
+            backgroundColor: 'white',
             flexGrow: 1,
             height: '100vh',
             display: 'flex',
@@ -223,7 +223,7 @@ export default function TransacoesGreenneat() {
           <Toolbar />
           <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{ marginBottom: '5px', marginTop: '40px' }}>
             <Grid item xs={6}>
-              <Container sx={{ m: 'auto', backgroundColor: 'white', borderRadius: 1, marginBottom: '16px', overflow: 'auto', width:'30%', marginLeft: '15%', }}>
+              <Container sx={{ m: 'auto', backgroundColor: 'white',  borderRadius: 1, marginBottom: '16px', overflow: 'auto', width:'30%', marginLeft: '15%', border: '2px solid #0E681D' }}>
                 <Title>$300</Title>
                 <SubTitle>Moedas Greenneat</SubTitle>
               </Container>

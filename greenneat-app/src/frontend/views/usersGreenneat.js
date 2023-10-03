@@ -22,8 +22,6 @@ import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
 import TableUsersGreenneat from '../components/Tables/TableUsersGreenneat';
 import Badge from '@mui/material/Badge';
-import MailIcon from '@mui/icons-material/Mail';
-import NotificationsIcon from '@mui/icons-material/Notifications';
 import { mainListItems } from '../components/menus/menuGreenneat';
 
 
@@ -125,9 +123,6 @@ export default function UsuariosGreenneat() {
             </Box>
             <Box sx={{ flexGrow: 1 }}></Box>
             <Box sx={{ color: 'action.active', display: 'flex', alignItems: 'center' }}>
-                <Badge color="warning" variant="dot" sx={{ marginRight: '10px' }}>
-                    <MailIcon sx={{ color: 'white' }}/>
-                </Badge>  
             <IconButton color="white" sx={{ marginLeft: 'auto', borderRadius: '0' }}>
               <Link href='#' sx={{
                 textDecoration: 'none',
@@ -212,7 +207,7 @@ export default function UsuariosGreenneat() {
         <Box
           component="main"
           sx={{
-            backgroundColor: '#F6F2C7',
+            backgroundColor: 'white',
             flexGrow: 1,
             height: '100vh',
             display: 'flex',
@@ -222,20 +217,8 @@ export default function UsuariosGreenneat() {
         >
           <Toolbar />
           <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{ marginBottom: '5px', marginTop: '40px' }}>
-            <Grid item xs={6}>
-              <Container sx={{ m: 'auto', backgroundColor: 'white', borderRadius: 1, marginBottom: '16px', overflow: 'auto', width:'30%', marginLeft: '15%', }}>
-
-              </Container>
-            </Grid>
-            <Grid item xs={6}>
-              <Box display="flex" justifyContent="flex-end" alignItems="center" style={{ marginRight: '15%' }}>
-                <div style={{ marginRight: '10px' }}>
-                  <NovaTransButton/>
-                </div>
-              </Box>
-            </Grid>
-          </Grid>      
             <TableUsersGreenneat />
+          </Grid> 
         </Box>
       </Box>
     </ThemeProvider>

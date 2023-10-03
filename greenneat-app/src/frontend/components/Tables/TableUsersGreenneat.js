@@ -303,6 +303,7 @@ function EnhancedTableToolbar(props) {
     },
     marginLeft: 0,
     width: '100%',
+    boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)',
     [theme.breakpoints.up('sm')]: {
       marginLeft: theme.spacing(1),
       width: 'auto',
@@ -406,8 +407,7 @@ export default function EnhancedTable() {
   );
 
   return (
-    <Container maxWidth="lg" sx={{ m: 'auto', marginTop: '20px', marginBottom: '16px', overflow: 'auto'}}>
-      <Paper sx={{ width: '100%'}}>
+    <Paper sx={{ width: '80%', margin: '0 auto', display: 'flex', flexDirection: 'column' }} elevation={2}>
         <EnhancedTableToolbar numSelected={selected.length} />
         <TableContainer>
           <Table
@@ -489,6 +489,5 @@ export default function EnhancedTable() {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
-    </Container>
   );
 }

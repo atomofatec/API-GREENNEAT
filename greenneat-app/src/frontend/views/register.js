@@ -15,7 +15,7 @@ import RegisterPartnerForm from '../components/registerForms/registerPartnerForm
 const defaultTheme = createTheme();
 
 const backgroundColor = {
-  backgroundColor: '#F6F2C7'
+  backgroundColor: 'white'
 };
 
 const fontColor = {
@@ -176,14 +176,14 @@ export default function Register() {
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
-                    backgroundColor: '#F6F2C7',
+                    backgroundColor: 'white',
                   }}
                 >
                   <Box
                     sx={{
                       display: 'flex',
                       alignItems: 'center',
-                      backgroundColor: '#F6F2C7',
+                      backgroundColor: 'white',
                     }}
                   >
                     <Divider
