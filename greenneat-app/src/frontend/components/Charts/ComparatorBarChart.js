@@ -1,5 +1,6 @@
 import React from "react";
 import Paper from '@mui/material/Paper';
+import FiltroComparatorCharts from '../Buttons/FiltroComparatorChart';
 import Container from '@mui/material/Container';
 import { BarChart, Bar, XAxis, Tooltip, ResponsiveContainer } from "recharts";
 import { BsThreeDots } from "react-icons/bs";
@@ -29,30 +30,24 @@ const data = [
 
 function UserActivity() {
   return (
-    <Container sx={{ width: '80%', margin: '0 auto', display: 'flex', flexDirection: 'column' }}>
-        <div className="activity">
-            <div className="info">
-                <div>
-                <h3>Comparador</h3>
-                <span>New Tracks</span>
-                </div>
-                <div className="filtro">
-                <BsThreeDots />
-                </div>
-            </div>
-            <ResponsiveContainer width="40%" height="60%">
-                <BarChart data={data}>
-                <XAxis dataKey="nome" axisLine={false} tickLine={false} />
-                <Tooltip />
-                <Bar
-                    radius={[5, 5, 0, 0]}
-                    dataKey="valor"
-                    stackId="a"
-                    fill="#0E681D"
-                />
-                </BarChart>
-            </ResponsiveContainer>
+    <Container sx={{ width: '30%', margin: '0 auto', display: 'flex', flexDirection: 'column', marginTop: '40px' }}>
+      <div className="activity">
+        <div className="filtro" style={{ textAlign: 'right' }}>
+          <FiltroComparatorCharts />
         </div>
+        <ResponsiveContainer width="100%" height="80%">
+          <BarChart data={data}>
+            <XAxis dataKey="nome" axisLine={false} tickLine={false} />
+              <Tooltip />
+                <Bar
+                  radius={[5, 5, 0, 0]}
+                  dataKey="valor"
+                  stackId="a"
+                  fill="#0E681D"
+                />
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
     </Container>
   );
 }
