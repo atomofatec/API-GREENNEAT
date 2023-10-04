@@ -75,7 +75,7 @@ export default function Register() {
               <Grid item xs={0} md={6} lg={6}>
                 <Box
                   sx={{
-                    backgroundColor: '#136935',
+                    backgroundColor: '#0E681D',
                     height: '100%',
                     flexDirection: 'column',
                     alignItems: 'center',
@@ -93,7 +93,7 @@ export default function Register() {
                     color={'white'}
                     fontWeight={'bold'}
                     mt={5}
-                    fontSize={'3vw'}
+                    fontSize={'2vw'}
                     sx={{
                       textAlign: 'center'
                     }}
@@ -105,7 +105,7 @@ export default function Register() {
                     variant="h5"
                     color={'white'}
                     fontWeight={'bold'}
-                    fontSize={'3vw'}
+                    fontSize={'2vw'}
                     sx={{
                       textAlign: 'center'
                     }}
@@ -117,7 +117,7 @@ export default function Register() {
                       my: 5,
                       backgroundColor: 'white',
                       width: '85%',
-                      height: '5px'
+                      height: '3px'
                     }}
                   />
                   {/*Botões*/}
@@ -129,7 +129,7 @@ export default function Register() {
                     sx={{
                       mt: 1,
                       mb: 2,
-                      backgroundColor: selectedOption === 'estabelecimento' ? 'white' : '#136935',
+                      backgroundColor: selectedOption === 'estabelecimento' ? 'white' : '#0E681D',
                       border: `3px solid ${selectedOption === 'estabelecimento' ? '#3B8F5C' : '#F3EEBF'}`,
                       color: selectedOption === 'estabelecimento' ? '#3B8F5C' : 'white',
                       width: 250,
@@ -146,7 +146,7 @@ export default function Register() {
                     sx={{
                       mt: 3,
                       mb: 2,
-                      backgroundColor: selectedOption === 'cooperativo' ? 'white' : '#136935',
+                      backgroundColor: selectedOption === 'cooperativo' ? 'white' : '#0E681D',
                       border: `3px solid ${selectedOption === 'cooperativo' ? '#3B8F5C' : '#F3EEBF'}`,
                       color: selectedOption === 'cooperativo' ? '#3B8F5C' : 'white',
                       width: 250,
@@ -157,7 +157,7 @@ export default function Register() {
                   </Button>
                   <Typography
                     color={'#C8C8C8'}
-                    fontSize={20}
+                    fontSize={'1vw'}
                     sx={{ textAlign: 'center', mt: 2 }}
                   >
                     Já possui uma conta? <br />
@@ -188,7 +188,7 @@ export default function Register() {
                   >
                     <Divider
                       sx={{
-                        backgroundColor: '#136935',
+                        backgroundColor: '#0E681D',
                         my: 1,
                         height: 3,
                         width: '10vw',
@@ -199,7 +199,7 @@ export default function Register() {
                       variant="h5"
                       style={fontColor}
                       fontWeight={'bold'}
-                      fontSize={35}
+                      fontSize={30}
                       sx={{ textAlign: 'center' }}
                       mx={1}
                     >
@@ -207,7 +207,7 @@ export default function Register() {
                     </Typography>
                     <Divider
                       sx={{
-                        backgroundColor: '#136935',
+                        backgroundColor: '#0E681D',
                         my: 1,
                         height: 3,
                         width: '10vw',

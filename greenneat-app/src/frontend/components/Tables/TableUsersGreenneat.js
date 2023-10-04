@@ -336,7 +336,7 @@ function EnhancedTableToolbar(props) {
     },
   }));
 
-export default function EnhancedTable() {
+export default function TableUsersGreenneat() {
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('cnpj');
   const [selected, setSelected] = React.useState([]);

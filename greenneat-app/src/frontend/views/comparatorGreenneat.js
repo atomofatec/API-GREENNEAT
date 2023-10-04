@@ -17,9 +17,9 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import Divider from '@mui/material/Divider';
 import Grid from '@mui/material/Grid';
-import TableUsersGreenneat from '../components/Tables/TableUsersGreenneat';
+import TableCompGreenneat from '../components/Tables/TableCompGreenneat';
+import ComparatorBarChart from '../components/Charts/ComparatorBarChart';
 import { mainListItems } from '../components/menus/menuGreenneat';
-
 
 const settings = [
   { name: 'Meu Perfil' },
@@ -76,7 +76,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 
-export default function UsuariosGreenneat() {
+export default function ComparatorGreenneat() {
   const [open, setOpen] = React.useState(false);
   const toggleDrawer = () => {
     setOpen(!open);
@@ -96,7 +96,7 @@ export default function UsuariosGreenneat() {
     <ThemeProvider theme={defaultTheme}>
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
-        <AppBar position="absolute" open={open} sx={{ backgroundColor: '#3B8F5C', height: 72 }} elevation={0}>
+        <AppBar position="absolute" open={open} sx={{ backgroundColor: '#3B8F5C', height: 72 }} elevation={2}>
           <Toolbar
             sx={{
               pr: '24px',
@@ -117,8 +117,6 @@ export default function UsuariosGreenneat() {
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
               <strong><h2>GREENNEAT</h2></strong>
             </Box>
-            <Box sx={{ flexGrow: 1 }}></Box>
-            <Box sx={{ color: 'action.active', display: 'flex', alignItems: 'center' }}>
             <IconButton color="white" sx={{ marginLeft: 'auto', borderRadius: '0' }}>
               <Link href='#' sx={{
                 textDecoration: 'none',
@@ -126,7 +124,8 @@ export default function UsuariosGreenneat() {
                   color: 'inherit',
                 },
               }}>
-                <Typography variant="body2" color="white" fontFamily="'Century Gothic', Futura, sans-serif"> 
+                <Typography variant="body2" color="white" fontFamily="'Century Gothic', Futura, sans-serif">
+                  <Box sx={{ flexGrow: 0 }}>
                     <Tooltip title="Abrir configurações">
                     <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                         <Avatar sx={{ bgcolor: 'white', color: '#0E681D' }}>G</Avatar>
@@ -165,10 +164,10 @@ export default function UsuariosGreenneat() {
                     )
                     ))}
                     </Menu>
+                  </Box>
                 </Typography>
               </Link>
             </IconButton>
-            </Box>
           </Toolbar>
         </AppBar>
         <Drawer variant="permanent" open={open}>
@@ -213,8 +212,9 @@ export default function UsuariosGreenneat() {
         >
           <Toolbar />
           <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{ marginBottom: '5px', marginTop: '40px' }}>
-            <TableUsersGreenneat />
-          </Grid> 
+            <TableCompGreenneat />
+            <ComparatorBarChart />
+        </Grid>
         </Box>
       </Box>
     </ThemeProvider>

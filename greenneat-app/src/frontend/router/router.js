@@ -9,6 +9,7 @@ import WalletSupplier from '../views/walletSupplier';
 import NewTransactionGreenneat from '../views/newTransactionGreenneat';
 import UsersGreenneat from '../views/usersGreenneat';
 import RequestSupplier from '../views/requestSupplier';
+import ComparatorGreenneat from '../views/comparatorGreenneat';
 
 function Router() {
     return(
@@ -24,6 +25,7 @@ function Router() {
             <Route path='/nova-transacao-Greenneat' element={<NewTransactionGreenneat />}/>
             <Route path='/usuarios-Greenneat' element={<UsersGreenneat />}/>
             <Route path='/solicitar-estabelecimento' element={<RequestSupplier />}/>
+            <Route path='/comparador-Greenneat' element={<ComparatorGreenneat />}/>
         </Routes>
         </BrowserRouter>
     )
