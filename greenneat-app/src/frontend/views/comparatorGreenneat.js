@@ -16,10 +16,9 @@ import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import Divider from '@mui/material/Divider';
-import Skeleton from '@mui/material/Skeleton';
-import PropTypes from 'prop-types';
 import Grid from '@mui/material/Grid';
-import Container from '@mui/material/Container';
+import TableCompGreenneat from '../components/Tables/TableCompGreenneat';
+import ComparatorBarChart from '../components/Charts/ComparatorBarChart';
 import { mainListItems } from '../components/menus/menuGreenneat';
 
 const settings = [
@@ -77,44 +76,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 
-//Retangulos
-function Media(props) {
-  const { loading = false } = props;
-
-  return (
-    <Container maxWidth="lg">
-      <Grid container spacing={2} justify="center">
-        {(loading ? Array.from(new Array(3)) : []).map((item, index) => (
-          <Grid item xs={12} sm={6} md={4} lg={3} key={index} sx={{ mx: 3 }}>
-            <Box sx={{ width: '100%', my: 2 }}>
-              {item ? (
-                <img
-                  style={{ width: 300, height: 200 }}
-                />
-              ) : (
-                <Skeleton variant="rectangular" width={300} height={200} />
-              )}
-            </Box>
-          </Grid>
-        ))}
-      </Grid>
-    </Container>
-  );
-}
-
-Media.propTypes = {
-  loading: PropTypes.bool,
-};
-//Fim Retangulos
-
-//localStorage
-console.log(localStorage.getItem('user'))
-console.log(localStorage.getItem('tipo'))
-console.log(localStorage.getItem('email'))
-console.log(localStorage.getItem('cpf'))
-console.log(localStorage.getItem('cnpj'))
-
-export default function DashboardGreenneat() {
+export default function ComparatorGreenneat() {
   const [open, setOpen] = React.useState(false);
   const toggleDrawer = () => {
     setOpen(!open);
@@ -249,10 +211,10 @@ export default function DashboardGreenneat() {
         }}
         >
           <Toolbar />
-          <Box sx={{ overflow: 'hidden' }}>
-            <Media loading /> {/*Retangulos*/}
-            <Media loading /> {/*Retangulos*/}
-          </Box>
+          <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{ marginBottom: '5px', marginTop: '40px' }}>
+            <TableCompGreenneat />
+            <ComparatorBarChart />
+          </Grid>
         </Box>
       </Box>
     </ThemeProvider>

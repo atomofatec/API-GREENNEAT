@@ -16,11 +16,14 @@ import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import Divider from '@mui/material/Divider';
-import Skeleton from '@mui/material/Skeleton';
-import PropTypes from 'prop-types';
 import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
-import { mainListItems } from '../components/menus/menuGreenneat';
+import SolicitarEstabForm from '../components/Forms/SolicitarEstabForm';
+import EnviarButton from '../components/Buttons/EnviarButton';
+import Title from '../components/Outros/Title';
+import Paper from '@mui/material/Paper';
+import SubTitle from '../components/Outros/SubTitle';
+import { mainListItems } from '../components/menus/menuSupplier';
 
 const settings = [
   { name: 'Meu Perfil' },
@@ -77,44 +80,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 
-//Retangulos
-function Media(props) {
-  const { loading = false } = props;
-
-  return (
-    <Container maxWidth="lg">
-      <Grid container spacing={2} justify="center">
-        {(loading ? Array.from(new Array(3)) : []).map((item, index) => (
-          <Grid item xs={12} sm={6} md={4} lg={3} key={index} sx={{ mx: 3 }}>
-            <Box sx={{ width: '100%', my: 2 }}>
-              {item ? (
-                <img
-                  style={{ width: 300, height: 200 }}
-                />
-              ) : (
-                <Skeleton variant="rectangular" width={300} height={200} />
-              )}
-            </Box>
-          </Grid>
-        ))}
-      </Grid>
-    </Container>
-  );
-}
-
-Media.propTypes = {
-  loading: PropTypes.bool,
-};
-//Fim Retangulos
-
-//localStorage
-console.log(localStorage.getItem('user'))
-console.log(localStorage.getItem('tipo'))
-console.log(localStorage.getItem('email'))
-console.log(localStorage.getItem('cpf'))
-console.log(localStorage.getItem('cnpj'))
-
-export default function DashboardGreenneat() {
+export default function SolicitarEstabelecimento() {
   const [open, setOpen] = React.useState(false);
   const toggleDrawer = () => {
     setOpen(!open);
@@ -134,7 +100,7 @@ export default function DashboardGreenneat() {
     <ThemeProvider theme={defaultTheme}>
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
-        <AppBar position="absolute" open={open} sx={{ backgroundColor: '#3B8F5C', height: 72 }} elevation={2}>
+        <AppBar position="absolute" open={open} sx={{ backgroundColor: '#3B8F5C', height: 72 }} elevation={0}>
           <Toolbar
             sx={{
               pr: '24px',
@@ -166,7 +132,7 @@ export default function DashboardGreenneat() {
                   <Box sx={{ flexGrow: 0 }}>
                     <Tooltip title="Abrir configurações">
                     <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                        <Avatar sx={{ bgcolor: 'white', color: '#0E681D' }}>G</Avatar>
+                        <Avatar sx={{ bgcolor: 'white', color: '#0E681D' }}>E</Avatar>
                     </IconButton>
                     </Tooltip>
                     <Menu
@@ -187,7 +153,7 @@ export default function DashboardGreenneat() {
                     >
                     <div style={{ margin: '5px 20px 10px 20px', color:'#0E681D' }}>
                         <strong>
-                            Greenneat
+                            Estabelecimento
                         </strong>
                     </div>
                     <Divider />
@@ -249,10 +215,31 @@ export default function DashboardGreenneat() {
         }}
         >
           <Toolbar />
-          <Box sx={{ overflow: 'hidden' }}>
-            <Media loading /> {/*Retangulos*/}
-            <Media loading /> {/*Retangulos*/}
-          </Box>
+          <Paper sx={{ width: '84%',  display: 'flex', flexDirection: 'column', marginTop: '40px', }} elevation={2}>
+           <Container maxWidth="lg" sx={{ m: 'auto', backgroundColor: 'white', borderRadius: 1,  marginBottom: '16px', overflow: 'auto'}}>
+            <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{marginBottom: '20px', marginTop: '20px' }}>
+              <Grid item xs={6}>
+                <Title>Solicitar retirada de Óleo</Title>
+                <SubTitle>Parceiro Cooperativo</SubTitle>
+              </Grid>
+            </Grid>
+            <Divider />
+            <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{marginBottom: '20px', marginTop: '10px' }}>
+              <Grid item xs={6}>
+                <SolicitarEstabForm/>
+              </Grid>
+              <Grid item xs={6}>
+              </Grid>
+            </Grid>
+            <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{marginBottom: '20px', marginTop: '10px' }}>
+              <Grid item xs={6}>
+              </Grid>
+              <Grid item xs={6}>
+                <EnviarButton />
+              </Grid>
+            </Grid>
+          </Container>
+          </Paper>
         </Box>
       </Box>
     </ThemeProvider>

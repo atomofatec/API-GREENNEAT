@@ -4,7 +4,7 @@ import SendIcon from '@mui/icons-material/Send';
 
 function EnviarCredButton({ onClick, style }) {
   const buttonStyles = {
-    backgroundColor: '#136935',
+    backgroundColor: '#0E681D',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',

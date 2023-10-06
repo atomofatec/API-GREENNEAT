@@ -8,12 +8,14 @@ const cliente = new Pool({
 });
 
 // Função para realizar a transferencia
-async function transfer(senderType, senderId, receiverType, uniqueKey, transferValue) {
+async function transfer(senderType, senderId, uniqueKey, transferValue) {
     try {
         // Faz a busca no banco de acordo com os parametros passados
         let sender = await cliente.query(`SELECT * FROM users WHERE id = $1`, [senderId]);
         let receiver = await cliente.query(`SELECT * FROM users WHERE cnpj = $1 OR cpf = $1`, [uniqueKey]);
-        
+        // Salva o type_user na variavel pra realizar a logica de negocio
+        let receiverType = receiver.rows[0].type_user;
+
         // Verifica se a busca encontrou sender ou receiver, se nao encontrou printa msg de erro
         if (sender.rows.length === 0 || receiver.rows.length === 0) {
             throw new Error('O remetente ou o destinatário não existe.');
@@ -21,7 +23,8 @@ async function transfer(senderType, senderId, receiverType, uniqueKey, transferV
         // Verifique se o remetente tem permissão para transferir
         if ((senderType === 'admin' && receiverType === 'partner') ||
             (senderType === 'partner' && receiverType === 'supplier') ||
-            (senderType === 'supplier' && receiverType === 'admin')) {
+            (senderType === 'supplier' && receiverType === 'admin') ||
+            (senderType === 'partner' && receiverType === 'admin')) {
 
             // Inicie uma transação
             await cliente.query('BEGIN');

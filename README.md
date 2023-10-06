@@ -8,10 +8,12 @@
   <a href ="#proposta"> Proposta </a>  • 
   <a href ="#prototipo"> Protótipo </a>  • 
   <a href ="#backlog-do-produto"> Backlog do Produto </a> • 
-  <a href ="#backlog-das-sprints"> Backlog das Sprints </a>
+  <a href ="#backlog-das-sprints"> Backlog das Sprints </a> • 
+  <a href ="#cronograma-das-sprints"> Cronograma das Sprints </a>
   <br>
-  <a href ="#cronograma-das-sprints"> Cronograma das Sprints </a> • 
+  <a href ="#user-stories"> User Stories </a>  •
   <a href ="#burndown-das-sprints"> Burndown das Sprints </a>  •
+  <a href ="#modelagem-banco"> Modelagem do Banco de Dados </a>  •
   <a href ="#equipe">Equipe</a>  •
   <a href ="#review">Sprint Reviews</a> 
 </p>
@@ -103,6 +105,14 @@ O desafio consiste em criar uma plataforma que gerencie os créditos a serem usa
 
 <br>
 
+<span id="user-stories">
+
+## :calendar: User Stories
+
+<h1 align="center"><img src="https://github.com/atomofatec/API-GREENNEAT/blob/main/imagens/User%20Storys.png" /></h1> 
+
+<br>
+
 <span id="burndown-das-sprints">
 
 ## :chart_with_downwards_trend: Burndown das Sprints
@@ -133,6 +143,15 @@ O desafio consiste em criar uma plataforma que gerencie os créditos a serem usa
 <br>
 // -->
 
+<span id="modelagem-banco">
+
+## :cd: Modelagem do Banco de Dados
+
+<h1 align="center"><img src="https://github.com/atomofatec/API-GREENNEAT/blob/main/imagens/modelagem_banco.png" /></h1> 
+
+<br>
+
+
 <span id="review">
 
 ## :camera_flash: Sprint Reviews
@@ -140,7 +159,7 @@ O desafio consiste em criar uma plataforma que gerencie os créditos a serem usa
 <h3>Video Sprint Review 1</h3>
 
 **:link: Clique no link abaixo para assistir ao vídeo da Sprint Review 1.**  
-> [Sprint Review 1]()
+> [Sprint Review 1](https://youtu.be/cO5zFNtnz98?feature=shared)
 
 <!-- //
 <span id="produto">
