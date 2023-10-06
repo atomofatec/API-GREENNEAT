@@ -6,7 +6,7 @@ import DashboardPartner from '../views/dashboardPartner';
 import TransactionsGreenneat from '../views/transactionsGreenneat';
 import WalletPartner from '../views/walletPartner';
 import WalletSupplier from '../views/walletSupplier';
-import NewTransactionGreenneat from '../views/newTransactionGreenneat';
+import NewTransactionGreenneat from '../views/NewTransactionGreenneat';
 import UsersGreenneat from '../views/usersGreenneat';
 import RequestSupplier from '../views/requestSupplier';
 import ComparatorGreenneat from '../views/comparatorGreenneat';
