@@ -22,6 +22,7 @@ import TextField from '@mui/material/TextField';
 import CarteiraEstabForm from '../components/Forms/CarteiraEstabForm';
 import EnviarButton from '../components/Buttons/EnviarButton';
 import Title from '../components/Outros/Title';
+import Paper from '@mui/material/Paper';
 import SubTitle from '../components/Outros/SubTitle';
 import { mainListItems } from '../components/menus/menuSupplier';
 import axios from 'axios';
@@ -168,7 +169,7 @@ export default function CarteiraEstabelecimento() {
           position="absolute"
           open={open}
           sx={{ backgroundColor: "#3B8F5C", height: 72 }}
-          elevation={0}
+          elevation={2}
         >
           <Toolbar
             sx={{
@@ -307,7 +308,7 @@ export default function CarteiraEstabelecimento() {
         <Box
           component="main"
           sx={{
-            backgroundColor: "#F6F2C7",
+            backgroundColor: 'white',
             flexGrow: 1,
             height: "100vh",
             display: "flex",
@@ -316,23 +317,9 @@ export default function CarteiraEstabelecimento() {
           }}
         >
           <Toolbar />
-          <Container
-            maxWidth="lg"
-            sx={{
-              m: "auto",
-              backgroundColor: "white",
-              borderRadius: 1,
-              marginTop: "40px",
-              marginBottom: "16px",
-              overflow: "auto",
-            }}
-          >
-            <Grid
-              container
-              rowSpacing={1}
-              columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-              sx={{ marginBottom: "20px", marginTop: "20px" }}
-            >
+          <Paper sx={{ width: '84%',  display: 'flex', flexDirection: 'column', marginTop: '40px', }} elevation={2}>
+           <Container maxWidth="lg" sx={{ m: 'auto', backgroundColor: 'white', borderRadius: 1,  marginBottom: '16px', overflow: 'auto'}}>
+            <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{marginBottom: '20px', marginTop: '20px' }}>
               <Grid item xs={6}>
                 <Title>Enviar Crédito</Title>
                 <SubTitle>Greeneat</SubTitle>
@@ -374,6 +361,7 @@ export default function CarteiraEstabelecimento() {
               </Grid>
             </Grid>
           </Container>
+          </Paper>
         </Box>
       </Box>
     </ThemeProvider>

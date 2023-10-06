@@ -7,6 +7,13 @@ import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
+import IconButton from '@mui/material/IconButton';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import InputLabel from '@mui/material/InputLabel';
+import InputAdornment from '@mui/material/InputAdornment';
+import FormControl from '@mui/material/FormControl';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Triangle from '../components/visualElements/triangle';
 import { useNavigate } from 'react-router-dom'
@@ -15,7 +22,7 @@ import axios from 'axios'
 const defaultTheme = createTheme();
 
 const backgroundColor = {
-    backgroundColor: '#F6F2C7'
+    backgroundColor: 'white'
 };
 
 const fontColor = {
@@ -29,6 +36,14 @@ export default function Login() {
 
   const [values, setValues] = React.useState();
   const navigate = useNavigate();
+
+  const [showPassword, setShowPassword] = React.useState(false);
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
 
   const handleChangeValues = (value) => {
     setValues(prevValue => ({
@@ -108,16 +123,16 @@ export default function Login() {
           <Box
             sx={{
               my: 20,
-              mx: 4,
+              mx: 8,
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
-              backgroundColor: '#F6F2C7',
+              backgroundColor: 'white',
             }}
           >
-            <Typography component="h1" variant="h5" style={fontColor}>
+            <Typography style={fontColor} fontSize={'2vw'}>
                 <strong>
-                    Seja bem-vindo!
+                  Seja Bem-Vindo(a)!
                 </strong>
             </Typography>
             {/* onSubmit={handleSubmit} */}
@@ -135,36 +150,55 @@ export default function Login() {
                 style={{ backgroundColor: 'white' }}
                 onChange={handleChangeValues}
               />
-              <TextField
+              <FormControl
+                variant="outlined"
                 margin="normal"
                 color="success"
                 fullWidth
                 name="password"
-                label="Senha"
+                label="password"
                 type="password"
                 id="password"
                 autoComplete="current-password"
                 required
                 style={{ backgroundColor: 'white' }}
-                onChange={handleChangeValues}
-              />
+                onChange={handleChangeValues}>
+                <InputLabel htmlFor="outlined-adornment-password">Senha</InputLabel>
+                <OutlinedInput
+                  id="outlined-adornment-password"
+                  type={showPassword ? 'text' : 'password'}
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                        edge="end"
+                      >
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                  label="password"
+                />
+              </FormControl>
               <Button
                 fullWidth
                 variant="contained"
                 color="success"
                 onClick={handleClickButton}
-                sx={{ mt: 3, mb: 2, backgroundColor: '#136935'}}
+                sx={{ mt: 3, mb: 2, backgroundColor: '#0E681D'}}
               >
                 Entrar
               </Button>
               <Grid container>
                 <Grid item xs>
-                  <Link href="#" variant="body2" style={{ textDecoration: 'none', ...fontColor }}>
+                  <Link href="#" variant="body2" style={{ textDecoration: 'none', ...fontColor }} fontSize={'1vw'}>
                     Esqueceu a senha?
                   </Link>
                 </Grid>
                 <Grid item>
-                  <Link href="/cadastro" variant="body2" style={{ textDecoration: 'none', ...fontColor }}>
+                  <Link href="/cadastro" variant="body2" style={{ textDecoration: 'none', ...fontColor }} fontSize={'1vw'}>
                     Crie a sua conta aqui
                   </Link>
                 </Grid>

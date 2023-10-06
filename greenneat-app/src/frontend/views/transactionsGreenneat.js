@@ -20,8 +20,6 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Title from '../components/Outros/Title';
 import SubTitle from '../components/Outros/SubTitle';
-import Skeleton from '@mui/material/Skeleton';
-import PropTypes from 'prop-types';
 import NovaTransButton from '../components/Buttons/NovaTransButton';
 import { mainListItems } from '../components/menus/menuGreenneat';
 import { useNavigate } from 'react-router-dom';
@@ -80,36 +78,6 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
     },
   }),
 );
-
-//Retangulos
-function Media(props) {
-  const { loading = false } = props;
-
-  return (
-    <Container maxWidth="lg">
-      <Grid container spacing={2} justify="center">
-        {(loading ? Array.from(new Array(1)) : []).map((item, index) => (
-          <Grid item xs={12} sm={6} md={4} lg={3} key={index} sx={{ mx: 3 }}>
-            <Box sx={{ width: '100%', my: 2 }}>
-              {item ? (
-                <img
-                  style={{ width: 1000, height: 420 }}
-                />
-              ) : (
-                <Skeleton variant="rectangular" width={1000} height={420} />
-              )}
-            </Box>
-          </Grid>
-        ))}
-      </Grid>
-    </Container>
-  );
-}
-
-Media.propTypes = {
-  loading: PropTypes.bool,
-};
-//Fim Retangulos
 
 export default function TransacoesGreenneat() {
   const navigate = useNavigate();
@@ -244,7 +212,7 @@ export default function TransacoesGreenneat() {
         <Box
           component="main"
           sx={{
-            backgroundColor: '#F6F2C7',
+            backgroundColor: 'white',
             flexGrow: 1,
             height: '100vh',
             display: 'flex',
@@ -255,7 +223,7 @@ export default function TransacoesGreenneat() {
           <Toolbar />
           <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{ marginBottom: '5px', marginTop: '40px' }}>
             <Grid item xs={6}>
-              <Container sx={{ m: 'auto', backgroundColor: 'white', borderRadius: 1, marginBottom: '16px', overflow: 'auto', width:'30%', marginLeft: '15%', }}>
+              <Container sx={{ m: 'auto', backgroundColor: 'white', borderRadius: 1, marginBottom: '16px', overflow: 'auto', width:'30%', marginLeft: '15%', border: '2px solid #0E681D' }}>
                 <Title>${localStorage.getItem('balance')}</Title>
                 <SubTitle>Moedas Greenneat</SubTitle>
               </Container>
@@ -268,9 +236,6 @@ export default function TransacoesGreenneat() {
               </Box>
             </Grid>
           </Grid>
-          <Box sx={{ overflow: 'hidden' }}>
-            <Media loading /> {/*Retangulos*/}
-          </Box>
         </Box>
       </Box>
     </ThemeProvider>

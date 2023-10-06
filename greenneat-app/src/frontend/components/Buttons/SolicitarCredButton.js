@@ -4,7 +4,7 @@ import AddIcon from '@mui/icons-material/Add';
 
 function SolicitarCredButton({ onClick, style }) {
   const buttonStyles = {
-    backgroundColor: '#136935',
+    backgroundColor: '#0E681D',
     display: 'flex', 
     alignItems: 'center',
     justifyContent: 'center',

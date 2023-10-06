@@ -9,7 +9,7 @@ function EnviarButton(props) {
       variant="contained"
       color="success"
       size="large"
-      sx={{ mt: 3, mb: 2, backgroundColor: "#136935" }}
+      sx={{ mt: 3, mb: 2, backgroundColor: "#0E681D" }}
       onClick={props.onClick}
     >
       Enviar

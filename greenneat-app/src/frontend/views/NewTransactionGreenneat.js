@@ -26,6 +26,7 @@ import NovaTransGreenForm from "../components/Forms/NovaTransGreenForm";
 import { mainListItems } from "../components/menus/menuGreenneat";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Paper from '@mui/material/Paper';
 
 const settings = [
   { name: "Meu Perfil" },
@@ -196,7 +197,7 @@ export default function NovaTransacaoGreenneat() {
           position="absolute"
           open={open}
           sx={{ backgroundColor: "#3B8F5C", height: 72 }}
-          elevation={0}
+          elevation={2}
         >
           <Toolbar
             sx={{
@@ -335,7 +336,7 @@ export default function NovaTransacaoGreenneat() {
         <Box
           component="main"
           sx={{
-            backgroundColor: "#F6F2C7",
+            backgroundColor: "#white",
             flexGrow: 1,
             height: "100vh",
             display: "flex",
@@ -344,42 +345,11 @@ export default function NovaTransacaoGreenneat() {
           }}
         >
           <Toolbar />
-          <Container
-            maxWidth="lg"
-            sx={{
-              m: "auto",
-              backgroundColor: "white",
-              borderRadius: 1,
-              marginTop: "40px",
-              marginBottom: "16px",
-              overflow: "auto",
-            }}
-          >
-            <Grid
-              container
-              rowSpacing={1}
-              columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-              sx={{ marginBottom: "20px", marginTop: "20px" }}
-            >
-              <Grid
-                item
-                xs={6}
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  marginBottom: "20px",
-                  marginTop: "10px",
-                }}
-              >
-                <ArrowBackIcon
-                  color="success"
-                  onClick={redirectToTransacoesGreenneat}
-                  style={{
-                    cursor: "pointer",
-                    marginRight: "5px",
-                    marginBottom: "30px",
-                  }}
-                />
+          <Paper sx={{ width: '80%',  display: 'flex', flexDirection: 'column', marginTop: '40px', }} elevation={2}>
+          <Container maxWidth="lg" sx={{ m: 'auto', backgroundColor: 'white', borderRadius: 1,  marginBottom: '16px', overflow: 'auto'}}>
+            <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{ marginBottom: '20px', marginTop: '20px' }}>
+              <Grid item xs={6} sx={{ display: 'flex', alignItems: 'center', marginBottom: '20px', marginTop: '10px' }}>
+                <ArrowBackIcon color="success" onClick={redirectToTransacoesGreenneat} style={{ cursor: 'pointer', marginRight: '5px', marginBottom: '30px' }} />
                 <div>
                   <Title>Enviar Crédito</Title>
                   <SubTitle>Parceiro Cooperativo</SubTitle>
@@ -427,6 +397,7 @@ export default function NovaTransacaoGreenneat() {
               </Grid>
             </Grid>
           </Container>
+          </Paper>
         </Box>
       </Box>
     </ThemeProvider>
