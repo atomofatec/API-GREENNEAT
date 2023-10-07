@@ -16,14 +16,12 @@ import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import Divider from '@mui/material/Divider';
-import Container from '@mui/material/Container';
+import Skeleton from '@mui/material/Skeleton';
+import PropTypes from 'prop-types';
 import Grid from '@mui/material/Grid';
-import Title from '../components/Outros/Title';
-import SubTitle from '../components/Outros/SubTitle';
-import NovaTransButton from '../components/Buttons/NovaTransButton';
-import { mainListItems } from '../components/menus/menuGreenneat';
-import { useNavigate } from 'react-router-dom';
-import TableTransGreenneat from '../components/Tables/TableTransGreenneat';
+import Container from '@mui/material/Container';
+import { mainListItems } from '../components/menus/menuPartner';
+import TableRequestsPartner from '../components/Tables/TableRequestsPartner';
 
 const settings = [
   { name: 'Meu Perfil' },
@@ -80,14 +78,37 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 
-export default function TransacoesGreenneat() {
-  const navigate = useNavigate();
+//Retangulos
+function Media(props) {
+  const { loading = false } = props;
 
-  const redirectToNovaTransacao = (event) => {
-    event.preventDefault();
-    navigate('/nova-transacao-greenneat');
-  };
+  return (
+    <Container maxWidth="lg">
+      <Grid container spacing={2} justify="center">
+        {(loading ? Array.from(new Array(3)) : []).map((item, index) => (
+          <Grid item xs={12} sm={6} md={4} lg={3} key={index} sx={{ mx: 3 }}>
+            <Box sx={{ width: '100%', my: 2 }}>
+              {item ? (
+                <img
+                  style={{ width: 300, height: 200 }}
+                />
+              ) : (
+                <Skeleton variant="rectangular" width={300} height={200} />
+              )}
+            </Box>
+          </Grid>
+        ))}
+      </Grid>
+    </Container>
+  );
+}
 
+Media.propTypes = {
+  loading: PropTypes.bool,
+};
+//Fim Retangulos
+
+export default function RequestPartner() {
   const [open, setOpen] = React.useState(false);
   const toggleDrawer = () => {
     setOpen(!open);
@@ -102,6 +123,13 @@ export default function TransacoesGreenneat() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  //localStorage
+  console.log(localStorage.getItem('user'))
+  console.log(localStorage.getItem('tipo'))
+  console.log(localStorage.getItem('email'))
+  console.log(localStorage.getItem('cpf'))
+  console.log(localStorage.getItem('cnpj'))
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -139,7 +167,7 @@ export default function TransacoesGreenneat() {
                   <Box sx={{ flexGrow: 0 }}>
                     <Tooltip title="Abrir configurações">
                     <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                        <Avatar sx={{ bgcolor: 'white', color: '#0E681D' }}>G</Avatar>
+                        <Avatar sx={{ bgcolor: 'white', color: '#0E681D' }}>PC</Avatar>
                     </IconButton>
                     </Tooltip>
                     <Menu
@@ -160,7 +188,7 @@ export default function TransacoesGreenneat() {
                     >
                     <div style={{ margin: '5px 20px 10px 20px', color:'#0E681D' }}>
                         <strong>
-                            Greenneat
+                            Parceiro Cooperativo
                         </strong>
                     </div>
                     <Divider />
@@ -213,7 +241,7 @@ export default function TransacoesGreenneat() {
         <Box
           component="main"
           sx={{
-            backgroundColor: 'white',
+            backgroundColor: '#F6F2C7',
             flexGrow: 1,
             height: '100vh',
             display: 'flex',
@@ -223,22 +251,7 @@ export default function TransacoesGreenneat() {
         >
           <Toolbar />
           <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{ marginBottom: '5px', marginTop: '40px' }}>
-            <Grid item xs={6}>
-              <Container sx={{ m: 'auto', backgroundColor: 'white', borderRadius: 1, marginBottom: '16px', overflow: 'auto', width:'30%', marginLeft: '15%', border: '2px solid #0E681D' }}>
-                <Title>${localStorage.getItem('balance')}</Title>
-                <SubTitle>Moedas Greenneat</SubTitle>
-              </Container>
-            </Grid>
-            <Grid item xs={6}>
-              <Box display="flex" justifyContent="flex-end" alignItems="center" style={{ marginRight: '15%' }}>
-                <div style={{ marginRight: '10px' }}>
-                  <NovaTransButton onClick={redirectToNovaTransacao}/>
-                </div>
-              </Box>
-            </Grid>
-          </Grid>
-          <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{ marginBottom: '5px', marginTop: '40px' }}>
-            <TableTransGreenneat/>
+            <TableRequestsPartner />
           </Grid>
         </Box>
       </Box>
