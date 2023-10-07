@@ -21,6 +21,7 @@ import PropTypes from 'prop-types';
 import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
 import { mainListItems } from '../components/menus/menuPartner';
+import TableRequestsPartner from '../components/Tables/TableRequestsPartner';
 
 const settings = [
   { name: 'Meu Perfil' },
@@ -107,7 +108,7 @@ Media.propTypes = {
 };
 //Fim Retangulos
 
-export default function SolicitacoesCooperativo() {
+export default function RequestPartner() {
   const [open, setOpen] = React.useState(false);
   const toggleDrawer = () => {
     setOpen(!open);
@@ -249,9 +250,9 @@ export default function SolicitacoesCooperativo() {
         }}
         >
           <Toolbar />
-          <Box sx={{ overflow: 'hidden' }}>
-            
-          </Box>
+          <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{ marginBottom: '5px', marginTop: '40px' }}>
+            <TableRequestsPartner />
+          </Grid>
         </Box>
       </Box>
     </ThemeProvider>

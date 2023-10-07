@@ -28,20 +28,20 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 import { visuallyHidden } from '@mui/utils';
 
-function createData(sender, receiver, valor, data) {
+function createData(supplier, oil_amount, status, data) {
   return {
-    sender,
-    receiver,
-    valor,
+    supplier,
+    oil_amount,
+    status,
     data,
   };
 }
 
 const rows = [
-    createData(30975153268, 14527896325, 'R$ 80,00', '15/06/2023'),
-    createData(45285298115, 19735486250, 'R$ 90,00', '30/05/2023'),
-    createData(26108627575, 10680765520, 'R$ 52,00', '25/05/2023'),
-    createData(41430376247, 40369874150, 'R$ 87,00', '09/08/2023'),
+    createData("Estabelecimento 1", '1l', 'Aberta', '15/06/2023'),
+    createData("Estabelecimento 2", '5l', 'Aberta', '30/05/2023'),
+    createData("Estabelecimento 3", '7l', 'Fechada', '25/05/2023'),
+    createData("Estabelecimento 4", '3l', 'Aberta', '09/08/2023'),
   ];
 
 function descendingComparator(a, b, orderBy) {
@@ -74,22 +74,22 @@ function stableSort(array, comparator) {
 
 const headCells = [
   {
-    id: 'cnpj_sender',
+    id: 'supplier',
     numeric: true,
     disablePadding: false,
-    label: 'Remetente',
+    label: 'Estabelecimento',
   },
   {
-    id: 'cnpj_receiver',
+    id: 'oil_amount',
     numeric: false,
     disablePadding: false,
-    label: 'Destinatário',
+    label: 'Quantidade',
   },
   {
-    id: 'valor',
+    id: 'status',
     numeric: true,
     disablePadding: false,
-    label: 'Valor',
+    label: 'Status',
   },
   {
     id: 'data',
@@ -165,8 +165,8 @@ EnhancedTableHead.propTypes = {
 };
 
 const options = [
-    { icon: <EditIcon style={{ color: '#3B8F5C', height: '1rem' }}/>, label: 'Editar' },
-    { icon: <DeleteIcon style={{ color: '#3B8F5C', height: '1rem' }}/>, label: 'Deletar' },
+    { icon: <EditIcon style={{ color: '#3B8F5C', height: '1rem' }}/>, label: 'Aceitar' },
+    { icon: <DeleteIcon style={{ color: '#3B8F5C', height: '1rem' }}/>, label: 'Excluir' },
   ];  
 
 const ITEM_HEIGHT = 48;
@@ -329,9 +329,9 @@ function EnhancedTableToolbar(props) {
     },
   }));
 
-export default function TableTransGreenneat() {
+export default function TableRequestsPartner() {
   const [order, setOrder] = React.useState('asc');
-  const [orderBy, setOrderBy] = React.useState('sender');
+  const [orderBy, setOrderBy] = React.useState('supplier');
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
@@ -345,19 +345,19 @@ export default function TableTransGreenneat() {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelected = rows.map((n) => n.sender);
+      const newSelected = rows.map((n) => n.supplier);
       setSelected(newSelected);
       return;
     }
     setSelected([]);
   };
 
-  const handleClick = (event, sender) => {
-    const selectedIndex = selected.indexOf(sender);
+  const handleClick = (event, supplier) => {
+    const selectedIndex = selected.indexOf(supplier);
     let newSelected = [];
 
     if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, sender);
+      newSelected = newSelected.concat(selected, supplier);
     } else if (selectedIndex === 0) {
       newSelected = newSelected.concat(selected.slice(1));
     } else if (selectedIndex === selected.length - 1) {
@@ -385,7 +385,7 @@ export default function TableTransGreenneat() {
     setDense(event.target.checked);
   };
 
-  const isSelected = (sender) => selected.indexOf(sender) !== -1;
+  const isSelected = (supplier) => selected.indexOf(supplier) !== -1;
 
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
@@ -418,17 +418,17 @@ export default function TableTransGreenneat() {
             />
             <TableBody>
               {visibleRows.map((row, index) => {
-                const isItemSelected = isSelected(row.sender);
+                const isItemSelected = isSelected(row.supplier);
                 const labelId = `enhanced-table-checkbox-${index}`;
 
                 return (
                   <TableRow
                     hover
-                    onClick={(event) => handleClick(event, row.sender)}
+                    onClick={(event) => handleClick(event, row.supplier)}
                     role="checkbox"
                     aria-checked={isItemSelected}
                     tabIndex={-1}
-                    key={row.sender}
+                    key={row.supplier}
                     selected={isItemSelected}
                     sx={{ cursor: 'pointer' }}
                   >
@@ -448,10 +448,10 @@ export default function TableTransGreenneat() {
                       padding="none"
                       align="center"
                     >
-                      {row.sender}
+                      {row.supplier}
                     </TableCell>
-                    <TableCell align="center">{row.receiver}</TableCell>
-                    <TableCell align="center">{row.valor}</TableCell>
+                    <TableCell align="center">{row.oil_amount}</TableCell>
+                    <TableCell align="center">{row.status}</TableCell>
                     <TableCell align="center">{row.data}</TableCell>
                     <TableCell align="center">
                       <LongMenu />

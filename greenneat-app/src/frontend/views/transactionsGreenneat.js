@@ -23,6 +23,7 @@ import SubTitle from '../components/Outros/SubTitle';
 import NovaTransButton from '../components/Buttons/NovaTransButton';
 import { mainListItems } from '../components/menus/menuGreenneat';
 import { useNavigate } from 'react-router-dom';
+import TableTransGreenneat from '../components/Tables/TableTransGreenneat';
 
 const settings = [
   { name: 'Meu Perfil' },
@@ -235,6 +236,9 @@ export default function TransacoesGreenneat() {
                 </div>
               </Box>
             </Grid>
+          </Grid>
+          <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{ marginBottom: '5px', marginTop: '40px' }}>
+            <TableTransGreenneat/>
           </Grid>
         </Box>
       </Box>
