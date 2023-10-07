@@ -51,7 +51,7 @@ async function existentEmailRegister(email){
 
 async function registerFunction(req, res){
     const {type, cnpj, cpf, email, password, telefone, bairro, endereco, numero, rSocial, nFantasia, balance, createdat, updatedat} = req.body;
-    console.log(req.body)
+    console.log(req.body);
 
     const existentCnpj = await existentCNPJRegister(cnpj);
     const existentEmail = await existentEmailRegister(email);

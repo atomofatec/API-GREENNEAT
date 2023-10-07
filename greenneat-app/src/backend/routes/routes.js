@@ -29,10 +29,10 @@ app.post("/", (req, res) => {
 // Rota para transferencia
 app.post('/transfer', async (req, res) => {
     try {
-        const { senderType, senderId, receiverType, uniqueKey, transferValue } = req.body;
+        const { senderType, senderId, uniqueKey, transferValue } = req.body;
 
         // Chama a função transfer com os parâmetros fornecidos
-        await transfer(senderType, senderId, receiverType, uniqueKey, transferValue);
+        await transfer(senderType, senderId, uniqueKey, transferValue);
 
         res.status(200).json({ message: 'Transferência concluída com sucesso!!!!' });
     } catch (error) {

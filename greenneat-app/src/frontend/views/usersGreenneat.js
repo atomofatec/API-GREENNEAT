@@ -16,11 +16,10 @@ import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import Divider from '@mui/material/Divider';
-import Skeleton from '@mui/material/Skeleton';
-import PropTypes from 'prop-types';
 import Grid from '@mui/material/Grid';
-import Container from '@mui/material/Container';
+import TableUsersGreenneat from '../components/Tables/TableUsersGreenneat';
 import { mainListItems } from '../components/menus/menuGreenneat';
+
 
 const settings = [
   { name: 'Meu Perfil' },
@@ -77,44 +76,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 
-//Retangulos
-function Media(props) {
-  const { loading = false } = props;
-
-  return (
-    <Container maxWidth="lg">
-      <Grid container spacing={2} justify="center">
-        {(loading ? Array.from(new Array(3)) : []).map((item, index) => (
-          <Grid item xs={12} sm={6} md={4} lg={3} key={index} sx={{ mx: 3 }}>
-            <Box sx={{ width: '100%', my: 2 }}>
-              {item ? (
-                <img
-                  style={{ width: 300, height: 200 }}
-                />
-              ) : (
-                <Skeleton variant="rectangular" width={300} height={200} />
-              )}
-            </Box>
-          </Grid>
-        ))}
-      </Grid>
-    </Container>
-  );
-}
-
-Media.propTypes = {
-  loading: PropTypes.bool,
-};
-//Fim Retangulos
-
-//localStorage
-console.log(localStorage.getItem('user'))
-console.log(localStorage.getItem('tipo'))
-console.log(localStorage.getItem('email'))
-console.log(localStorage.getItem('cpf'))
-console.log(localStorage.getItem('cnpj'))
-
-export default function DashboardGreenneat() {
+export default function UsuariosGreenneat() {
   const [open, setOpen] = React.useState(false);
   const toggleDrawer = () => {
     setOpen(!open);
@@ -134,7 +96,7 @@ export default function DashboardGreenneat() {
     <ThemeProvider theme={defaultTheme}>
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
-        <AppBar position="absolute" open={open} sx={{ backgroundColor: '#3B8F5C', height: 72 }} elevation={2}>
+        <AppBar position="absolute" open={open} sx={{ backgroundColor: '#3B8F5C', height: 72 }} elevation={0}>
           <Toolbar
             sx={{
               pr: '24px',
@@ -155,6 +117,8 @@ export default function DashboardGreenneat() {
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
               <strong><h2>GREENNEAT</h2></strong>
             </Box>
+            <Box sx={{ flexGrow: 1 }}></Box>
+            <Box sx={{ color: 'action.active', display: 'flex', alignItems: 'center' }}>
             <IconButton color="white" sx={{ marginLeft: 'auto', borderRadius: '0' }}>
               <Link href='#' sx={{
                 textDecoration: 'none',
@@ -162,8 +126,7 @@ export default function DashboardGreenneat() {
                   color: 'inherit',
                 },
               }}>
-                <Typography variant="body2" color="white" fontFamily="'Century Gothic', Futura, sans-serif">
-                  <Box sx={{ flexGrow: 0 }}>
+                <Typography variant="body2" color="white" fontFamily="'Century Gothic', Futura, sans-serif"> 
                     <Tooltip title="Abrir configurações">
                     <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                         <Avatar sx={{ bgcolor: 'white', color: '#0E681D' }}>G</Avatar>
@@ -202,10 +165,10 @@ export default function DashboardGreenneat() {
                     )
                     ))}
                     </Menu>
-                  </Box>
                 </Typography>
               </Link>
             </IconButton>
+            </Box>
           </Toolbar>
         </AppBar>
         <Drawer variant="permanent" open={open}>
@@ -249,10 +212,9 @@ export default function DashboardGreenneat() {
         }}
         >
           <Toolbar />
-          <Box sx={{ overflow: 'hidden' }}>
-            <Media loading /> {/*Retangulos*/}
-            <Media loading /> {/*Retangulos*/}
-          </Box>
+          <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{ marginBottom: '5px', marginTop: '40px' }}>
+            <TableUsersGreenneat />
+          </Grid> 
         </Box>
       </Box>
     </ThemeProvider>
