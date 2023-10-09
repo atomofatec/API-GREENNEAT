@@ -18,6 +18,24 @@ function SolicitarEstabForm({ style }) {
     setValor(numericValue || "0");
   };
 
+  const [preco, setPreco] = useState("");
+
+  const handlePrecoChange = (event) => {
+    const input = event.target.value;
+  
+    // Remove all non-numeric and non-decimal point characters except for the first one
+    const cleanedValue = input.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');
+  
+    // Ensure there's at most one decimal point
+    const decimalCount = (cleanedValue.match(/\./g) || []).length;
+    if (decimalCount > 1) {
+      return;
+    }
+  
+    // Set the preco state with the cleaned value
+    setPreco(cleanedValue);
+  };  
+
   function getStyles(name, personName, theme) {
     return {
       fontWeight:
@@ -54,11 +72,28 @@ function SolicitarEstabForm({ style }) {
         autoComplete="valor"
         required
         autoFocus
-        style={{ backgroundColor: 'white', marginBottom: '25px' }}
+        style={{ backgroundColor: 'white', marginBottom: '10px' }}
         value={valor}
         onChange={handleValorChange}
         InputProps={{
           endAdornment: <InputAdornment position="end">ml</InputAdornment>,
+        }}
+      />
+      <TextField
+        margin="normal"
+        color="success"
+        fullWidth
+        id="preco"
+        label="Preço"
+        name="preco"
+        autoComplete="preco"
+        required
+        autoFocus
+        style={{ backgroundColor: 'white', marginBottom: '25px' }}
+        value={preco}
+        onChange={handlePrecoChange}
+        InputProps={{
+          endAdornment: <InputAdornment position="end">$</InputAdornment>,
         }}
       />
       <Autocomplete
@@ -68,6 +103,7 @@ function SolicitarEstabForm({ style }) {
           setPersonName(newValue);
         }}
         options={names}
+        style={{ backgroundColor: 'white', marginBottom: '10px' }}
         isOptionEqualToValue={(option, value) => option === value}
         renderInput={(params) => (
           <TextField
