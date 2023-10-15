@@ -93,7 +93,7 @@ O desafio consiste em criar uma plataforma que gerencie os créditos a serem usa
 
 ## :calendar: Backlog das Sprints
 
-<h1 align="center"><img src="https://github.com/atomofatec/API-GREENNEAT/blob/main/imagens/backlog_produto.png" alt="Backlog das Sprints"/></h1> 
+<h1 align="center"><img src="https://github.com/atomofatec/API-GREENNEAT/blob/main/imagens/backlog_sprints.png" alt="Backlog das Sprints"/></h1> 
 
 <br>
 
