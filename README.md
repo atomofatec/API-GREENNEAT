@@ -85,7 +85,7 @@ O desafio consiste em criar uma plataforma que gerencie os créditos a serem usa
 
 ## :calendar: Backlog do Produto
 
-<h1 align="center"><img src="https://github.com/atomofatec/API-GREENNEAT/blob/main/imagens/Backlog%20do%20Produto.png" /></h1> 
+<h1 align="center"><img src="https://github.com/atomofatec/API-GREENNEAT/blob/main/imagens/backlog_produto.png" alt="Backlog do Produto"/></h1> 
 
 <br>
 
@@ -93,7 +93,7 @@ O desafio consiste em criar uma plataforma que gerencie os créditos a serem usa
 
 ## :calendar: Backlog das Sprints
 
-<h1 align="center"><img src="https://github.com/atomofatec/API-GREENNEAT/blob/main/imagens/Backlog%20das%20Sprints.png" /></h1> 
+<h1 align="center"><img src="https://github.com/atomofatec/API-GREENNEAT/blob/main/imagens/backlog_produto.png" alt="Backlog das Sprints"/></h1> 
 
 <br>
 
@@ -101,7 +101,7 @@ O desafio consiste em criar uma plataforma que gerencie os créditos a serem usa
 
 ## :calendar: Cronograma das Sprints
 
-<h1 align="center"><img src="https://github.com/atomofatec/API-GREENNEAT/blob/main/imagens/Cronograma%20das%20Sprints.png" /></h1> 
+<h1 align="center"><img src="https://github.com/atomofatec/API-GREENNEAT/blob/main/imagens/cronograma_sprints.png" alt="Cronograma das Sprints"/></h1> 
 
 <br>
 
@@ -109,7 +109,7 @@ O desafio consiste em criar uma plataforma que gerencie os créditos a serem usa
 
 ## :calendar: User Stories
 
-<h1 align="center"><img src="https://github.com/atomofatec/API-GREENNEAT/blob/main/imagens/User%20Storys.png" /></h1> 
+<h1 align="center"><img src="https://github.com/atomofatec/API-GREENNEAT/blob/main/imagens/user_stories.png" alt="User Stories"/></h1> 
 
 <br>
 
@@ -119,17 +119,17 @@ O desafio consiste em criar uma plataforma que gerencie os créditos a serem usa
   
 <h3>1ª Sprint</h3>
 
-<h1 align="center"><img src="https://github.com/atomofatec/API-GREENNEAT/blob/main/imagens/burndown_sprint1.png" alt="Burndown da Sprint 1"/> </h1> 
+<h1 align="center"><img src="https://github.com/atomofatec/API-GREENNEAT/blob/main/imagens/burndown_sprint1.png" alt="Burndown da Sprint 1"/></h1> 
 
 <br>
 
-<!-- //
 <h3>2ª Sprint</h3>
 
-<h1 align="center"></h1> 
+<h1 align="center"><img src="https://github.com/atomofatec/API-GREENNEAT/blob/main/imagens/burndown_sprint2.jpg" alt="Burndown da Sprint 2"/></h1> 
 
 <br>
-  
+
+  <!-- //
 <h3>3ª Sprint</h3>
 
 <h1 align="center"></h1> 
