@@ -161,6 +161,12 @@ O desafio consiste em criar uma plataforma que gerencie os créditos a serem usa
 **:link: Clique no link abaixo para assistir ao vídeo da Sprint Review 1.**  
 > [Sprint Review 1](https://youtu.be/cO5zFNtnz98?feature=shared)
 
+<h3>Video Sprint Review 2</h3>
+
+**:link: Clique no link abaixo para assistir ao vídeo da Sprint Review 2.**  
+> [Sprint Review 2](https://www.youtube.com/watch?v=IFZ-cbV5QTU)
+
+
 <!-- //
 <span id="produto">
 
