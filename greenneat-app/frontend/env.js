@@ -1,0 +1,7 @@
+export const API_BASE_URL = "http://localhost:8080/api";
+export const GREENNEAT_TYPE_USER = 1;
+export const SUPPLIER_TYPE_USER = 2;
+export const PARTNER_TYPE_USER = 3;
+export const GREENEAT_DOCUMENT = 888888884;
+
+export default {API_BASE_URL, GREENNEAT_TYPE_USER, SUPPLIER_TYPE_USER, PARTNER_TYPE_USER, GREENEAT_DOCUMENT}
