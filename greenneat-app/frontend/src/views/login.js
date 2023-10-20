@@ -17,7 +17,7 @@ import { useNavigate } from "react-router-dom";
 const defaultTheme = createTheme();
 
 const backgroundColor = {
-  backgroundColor: "#F6F2C7",
+  backgroundColor: "white",
 };
 
 const fontColor = {
@@ -88,14 +88,14 @@ export default function Login() {
           <Box
             sx={{
               my: 20,
-              mx: 4,
+              mx: 8,
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
-              backgroundColor: "#F6F2C7",
+              backgroundColor: "white",
             }}
           >
-            <Typography component="h1" variant="h5" style={fontColor}>
+            <Typography style={fontColor} fontSize={'25px'}>
               <strong>Seja bem-vindo!</strong>
             </Typography>
             <Box

@@ -17,7 +17,7 @@ import {API_BASE_URL, SUPPLIER_TYPE_USER, PARTNER_TYPE_USER} from "../../env.js"
 const defaultTheme = createTheme();
 
 const backgroundColor = {
-  backgroundColor: "#F6F2C7",
+  backgroundColor: "white",
 };
 
 const fontColor = {
@@ -122,7 +122,7 @@ export default function Register() {
               <Grid item xs={0} md={6} lg={6}>
                 <Box
                   sx={{
-                    backgroundColor: "#136935",
+                    backgroundColor: "#0E681D",
                     height: "100%",
                     flexDirection: "column",
                     alignItems: "center",
@@ -140,7 +140,7 @@ export default function Register() {
                     color={"white"}
                     fontWeight={"bold"}
                     mt={5}
-                    fontSize={"3vw"}
+                    fontSize={"25px"}
                     sx={{
                       textAlign: "center",
                     }}
@@ -152,7 +152,7 @@ export default function Register() {
                     variant="h5"
                     color={"white"}
                     fontWeight={"bold"}
-                    fontSize={"3vw"}
+                    fontSize={"25px"}
                     sx={{
                       textAlign: "center",
                     }}
@@ -164,7 +164,7 @@ export default function Register() {
                       my: 5,
                       backgroundColor: "white",
                       width: "85%",
-                      height: "5px",
+                      height: "3px",
                     }}
                   />
                   {/*Botões*/}
@@ -179,7 +179,7 @@ export default function Register() {
                       backgroundColor:
                         selectedOption === "estabelecimento"
                           ? "white"
-                          : "#136935",
+                          : "#0E681D",
                       border: `3px solid ${
                         selectedOption === "estabelecimento"
                           ? "#3B8F5C"
@@ -204,7 +204,7 @@ export default function Register() {
                       mt: 3,
                       mb: 2,
                       backgroundColor:
-                        selectedOption === "cooperativo" ? "white" : "#136935",
+                        selectedOption === "cooperativo" ? "white" : "#0E681D",
                       border: `3px solid ${
                         selectedOption === "cooperativo" ? "#3B8F5C" : "#F3EEBF"
                       }`,
@@ -218,7 +218,7 @@ export default function Register() {
                   </Button>
                   <Typography
                     color={"#C8C8C8"}
-                    fontSize={20}
+                    fontSize={'1vw'}
                     sx={{ textAlign: "center", mt: 2 }}
                   >
                     Já possui uma conta? <br />
@@ -240,19 +240,19 @@ export default function Register() {
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "center",
-                    backgroundColor: "#F6F2C7",
+                    backgroundColor: "white",
                   }}
                 >
                   <Box
                     sx={{
                       display: "flex",
                       alignItems: "center",
-                      backgroundColor: "#F6F2C7",
+                      backgroundColor: "white",
                     }}
                   >
                     <Divider
                       sx={{
-                        backgroundColor: "#136935",
+                        backgroundColor: "#0E681D",
                         my: 1,
                         height: 3,
                         width: "10vw",
@@ -263,7 +263,7 @@ export default function Register() {
                       variant="h5"
                       style={fontColor}
                       fontWeight={"bold"}
-                      fontSize={35}
+                      fontSize={30}
                       sx={{ textAlign: "center" }}
                       mx={1}
                     >
@@ -272,7 +272,7 @@ export default function Register() {
                     </Typography>
                     <Divider
                       sx={{
-                        backgroundColor: "#136935",
+                        backgroundColor: "#0E681D",
                         my: 1,
                         height: 3,
                         width: "10vw",

@@ -234,7 +234,7 @@ export default function RequestPartner() {
         <Box
           component="main"
           sx={{
-            backgroundColor: '#F6F2C7',
+            backgroundColor: 'white',
             flexGrow: 1,
             height: '100vh',
             display: 'flex',

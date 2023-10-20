@@ -19,6 +19,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Divider from '@mui/material/Divider';
 import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
+import Paper from '@mui/material/Paper';
 import EnviarButton from '../components/Buttons/EnviarButton';
 import Title from '../components/Outros/Title';
 import SubTitle from '../components/Outros/SubTitle';
@@ -271,7 +272,7 @@ export default function NovaTransacaoGreenneat() {
         <Box
           component="main"
           sx={{
-            backgroundColor: '#F6F2C7',
+            backgroundColor: 'white',
             flexGrow: 1,
             height: '100vh',
             display: 'flex',
@@ -280,7 +281,8 @@ export default function NovaTransacaoGreenneat() {
         }}
         >
           <Toolbar />
-          <Container maxWidth="lg" sx={{ m: 'auto', backgroundColor: 'white', borderRadius: 1, marginTop: '40px', marginBottom: '16px', overflow: 'auto'}}>
+          <Paper sx={{ width: '80%',  display: 'flex', flexDirection: 'column', marginTop: '40px', }} elevation={2}>
+          <Container maxWidth="lg" sx={{ m: 'auto', backgroundColor: 'white', borderRadius: 1,  marginBottom: '16px', overflow: 'auto'}}>
             <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{ marginBottom: '20px', marginTop: '20px' }}>
               <Grid item xs={6} sx={{ display: 'flex', alignItems: 'center', marginBottom: '20px', marginTop: '10px' }}>
                 <ArrowBackIcon color="success" onClick={redirectToTransacoesGreenneat} style={{ cursor: 'pointer', marginRight: '5px', marginBottom: '30px' }} />
@@ -313,7 +315,8 @@ export default function NovaTransacaoGreenneat() {
                 <EnviarButton onClick={sendTransfer}/>
               </Grid>
             </Grid>
-          </Container>
+            </Container>
+          </Paper>
         </Box>
       </Box>
     </ThemeProvider>

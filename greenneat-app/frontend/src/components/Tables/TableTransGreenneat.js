@@ -18,24 +18,26 @@ import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Menu from '@mui/material/Menu';
+import Grid from '@mui/material/Grid';
+import Title from '../Outros/Title';
 import MenuItem from '@mui/material/MenuItem';
 import { styled } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
-import SearchIcon from '@mui/icons-material/Search';
 import EditIcon from '@mui/icons-material/Edit';
-import Container from '@mui/material/Container';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import axios from 'axios';
 import { API_BASE_URL } from '../../../env';
 
 import { visuallyHidden } from '@mui/utils';
 
-function createData(sender, receiver, valor, data) {
+function createData(sender, receiver, documento, valor, data, situacao) {
 	return {
 		sender,
 		receiver,
+		documento,
 		valor,
 		data,
+		situacao
 	};
 }
 
@@ -82,6 +84,12 @@ const headCells = [
 		label: 'Destinatário',
 	},
 	{
+		id: 'documento',
+		numeric: false,
+		disablePadding: false,
+		label: 'Documento',
+	},
+	{
 		id: 'valor',
 		numeric: true,
 		disablePadding: false,
@@ -92,6 +100,12 @@ const headCells = [
 		numeric: false,
 		disablePadding: true,
 		label: 'Data',
+	},
+	{
+		id: 'situacao',
+		numeric: false,
+		disablePadding: true,
+		label: 'Situação',
 	},
 	{
 	},
@@ -128,7 +142,7 @@ function EnhancedTableHead(props) {
 				{headCells.map((headCell) => (
 					<StyledTableCell
 						key={headCell.id}
-						align={headCell.numeric ? 'right' : 'left'}
+						align={headCell.numeric ? 'center' : 'center'}
 						padding={headCell.disablePadding ? 'none' : 'normal'}
 						sortDirection={orderBy === headCell.id ? order : false}
 					>
@@ -137,12 +151,14 @@ function EnhancedTableHead(props) {
 							direction={orderBy === headCell.id ? order : 'asc'}
 							onClick={createSortHandler(headCell.id)}
 						>
-							{headCell.label}
-							{orderBy === headCell.id ? (
-								<Box component="span" sx={visuallyHidden}>
-									{order === 'desc' ? 'sorted descending' : 'sorted ascending'}
-								</Box>
-							) : null}
+							<Typography sx={{fontWeight: 'bold'}}>
+								{headCell.label}
+								{orderBy === headCell.id ? (
+									<Box component="span" sx={visuallyHidden}>
+										{order === 'desc' ? 'sorted descending' : 'sorted ascending'}
+									</Box>
+								) : null}
+							</Typography>
 						</TableSortLabel>
 					</StyledTableCell>
 				))}
@@ -250,15 +266,16 @@ function EnhancedTableToolbar(props) {
 					id="tableTitle"
 					component="div"
 				>
-					<Search>
-						<SearchIconWrapper>
-							<SearchIcon />
-						</SearchIconWrapper>
-						<StyledInputBase
-							placeholder="Buscar…"
-							inputProps={{ 'aria-label': 'search' }}
-						/>
-					</Search>
+				<Grid
+                  container
+                  rowSpacing={1}
+                  columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+                  sx={{ marginBottom: "20px", marginTop: "20px" }}
+                >
+                  <Grid item xs={6}>
+                    <Title>Transações</Title>
+                  </Grid>
+              	</Grid>
 				</Typography>
 			)}
 
@@ -283,31 +300,6 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 	textAlign: 'center',
 }));
 
-const Search = styled('div')(({ theme }) => ({
-	position: 'relative',
-	borderRadius: theme.shape.borderRadius,
-	backgroundColor: alpha(theme.palette.common.white, 0.15),
-	'&:hover': {
-		backgroundColor: alpha(theme.palette.common.white, 0.25),
-	},
-	marginLeft: 0,
-	width: '100%',
-	boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)',
-	[theme.breakpoints.up('sm')]: {
-		marginLeft: theme.spacing(1),
-		width: 'auto',
-	},
-}));
-
-const SearchIconWrapper = styled('div')(({ theme }) => ({
-	padding: theme.spacing(0, 2),
-	height: '100%',
-	position: 'absolute',
-	pointerEvents: 'none',
-	display: 'flex',
-	alignItems: 'center',
-	justifyContent: 'center',
-}));
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
 	color: 'inherit',
@@ -500,8 +492,10 @@ export default function TableTransGreenneat() {
 										{row.sender}
 									</TableCell>
 									<TableCell align="center">{row.receiver}</TableCell>
+									<TableCell align="center">{row.documento}</TableCell>
 									<TableCell align="center">{row.valor}</TableCell>
 									<TableCell align="center">{row.data}</TableCell>
+									<TableCell align="center">{row.situacao}</TableCell>
 									<TableCell align="center">
 										<LongMenu />
 									</TableCell>
@@ -521,6 +515,8 @@ export default function TableTransGreenneat() {
 				</Table>
 			</TableContainer>
 			<TablePagination
+				labelRowsPerPage="Linhas por página:"
+				labelDisplayedRows={({ from, to, count }) => `${from}-${to} de ${count}`}
 				rowsPerPageOptions={[5, 10, 25]}
 				component="div"
 				count={rows.length}

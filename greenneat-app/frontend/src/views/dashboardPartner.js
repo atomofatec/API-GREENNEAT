@@ -17,6 +17,8 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import Divider from '@mui/material/Divider';
 import Skeleton from '@mui/material/Skeleton';
+import Paper from '@mui/material/Paper';
+import Title from '../components/Outros/Title';
 import PropTypes from 'prop-types';
 import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
@@ -127,7 +129,7 @@ export default function DashboardCooperativo() {
     <ThemeProvider theme={defaultTheme}>
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
-        <AppBar position="absolute" open={open} sx={{ backgroundColor: '#3B8F5C', height: 72 }} elevation={0}>
+        <AppBar position="absolute" open={open} sx={{ backgroundColor: '#3B8F5C', height: 72 }} elevation={2}>
           <Toolbar
             sx={{
               pr: '24px',
@@ -233,7 +235,7 @@ export default function DashboardCooperativo() {
         <Box
           component="main"
           sx={{
-            backgroundColor: '#F6F2C7',
+            backgroundColor: 'white',
             flexGrow: 1,
             height: '100vh',
             display: 'flex',
@@ -242,10 +244,26 @@ export default function DashboardCooperativo() {
         }}
         >
           <Toolbar />
-          <Box sx={{ overflow: 'hidden' }}>
-            <Media loading /> {/*Retangulos*/}
-            <Media loading /> {/*Retangulos*/}
-          </Box>
+          <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{ marginBottom: '5px', marginTop: '40px' }}>
+            <Paper sx={{ width: '80%', margin: '0 auto', display: 'flex', flexDirection: 'column' }} elevation={2}>
+              <Container maxWidth="lg" sx={{ m: 'auto', marginBottom: '16px', overflow: 'auto'}}>
+                <Grid
+                    container
+                    rowSpacing={1}
+                    columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+                    sx={{ marginBottom: "20px", marginTop: "20px" }}
+                  >
+                    <Grid item xs={6}>
+                      <Title>Dashboards</Title>
+                    </Grid>
+                </Grid>
+                <Box sx={{ overflow: 'hidden' }}>
+                  <Media loading /> {/*Retangulos*/}
+                  <Media loading /> {/*Retangulos*/}
+                </Box>
+              </Container>
+            </Paper>
+          </Grid>
         </Box>
       </Box>
     </ThemeProvider>

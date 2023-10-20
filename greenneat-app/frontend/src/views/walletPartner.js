@@ -17,6 +17,7 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import Divider from '@mui/material/Divider';
 import Grid from '@mui/material/Grid';
+import Paper from '@mui/material/Paper';
 import Container from '@mui/material/Container';
 import SolicitarCredButton from '../components/Buttons/SolicitarCredButton';
 import EnviarCredButton from '../components/Buttons/EnviarCredButton';
@@ -181,7 +182,7 @@ export default function CarteiraCooperativo() {
     <ThemeProvider theme={defaultTheme}>
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
-        <AppBar position="absolute" open={open} sx={{ backgroundColor: '#3B8F5C', height: 72 }} elevation={0}>
+        <AppBar position="absolute" open={open} sx={{ backgroundColor: '#3B8F5C', height: 72 }} elevation={2}>
           <Toolbar
             sx={{
               pr: '24px',
@@ -287,7 +288,7 @@ export default function CarteiraCooperativo() {
         <Box
           component="main"
           sx={{
-            backgroundColor: '#F6F2C7',
+            backgroundColor: 'white',
             flexGrow: 1,
             height: '100vh',
             display: 'flex',
@@ -314,7 +315,8 @@ export default function CarteiraCooperativo() {
 
 
           {showSolicitarCredito && (
-          <Container maxWidth="lg" sx={{ m: 'auto', backgroundColor: 'white', borderRadius: 1, marginTop: '20px', marginBottom: '16px', overflow: 'auto'}}>
+          <Paper sx={{ width: '84%',  display: 'flex', flexDirection: 'column', marginTop: '40px', }} elevation={2}>
+            <Container maxWidth="lg" sx={{ m: 'auto', backgroundColor: 'white', borderRadius: 1,  marginBottom: '16px', overflow: 'auto'}}>
               <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{marginBottom: '20px', marginTop: '20px' }}>
                 <Grid item xs={6}>
                   <Title>Solicitar Crédito</Title>
@@ -344,41 +346,44 @@ export default function CarteiraCooperativo() {
                   <EnviarButton onClick={sendRequest}/>
                 </Grid>
               </Grid>
-          </Container>
+            </Container>
+          </Paper>
           )}
 
           {showEnviarCredito && (
-          <Container maxWidth="lg" sx={{ m: 'auto', backgroundColor: 'white', borderRadius: 1, marginTop: '20px', marginBottom: '16px', overflow: 'auto'}}>
-            <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{marginBottom: '20px', marginTop: '20px' }}>
-              <Grid item xs={6}>
-                <Title>Enviar Crédito</Title>
-                <SubTitle>Estabelecimento</SubTitle>
+          <Paper sx={{ width: '84%',  display: 'flex', flexDirection: 'column', marginTop: '40px', }} elevation={2}>
+            <Container maxWidth="lg" sx={{ m: 'auto', backgroundColor: 'white', borderRadius: 1,  marginBottom: '16px', overflow: 'auto'}}>
+              <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{marginBottom: '20px', marginTop: '20px' }}>
+                <Grid item xs={6}>
+                  <Title>Enviar Crédito</Title>
+                  <SubTitle>Estabelecimento</SubTitle>
+                </Grid>
+                <Grid item xs={6}>
+                  <Box display="flex" justifyContent="flex-end" alignItems="center">
+                    <Title>$100</Title>
+                  </Box>
+                  <Box textAlign="right">
+                    <SubTitle>Moedas Greenneat</SubTitle>
+                  </Box>
+                </Grid>
               </Grid>
-              <Grid item xs={6}>
-                <Box display="flex" justifyContent="flex-end" alignItems="center">
-                  <Title>$100</Title>
-                </Box>
-                <Box textAlign="right">
-                  <SubTitle>Moedas Greenneat</SubTitle>
-                </Box>
+              <Divider />
+              <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{marginBottom: '20px', marginTop: '10px' }}>
+                <Grid item xs={6}>
+                  <CarteiraCoopEnvForm cnpj={cnpj} valor={valor} onChangeCnpj={handleCnpjChange} onChangeValor={handleValorChange}/>
+                </Grid>
+                <Grid item xs={6}>
+                </Grid>
               </Grid>
-            </Grid>
-            <Divider />
-            <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{marginBottom: '20px', marginTop: '10px' }}>
-              <Grid item xs={6}>
-                <CarteiraCoopEnvForm cnpj={cnpj} valor={valor} onChangeCnpj={handleCnpjChange} onChangeValor={handleValorChange}/>
+              <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{marginBottom: '20px', marginTop: '10px' }}>
+                <Grid item xs={6}>
+                </Grid>
+                <Grid item xs={6}>
+                  <EnviarButton onClick={sendRequest} />
+                </Grid>
               </Grid>
-              <Grid item xs={6}>
-              </Grid>
-            </Grid>
-            <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{marginBottom: '20px', marginTop: '10px' }}>
-              <Grid item xs={6}>
-              </Grid>
-              <Grid item xs={6}>
-                <EnviarButton onClick={sendRequest} />
-              </Grid>
-            </Grid>
-          </Container>
+            </Container>
+          </Paper>
           )}
         </Box>
       </Box>

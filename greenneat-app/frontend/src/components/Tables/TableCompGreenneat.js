@@ -8,6 +8,9 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import TableSortLabel from '@mui/material/TableSortLabel';
 import Paper from '@mui/material/Paper';
+import Grid from '@mui/material/Grid';
+import Title from '../Outros/Title';
+import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import axios from 'axios';
 import { API_BASE_URL } from '../../../env';
@@ -98,7 +101,9 @@ function EnhancedTableHead(props) {
 							direction={orderBy === headCell.id ? order : 'asc'}
 							onClick={createSortHandler(headCell.id)}
 						>
-							{headCell.label}
+							<Typography sx={{fontWeight: 'bold'}}>
+								{headCell.label}
+							</Typography>
 						</TableSortLabel>
 					</TableCell>
 				))}
@@ -188,12 +193,21 @@ export default function TableUsersGreenneat() {
 	);
 
 	return (
-		<Container sx={{ width: '80%', margin: '0 auto', display: 'flex', flexDirection: 'column' }}>
-			<Paper sx={{ width: '100%', minWidth: 750 }} elevation={2}>
-				<TableContainer>
+		<Paper sx={{ width: '80%', margin: '0 auto', display: 'flex', flexDirection: 'column' }} elevation={2}>
+			<TableContainer>
+				<Grid
+					container
+					rowSpacing={1}
+					columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+					sx={{ marginBottom: "20px", marginTop: "20px" }}
+				>
+					<Grid item xs={6}>
+						<Title>Comparador</Title>
+					</Grid>
+				</Grid>
 					<Table
+						sx={{ width: '100%', minWidth: 750 }}
 						aria-labelledby="tableTitle"
-						size="medium"
 					>
 						<EnhancedTableHead
 							order={order}
@@ -234,6 +248,5 @@ export default function TableUsersGreenneat() {
 					</Table>
 				</TableContainer>
 			</Paper>
-		</Container>
 	);
 }

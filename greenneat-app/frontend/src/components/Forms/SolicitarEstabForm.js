@@ -42,7 +42,7 @@ function SolicitarEstabForm(props) {
         value={props.quantity}
         onChange={props.quantityChange}
         InputProps={{
-          endAdornment: <InputAdornment position="end">ml</InputAdornment>,
+          endAdornment: <InputAdornment position="end">L</InputAdornment>,
         }}
       />
       <Autocomplete

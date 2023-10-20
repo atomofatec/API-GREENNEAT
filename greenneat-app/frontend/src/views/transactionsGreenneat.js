@@ -288,7 +288,7 @@ export default function TransacoesGreenneat() {
         <Box
           component="main"
           sx={{
-            backgroundColor: "#F6F2C7",
+            backgroundColor: "white",
             flexGrow: 1,
             height: "100vh",
             display: "flex",
@@ -321,10 +321,8 @@ export default function TransacoesGreenneat() {
                 </div>
               </Box>
             </Grid>
-            <Grid item xs={20}>
-              <Box sx={{ overflow: "hidden" }}>
-                <TableTransGreenneat />
-              </Box>
+            <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{ marginBottom: '5px', marginTop: '40px' }}>
+              <TableTransGreenneat />
             </Grid>
           </Grid>
         </Box>

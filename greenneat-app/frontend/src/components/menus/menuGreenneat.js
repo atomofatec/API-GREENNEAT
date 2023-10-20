@@ -1,100 +1,60 @@
-import * as React from "react";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import BarChartIcon from "@mui/icons-material/BarChart";
-import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
-import BalanceIcon from "@mui/icons-material/Balance";
-import ReceiptIcon from "@mui/icons-material/Receipt";
-import Typography from "@mui/material/Typography";
-import { Link } from "react-router-dom";
+import * as React from 'react';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import BarChartIcon from '@mui/icons-material/BarChart';
+import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
+import BalanceIcon from '@mui/icons-material/Balance';
+import ReceiptIcon from '@mui/icons-material/Receipt';
+import Typography from '@mui/material/Typography';
+import { Link } from 'react-router-dom';
 
 export const mainListItems = (
   <React.Fragment>
-    <ListItemButton
-      component={Link}
-      to="/dashboard-greenneat"
-      sx={{ color: "white" }}
-    >
+    <ListItemButton component={Link} to="/dashboard-greenneat" sx={{ color: 'white', height: '4rem' }}>
       <ListItemIcon>
-        <BarChartIcon sx={{ color: "white" }} />
+        <BarChartIcon sx={{ color: 'white' }} />
       </ListItemIcon>
       <ListItemText
         primary={
-          <Typography
-            variant="body2"
-            style={{
-              fontSize: "1rem",
-              fontFamily: "'Century Gothic', Futura, sans-serif",
-            }}
-          >
+          <Typography variant="body2" style={{ fontSize: '18px', fontFamily: "'Century Gothic', Futura, sans-serif" }}>
             Dashboard
           </Typography>
         }
       />
     </ListItemButton>
-    <ListItemButton
-      component={Link}
-      to="/usuarios-Greenneat"
-      sx={{ color: "white" }}
-    >
+    <ListItemButton component={Link} to="/usuarios-greenneat" sx={{ color: 'white', height: '4rem' }}>
       <ListItemIcon>
-        <PeopleAltIcon sx={{ color: "white" }} />
+        <PeopleAltIcon sx={{ color: 'white' }} />
       </ListItemIcon>
       <ListItemText
         primary={
-          <Typography
-            variant="body2"
-            style={{
-              fontSize: "1rem",
-              fontFamily: "'Century Gothic', Futura, sans-serif",
-            }}
-          >
+          <Typography variant="body2" style={{ fontSize: '18px', fontFamily: "'Century Gothic', Futura, sans-serif" }}>
             Usuários
           </Typography>
         }
       />
     </ListItemButton>
-    <ListItemButton
-      component={Link}
-      to="/comparador-Greenneat"
-      sx={{ color: "white" }}
-    >
+    <ListItemButton component={Link} to="/comparador-Greenneat" sx={{ color: 'white', height: '4rem' }}>
       <ListItemIcon>
-        <BalanceIcon sx={{ color: "white" }} />
+        <BalanceIcon sx={{ color: 'white' }} />
       </ListItemIcon>
       <ListItemText
         primary={
-          <Typography
-            variant="body2"
-            style={{
-              fontSize: "1rem",
-              fontFamily: "'Century Gothic', Futura, sans-serif",
-            }}
-          >
+          <Typography variant="body2" style={{ fontSize: '18px', fontFamily: "'Century Gothic', Futura, sans-serif" }}>
             Comparador
           </Typography>
         }
       />
     </ListItemButton>
-    <ListItemButton
-      component={Link}
-      to="/transacoes-greenneat"
-      sx={{ color: "white" }}
-    >
+    <ListItemButton component={Link} to="/transacoes-greenneat" sx={{ color: 'white', height: '4rem' }}>
       <ListItemIcon>
-        <ReceiptIcon sx={{ color: "white" }} />
+        <ReceiptIcon sx={{ color: 'white' }} />
       </ListItemIcon>
       <ListItemText
         primary={
-          <Typography
-            variant="body2"
-            style={{
-              fontSize: "1rem",
-              fontFamily: "'Century Gothic', Futura, sans-serif",
-            }}
-          >
-            Transações
+          <Typography variant="body2" style={{ fontSize: '18px', fontFamily: "'Century Gothic', Futura, sans-serif" }}>
+            Transações 
           </Typography>
         }
       />

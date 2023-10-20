@@ -18,7 +18,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
 import Container from "@mui/material/Container";
-import TextField from "@mui/material/TextField";
+import Paper from '@mui/material/Paper';
 import CarteiraEstabForm from "../components/Forms/CarteiraEstabForm";
 import EnviarButton from "../components/Buttons/EnviarButton";
 import Title from "../components/Outros/Title";
@@ -146,7 +146,7 @@ export default function CarteiraEstabelecimento() {
           position="absolute"
           open={open}
           sx={{ backgroundColor: "#3B8F5C", height: 72 }}
-          elevation={0}
+          elevation={2}
         >
           <Toolbar
             sx={{
@@ -285,7 +285,7 @@ export default function CarteiraEstabelecimento() {
         <Box
           component="main"
           sx={{
-            backgroundColor: "#F6F2C7",
+            backgroundColor: "white",
             flexGrow: 1,
             height: "100vh",
             display: "flex",
@@ -294,17 +294,8 @@ export default function CarteiraEstabelecimento() {
           }}
         >
           <Toolbar />
-          <Container
-            maxWidth="lg"
-            sx={{
-              m: "auto",
-              backgroundColor: "white",
-              borderRadius: 1,
-              marginTop: "40px",
-              marginBottom: "16px",
-              overflow: "auto",
-            }}
-          >
+          <Paper sx={{ width: '84%',  display: 'flex', flexDirection: 'column', marginTop: '40px', }} elevation={2}>
+           <Container maxWidth="lg" sx={{ m: 'auto', backgroundColor: 'white', borderRadius: 1,  marginBottom: '16px', overflow: 'auto'}}>
             <Grid
               container
               rowSpacing={1}
@@ -351,7 +342,8 @@ export default function CarteiraEstabelecimento() {
                 <EnviarButton onClick={sendTransfer} />
               </Grid>
             </Grid>
-          </Container>
+            </Container>
+          </Paper>
         </Box>
       </Box>
     </ThemeProvider>
