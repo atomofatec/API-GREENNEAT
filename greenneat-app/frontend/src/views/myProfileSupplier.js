@@ -13,16 +13,18 @@ import List from '@mui/material/List';
 import Link from '@mui/material/Link';
 import Menu from '@mui/material/Menu';
 import Avatar from '@mui/material/Avatar';
+import AvatarImage from "../images/PerfilEstabelecimento.png";
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import Divider from '@mui/material/Divider';
-import Skeleton from '@mui/material/Skeleton';
 import Paper from '@mui/material/Paper';
 import Title from '../components/Outros/Title';
-import PropTypes from 'prop-types';
 import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
-import { mainListItems } from '../components/menus/menuPartner';
+import SubTitle from '../components/Outros/SubTitle';
+import ProfileEstabForm from "../components/Forms/ProfileEstabForm";
+import SenhaForm from "../components/Forms/SenhaForm";
+import { mainListItems } from '../components/menus/menuSupplier';
 
 const settings = [
   { name: 'Meu Perfil' },
@@ -79,37 +81,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 
-//Retangulos
-function Media(props) {
-  const { loading = false } = props;
-
-  return (
-    <Container maxWidth="lg">
-      <Grid container spacing={2} justify="center">
-        {(loading ? Array.from(new Array(3)) : []).map((item, index) => (
-          <Grid item xs={12} sm={6} md={4} lg={3} key={index} sx={{ mx: 3 }}>
-            <Box sx={{ width: '100%', my: 2 }}>
-              {item ? (
-                <img
-                  style={{ width: 300, height: 200 }}
-                />
-              ) : (
-                <Skeleton variant="rectangular" width={300} height={200} />
-              )}
-            </Box>
-          </Grid>
-        ))}
-      </Grid>
-    </Container>
-  );
-}
-
-Media.propTypes = {
-  loading: PropTypes.bool,
-};
-//Fim Retangulos
-
-export default function DashboardCooperativo() {
+export default function MyProfileSupplier() {
   const [open, setOpen] = React.useState(false);
   const toggleDrawer = () => {
     setOpen(!open);
@@ -161,7 +133,7 @@ export default function DashboardCooperativo() {
                   <Box sx={{ flexGrow: 0 }}>
                     <Tooltip title="Abrir configurações">
                     <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                        <Avatar sx={{ bgcolor: 'white', color: '#0E681D' }}>PC</Avatar>
+                        <Avatar sx={{ bgcolor: 'white', color: '#0E681D' }}>E</Avatar>
                     </IconButton>
                     </Tooltip>
                     <Menu
@@ -181,12 +153,12 @@ export default function DashboardCooperativo() {
                     onClose={handleCloseUserMenu}
                     >
                     <div style={{ margin: '5px 20px 0px 20px', color:'#0E681D' }}>
-                        <strong>
-                            Parceiro Cooperativo
-                        </strong>
+                      <strong>
+                        Estabelecimento
+                      </strong>
                     </div>
                     <div style={{ margin: '0px 20px 10px 20px', color: 'grey' }}>
-												@email.com
+											@email.com
 										</div>
                     <Divider />
                     {settings.map((setting, index) => (
@@ -194,7 +166,7 @@ export default function DashboardCooperativo() {
                         <Divider key={index} />
                     ) : (
                         <MenuItem key={setting.name} onClick={handleCloseUserMenu}>
-                        <Typography textAlign="center"><Link href='/meu-perfil-cooperativo' sx={{textDecoration: 'none', color: 'inherit'}}>{setting.name}</Link></Typography>
+                        <Typography textAlign="center"><Link href='/meu-perfil-estabelecimento' sx={{textDecoration: 'none', color: 'inherit'}}>{setting.name}</Link></Typography>
                         <Typography textAlign="center"><Link href='#' sx={{textDecoration: 'none', color: 'inherit'}}>{setting.ajuda}</Link></Typography>
                         <Typography textAlign="center"><Link href='/' sx={{textDecoration: 'none', color: 'inherit'}}>{setting.sair}</Link></Typography>
                         </MenuItem>
@@ -248,26 +220,44 @@ export default function DashboardCooperativo() {
         }}
         >
           <Toolbar />
-          <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{ marginBottom: '5px', marginTop: '40px' }}>
-            <Paper sx={{ width: '80%', margin: '0 auto', display: 'flex', flexDirection: 'column' }} elevation={2}>
-              <Container maxWidth="lg" sx={{ m: 'auto', marginBottom: '16px', overflow: 'auto'}}>
-                <Grid
-                    container
-                    rowSpacing={1}
-                    columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-                    sx={{ marginBottom: "20px", marginTop: "20px" }}
-                  >
+          <Grid container spacing={2} sx={{ marginBottom: '5px', marginTop: '40px', width: '80%' }}>
+            <Grid item xs={4}>
+              <Paper sx={{ margin: '0 auto', display: 'flex', flexDirection: 'column', height: '100%' }} elevation={2}>
+                <Container maxWidth="lg" sx={{ m: 'auto', overflow: 'auto' }}>
+                  <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                    <img src={AvatarImage} alt="Perfil" height="122px" />
+                    <Title>Estabelecimento</Title>
+                    <SubTitle>@email.com</SubTitle>
+                  </Grid>
+                </Container>
+              </Paper>
+            </Grid>
+            <Grid item xs={8}>
+              <Paper sx={{ margin: '0 auto', display: 'flex', flexDirection: 'column' }} elevation={2}>
+                <Container maxWidth="lg" sx={{ m: 'auto', marginBottom: '16px', overflow: 'auto' }}>
+                  <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{ marginTop: "20px" }}>
                     <Grid item xs={6}>
-                      <Title>Dashboards</Title>
+                      <Title>Meu Perfil</Title>
+                      <SubTitle>As informações podem ser editadas</SubTitle>
                     </Grid>
-                </Grid>
-                <Box sx={{ overflow: 'hidden' }}>
-                  <Media loading /> {/*Retangulos*/}
-                  <Media loading /> {/*Retangulos*/}
-                </Box>
-              </Container>
-            </Paper>
+                  </Grid>
+                  <ProfileEstabForm />
+                </Container>
+              </Paper>
+            </Grid>
           </Grid>
+          <Paper sx={{ width: '80%', display: 'flex', flexDirection: 'column', marginTop: '40px', marginBottom: '40px' }} elevation={2}>
+            <Container maxWidth="lg" sx={{ m: 'auto', backgroundColor: 'white', borderRadius: 1, marginBottom: '16px', overflow: 'auto' }}>
+              <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{ marginTop: "20px" }}>
+                <Grid item xs={6}>
+                  <Title>Senha</Title>
+                  <SubTitle>A senha pode ser editada</SubTitle>
+                </Grid>
+              </Grid>
+              <SenhaForm />
+            </Container>
+          </Paper>
+          <Grid>.</Grid>
         </Box>
       </Box>
     </ThemeProvider>

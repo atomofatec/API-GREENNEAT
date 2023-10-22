@@ -28,11 +28,11 @@ import {API_BASE_URL, GREENEAT_DOCUMENT, SUPPLIER_TYPE_USER} from "../../env.js"
 import axios from "axios";
 
 const settings = [
-  { name: "Meu Perfil" },
-  { name: "Ajuda" },
-  "divider",
-  { sair: "Sair" },
-];
+  { name: 'Meu Perfil' },
+  { ajuda: 'Ajuda #' },
+  'divider',
+  { sair: 'Sair' },
+]; 
 
 const drawerWidth = 240;
 
@@ -212,37 +212,23 @@ export default function CarteiraEstabelecimento() {
                       open={Boolean(anchorElUser)}
                       onClose={handleCloseUserMenu}
                     >
-                      <div
-                        style={{
-                          margin: "5px 20px 10px 20px",
-                          color: "#0E681D",
-                        }}
-                      >
-                        <strong>Estabelecimento</strong>
+                      <div style={{ margin: '5px 20px 0px 20px', color:'#0E681D' }}>
+                        <strong>
+                          Estabelecimento
+                        </strong>
+                      </div>
+                      <div style={{ margin: '0px 20px 10px 20px', color: 'grey' }}>
+                        @email.com
                       </div>
                       <Divider />
                       {settings.map((setting, index) =>
                         setting === "divider" ? (
                           <Divider key={index} />
                         ) : (
-                          <MenuItem
-                            key={setting.name}
-                            onClick={handleCloseUserMenu}
-                          >
-                            <Typography textAlign="center">
-                              {setting.name}
-                            </Typography>
-                            <Typography textAlign="center">
-                              <Link
-                                href="/"
-                                sx={{
-                                  textDecoration: "none",
-                                  color: "inherit",
-                                }}
-                              >
-                                {setting.sair}
-                              </Link>
-                            </Typography>
+                          <MenuItem key={setting.name} onClick={handleCloseUserMenu}>
+                          <Typography textAlign="center"><Link href='/meu-perfil-estabelecimento' sx={{textDecoration: 'none', color: 'inherit'}}>{setting.name}</Link></Typography>
+                          <Typography textAlign="center"><Link href='#' sx={{textDecoration: 'none', color: 'inherit'}}>{setting.ajuda}</Link></Typography>
+                          <Typography textAlign="center"><Link href='/' sx={{textDecoration: 'none', color: 'inherit'}}>{setting.sair}</Link></Typography>
                           </MenuItem>
                         )
                       )}

@@ -50,7 +50,7 @@ export const mainListItems = (
     </ListItemButton>
     <ListItemButton
       component={Link}
-      to="/solicitacoes-coleta-parceiro"
+      to="/solicitacoes-coleta-cooperativo"
       sx={{ color: "white" }}
     >
       <ListItemIcon>
