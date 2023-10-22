@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import MuiDrawer from '@mui/material/Drawer';
@@ -24,6 +24,8 @@ import EnviarCredButton from '../components/Buttons/EnviarCredButton';
 import EnviarButton from '../components/Buttons/EnviarButton';
 import Title from '../components/Outros/Title';
 import SubTitle from '../components/Outros/SubTitle';
+import Alert from "@mui/material/Alert";
+import AlertTitle from "@mui/material/AlertTitle";
 import CarteiraCoopSolForm from '../components/Forms/CarteiraCoopSolForm';
 import CarteiraCoopEnvForm from '../components/Forms/CarteiraCoopEnvForm';
 import { mainListItems } from '../components/menus/menuPartner';
@@ -36,6 +38,13 @@ const settings = [
   'divider',
   { sair: 'Sair' },
 ];  
+
+const alertStyle = {
+  position: 'fixed',
+  top: '10px',
+  right: '10px',
+  zIndex: 9999,
+};
 
 const drawerWidth = 240;
 
@@ -134,6 +143,12 @@ export default function CarteiraCooperativo() {
     setShowEnviarCredito(true);
   };
 
+  const [errorAlertOpen, setErrorAlertOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const [successAlertOpen, setSuccessAlertOpen] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');  
+  
   const sendRequest = async () => {
     
     try{
@@ -151,7 +166,8 @@ export default function CarteiraCooperativo() {
 
       await axios.post(API_BASE_URL + "/transactions/request", data);
     
-      window.alert("Solicitação realizada!")
+      setSuccessMessage("Solicitação realizada!")
+      setSuccessAlertOpen(true);
     }
     else{
       const data = {
@@ -159,17 +175,50 @@ export default function CarteiraCooperativo() {
         amount: valor
       };
       await axios.post(API_BASE_URL + "/transactions/transfer", data);
-      window.alert("Transferencia realizada!")
+      setSuccessMessage("Transferencia realizada!")
+      setSuccessAlertOpen(true);
     }
 
     setValor("")
     setCnpj("")
 
     } catch(error){
-      window.alert(error.response.data)
+      setErrorMessage(error.response.data);
+      setErrorAlertOpen(true);
     }
   }
 
+  const [autoCloseTimeout, setAutoCloseTimeout] = useState(null);
+
+  useEffect(() => {
+    if (errorAlertOpen) {
+      const timeout = setTimeout(() => {
+        setErrorAlertOpen(false);
+      }, 5000);
+      setAutoCloseTimeout(timeout);
+    } else {
+      if (autoCloseTimeout) {
+        clearTimeout(autoCloseTimeout);
+        setAutoCloseTimeout(null);
+      }
+    }
+  }, [errorAlertOpen]);
+
+  const [autoCloseSuccessTimeout, setAutoCloseSuccessTimeout] = useState(null);
+
+  useEffect(() => {
+    if (successAlertOpen) {
+      const timeout = setTimeout(() => {
+        setSuccessAlertOpen(false);
+      }, 5000);
+      setAutoCloseSuccessTimeout(timeout);
+    } else {
+      if (autoCloseSuccessTimeout) {
+        clearTimeout(autoCloseSuccessTimeout);
+        setAutoCloseSuccessTimeout(null);
+      }
+    }
+  }, [successAlertOpen]);
 
   //obter o usuario dos cookies e verifica o type user 
   let user = document.cookie.split("=")
@@ -391,6 +440,22 @@ export default function CarteiraCooperativo() {
           )}
         </Box>
       </Box>
+      {errorAlertOpen && (
+        <div style={alertStyle}>
+          <Alert severity="error">
+            <AlertTitle>Erro</AlertTitle>
+            {errorMessage}
+          </Alert>
+        </div>
+      )}
+      {successAlertOpen && (
+        <div style={alertStyle}>
+          <Alert severity="success">
+            <AlertTitle>Sucesso</AlertTitle>
+            {successMessage}
+          </Alert>
+        </div>
+      )}
     </ThemeProvider>
   );
 }

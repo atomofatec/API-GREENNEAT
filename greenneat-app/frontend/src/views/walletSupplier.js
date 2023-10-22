@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from 'react';
 import { styled, createTheme, ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import MuiDrawer from "@mui/material/Drawer";
@@ -19,6 +19,8 @@ import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
 import Container from "@mui/material/Container";
 import Paper from '@mui/material/Paper';
+import Alert from "@mui/material/Alert";
+import AlertTitle from "@mui/material/AlertTitle";
 import CarteiraEstabForm from "../components/Forms/CarteiraEstabForm";
 import EnviarButton from "../components/Buttons/EnviarButton";
 import Title from "../components/Outros/Title";
@@ -33,6 +35,13 @@ const settings = [
   'divider',
   { sair: 'Sair' },
 ]; 
+
+const alertStyle = {
+  position: 'fixed',
+  top: '10px',
+  right: '10px',
+  zIndex: 9999,
+};
 
 const drawerWidth = 240;
 
@@ -106,6 +115,12 @@ export default function CarteiraEstabelecimento() {
     setAnchorElUser(null);
   };
 
+  const [errorAlertOpen, setErrorAlertOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const [successAlertOpen, setSuccessAlertOpen] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');  
+
   const sendTransfer = async () => {
 
     try{
@@ -122,11 +137,13 @@ export default function CarteiraEstabelecimento() {
 
       await axios.post(API_BASE_URL + "/transactions/transfer", data);
       
-      window.alert("Transferência realizada!")
+      setSuccessMessage('Transferência realizada!');
+      setSuccessAlertOpen(true);
       setValor("")
 
     } catch(error){
-      window.alert(error.response.data)
+      setErrorMessage(error.response.data);
+      setErrorAlertOpen(true);
     }
     
   };
@@ -332,6 +349,22 @@ export default function CarteiraEstabelecimento() {
           </Paper>
         </Box>
       </Box>
+      {errorAlertOpen && (
+        <div style={alertStyle}>
+          <Alert severity="error">
+            <AlertTitle>Erro</AlertTitle>
+            {errorMessage}
+          </Alert>
+        </div>
+      )}
+      {successAlertOpen && (
+        <div style={alertStyle}>
+          <Alert severity="success">
+            <AlertTitle>Sucesso</AlertTitle>
+            {successMessage}
+          </Alert>
+        </div>
+      )}
     </ThemeProvider>
   );
 }

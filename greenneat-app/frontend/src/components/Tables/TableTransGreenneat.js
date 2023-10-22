@@ -30,14 +30,14 @@ import { API_BASE_URL } from '../../../env';
 
 import { visuallyHidden } from '@mui/utils';
 
-function createData(sender, receiver, documento, valor, data, situacao) {
+function createData(sender, receiver, valor, data, documento, situacao) {
 	return {
 		sender,
 		receiver,
-		documento,
 		valor,
 		data,
-		situacao
+		documento,
+		situacao,
 	};
 }
 
@@ -84,12 +84,6 @@ const headCells = [
 		label: 'Destinatário',
 	},
 	{
-		id: 'documento',
-		numeric: false,
-		disablePadding: false,
-		label: 'Documento',
-	},
-	{
 		id: 'valor',
 		numeric: true,
 		disablePadding: false,
@@ -102,12 +96,16 @@ const headCells = [
 		label: 'Data',
 	},
 	{
+		id: 'documento',
+		numeric: false,
+		disablePadding: false,
+		label: 'Documento',
+	},
+	{
 		id: 'situacao',
 		numeric: false,
 		disablePadding: true,
 		label: 'Situação',
-	},
-	{
 	},
 ];
 
@@ -176,65 +174,7 @@ EnhancedTableHead.propTypes = {
 	rowCount: PropTypes.number.isRequired,
 };
 
-const options = [
-	{ icon: <EditIcon style={{ color: '#3B8F5C', height: '1rem' }} />, label: 'Editar' },
-	{ icon: <DeleteIcon style={{ color: '#3B8F5C', height: '1rem' }} />, label: 'Deletar' },
-];
-
 const ITEM_HEIGHT = 48;
-
-function LongMenu() {
-	const [anchorEl, setAnchorEl] = React.useState(null);
-	const open = Boolean(anchorEl);
-
-	const handleClick = (event) => {
-		setAnchorEl(event.currentTarget);
-	};
-
-	const handleClose = () => {
-		setAnchorEl(null);
-	};
-
-	return (
-		<div>
-			<IconButton
-				aria-label="more"
-				id="long-button"
-				aria-controls={open ? 'long-menu' : undefined}
-				aria-expanded={open ? 'true' : undefined}
-				aria-haspopup="true"
-				onClick={handleClick}
-			>
-				<MoreVertIcon />
-			</IconButton>
-			<Menu
-				id="long-menu"
-				MenuListProps={{
-					'aria-labelledby': 'long-button',
-				}}
-				anchorEl={anchorEl}
-				open={open}
-				onClose={handleClose}
-				PaperProps={{
-					style: {
-						maxHeight: ITEM_HEIGHT * 4.5,
-						width: '15ch',
-					},
-				}}
-			>
-				{options.map((option) => (
-					<MenuItem
-						key={option.label}
-						selected={option.label === 'Pyxis'}
-						onClick={handleClose}
-					>
-						{option.icon} {option.label}
-					</MenuItem>
-				))}
-			</Menu>
-		</div>
-	);
-}
 
 function EnhancedTableToolbar(props) {
 	const { numSelected } = props;
@@ -492,13 +432,10 @@ export default function TableTransGreenneat() {
 										{row.sender}
 									</TableCell>
 									<TableCell align="center">{row.receiver}</TableCell>
-									<TableCell align="center">{row.documento}</TableCell>
 									<TableCell align="center">{row.valor}</TableCell>
 									<TableCell align="center">{row.data}</TableCell>
-									<TableCell align="center">{row.situacao}</TableCell>
-									<TableCell align="center">
-										<LongMenu />
-									</TableCell>
+									<TableCell align="center">{}</TableCell>
+									<TableCell align="center">{}</TableCell>
 								</TableRow>
 							);
 						})}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import MuiDrawer from '@mui/material/Drawer';
@@ -23,6 +23,8 @@ import Paper from '@mui/material/Paper';
 import EnviarButton from '../components/Buttons/EnviarButton';
 import Title from '../components/Outros/Title';
 import SubTitle from '../components/Outros/SubTitle';
+import Alert from "@mui/material/Alert";
+import AlertTitle from "@mui/material/AlertTitle";
 import NovaTransGreenForm from '../components/Forms/NovaTransGreenForm';
 import { mainListItems } from '../components/menus/menuGreenneat';
 import { useNavigate } from 'react-router-dom';
@@ -35,6 +37,13 @@ const settings = [
   'divider',
   { sair: 'Sair' },
 ];  
+
+const alertStyle = {
+  position: 'fixed',
+  top: '10px',
+  right: '10px',
+  zIndex: 9999,
+};
 
 const drawerWidth = 240;
 
@@ -128,6 +137,12 @@ export default function NovaTransacaoGreenneat() {
     setValor(numericValue || "0");
   };
 
+  const [errorAlertOpen, setErrorAlertOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const [successAlertOpen, setSuccessAlertOpen] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');  
+
   const sendTransfer = async () => {
 
     try{
@@ -145,16 +160,50 @@ export default function NovaTransacaoGreenneat() {
 
       await axios.post(API_BASE_URL + "/transactions/transfer", data);
       
-      window.alert("Transferência realizada!")
-      setValor("")
-      setCnpj("")
+      setSuccessMessage('Transferência realizada!');
+      setSuccessAlertOpen(true);
+      setValor('');
+      setCnpj('');
 
     } catch(error){
-      window.alert(error.response.data)
+      setErrorMessage(error.response.data);
+      setErrorAlertOpen(true);
     }
     
   };
   
+  const [autoCloseTimeout, setAutoCloseTimeout] = useState(null);
+
+  useEffect(() => {
+    if (errorAlertOpen) {
+      const timeout = setTimeout(() => {
+        setErrorAlertOpen(false);
+      }, 5000);
+      setAutoCloseTimeout(timeout);
+    } else {
+      if (autoCloseTimeout) {
+        clearTimeout(autoCloseTimeout);
+        setAutoCloseTimeout(null);
+      }
+    }
+  }, [errorAlertOpen]);
+
+  const [autoCloseSuccessTimeout, setAutoCloseSuccessTimeout] = useState(null);
+
+  useEffect(() => {
+    if (successAlertOpen) {
+      const timeout = setTimeout(() => {
+        setSuccessAlertOpen(false);
+      }, 5000);
+      setAutoCloseSuccessTimeout(timeout);
+    } else {
+      if (autoCloseSuccessTimeout) {
+        clearTimeout(autoCloseSuccessTimeout);
+        setAutoCloseSuccessTimeout(null);
+      }
+    }
+  }, [successAlertOpen]);
+
   //obter o usuario dos cookies e verifica o type user 
   let user = document.cookie.split("=")
   user = JSON.parse(user[2])
@@ -323,6 +372,22 @@ export default function NovaTransacaoGreenneat() {
           </Paper>
         </Box>
       </Box>
+      {errorAlertOpen && (
+        <div style={alertStyle}>
+          <Alert severity="error">
+            <AlertTitle>Erro</AlertTitle>
+            {errorMessage}
+          </Alert>
+        </div>
+      )}
+      {successAlertOpen && (
+        <div style={alertStyle}>
+          <Alert severity="success">
+            <AlertTitle>Sucesso</AlertTitle>
+            {successMessage}
+          </Alert>
+        </div>
+      )}
     </ThemeProvider>
   );
 }

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from 'react';
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
@@ -6,6 +6,8 @@ import Link from "@mui/material/Link";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
+import Alert from "@mui/material/Alert";
+import AlertTitle from "@mui/material/AlertTitle";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Triangle from "../components/visualElements/triangle";
@@ -24,6 +26,13 @@ const fontColor = {
   color: "#0E681D",
 };
 
+const alertStyle = {
+  position: 'fixed',
+  top: '10px',
+  right: '10px',
+  zIndex: 9999,
+};
+
 export default function Login() {
 
   document.cookie = "token="
@@ -34,6 +43,9 @@ export default function Login() {
     email: "",
     password: "",
   });
+
+  const [errorAlertOpen, setErrorAlertOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -61,9 +73,26 @@ export default function Login() {
         navigate("/dashboard-cooperativo");
 
     } catch (error) {
-      window.alert(error.response.data)
+      setErrorMessage(error.response.data);
+      setErrorAlertOpen(true);
     }
   };
+
+  const [autoCloseTimeout, setAutoCloseTimeout] = useState(null);
+
+  useEffect(() => {
+    if (errorAlertOpen) {
+      const timeout = setTimeout(() => {
+        setErrorAlertOpen(false);
+      }, 5000);
+      setAutoCloseTimeout(timeout);
+    } else {
+      if (autoCloseTimeout) {
+        clearTimeout(autoCloseTimeout);
+        setAutoCloseTimeout(null);
+      }
+    }
+  }, [errorAlertOpen]);
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -165,6 +194,14 @@ export default function Login() {
           </Box>
         </Grid>
       </Grid>
+      {errorAlertOpen && (
+        <div style={alertStyle}>
+          <Alert severity="error">
+            <AlertTitle>Erro</AlertTitle>
+            {errorMessage}
+          </Alert>
+        </div>
+      )}
     </ThemeProvider>
   );
 }

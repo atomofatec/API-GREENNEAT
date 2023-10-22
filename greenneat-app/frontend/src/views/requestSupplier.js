@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import MuiDrawer from '@mui/material/Drawer';
@@ -23,6 +23,8 @@ import EnviarButton from '../components/Buttons/EnviarButton';
 import Title from '../components/Outros/Title';
 import Paper from '@mui/material/Paper';
 import SubTitle from '../components/Outros/SubTitle';
+import Alert from "@mui/material/Alert";
+import AlertTitle from "@mui/material/AlertTitle";
 import { mainListItems } from '../components/menus/menuSupplier';
 import axios from 'axios';
 import { API_BASE_URL, SUPPLIER_TYPE_USER } from '../../env.js'
@@ -33,6 +35,13 @@ const settings = [
   'divider',
   { sair: 'Sair' },
 ];   
+
+const alertStyle = {
+  position: 'fixed',
+  top: '10px',
+  right: '10px',
+  zIndex: 9999,
+};
 
 const drawerWidth = 240;
 
@@ -120,6 +129,12 @@ export default function SolicitarEstabelecimento() {
     setOilType(newValue)
   };
 
+  const [errorAlertOpen, setErrorAlertOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const [successAlertOpen, setSuccessAlertOpen] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');  
+
   const sendRequest = async () => {
 
     try{
@@ -139,14 +154,47 @@ export default function SolicitarEstabelecimento() {
 
       await axios.post(API_BASE_URL + "/oils/available", data);
       
-      window.alert("Retirada solicitada!")
+      setSuccessMessage("Retirada solicitada!")
+      setSuccessAlertOpen(true);
 
     } catch(error){
-      window.alert(error.response.data)
+      setErrorMessage(error.response.data);
+      setErrorAlertOpen(true);
     }
     
   };
 
+  const [autoCloseTimeout, setAutoCloseTimeout] = useState(null);
+
+  useEffect(() => {
+    if (errorAlertOpen) {
+      const timeout = setTimeout(() => {
+        setErrorAlertOpen(false);
+      }, 5000);
+      setAutoCloseTimeout(timeout);
+    } else {
+      if (autoCloseTimeout) {
+        clearTimeout(autoCloseTimeout);
+        setAutoCloseTimeout(null);
+      }
+    }
+  }, [errorAlertOpen]);
+
+  const [autoCloseSuccessTimeout, setAutoCloseSuccessTimeout] = useState(null);
+
+  useEffect(() => {
+    if (successAlertOpen) {
+      const timeout = setTimeout(() => {
+        setSuccessAlertOpen(false);
+      }, 5000);
+      setAutoCloseSuccessTimeout(timeout);
+    } else {
+      if (autoCloseSuccessTimeout) {
+        clearTimeout(autoCloseSuccessTimeout);
+        setAutoCloseSuccessTimeout(null);
+      }
+    }
+  }, [successAlertOpen]);
 
   //obter o usuario dos cookies e verifica o type user 
   let user = document.cookie.split("=")
@@ -305,6 +353,22 @@ export default function SolicitarEstabelecimento() {
           </Paper>
         </Box>
       </Box>
+      {errorAlertOpen && (
+        <div style={alertStyle}>
+          <Alert severity="error">
+            <AlertTitle>Erro</AlertTitle>
+            {errorMessage}
+          </Alert>
+        </div>
+      )}
+      {successAlertOpen && (
+        <div style={alertStyle}>
+          <Alert severity="success">
+            <AlertTitle>Sucesso</AlertTitle>
+            {successMessage}
+          </Alert>
+        </div>
+      )}
     </ThemeProvider>
   );
 }
