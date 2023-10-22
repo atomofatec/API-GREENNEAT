@@ -36,18 +36,6 @@ export const mainListItems = (
         }
       />
     </ListItemButton>
-    <ListItemButton component={Link} to="#" sx={{ color: 'white', height: '4rem' }}>
-      <ListItemIcon>
-        <PaidIcon sx={{ color: 'white' }} />
-      </ListItemIcon>
-      <ListItemText
-        primary={
-          <Typography variant="body2" style={{ fontSize: '18px', fontFamily: "'Century Gothic', Futura, sans-serif" }}>
-            Saldo #
-          </Typography>
-        }
-      />
-    </ListItemButton>
     <ListItemButton
       component={Link}
       to="/solicitacoes-coleta-cooperativo"
