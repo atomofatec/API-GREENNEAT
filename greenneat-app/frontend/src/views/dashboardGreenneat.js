@@ -20,9 +20,14 @@ import PropTypes from 'prop-types';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import Title from '../components/Outros/Title';
+import SubTitle from '../components/Outros/SubTitle';
 import Container from '@mui/material/Container';
 import AvatarImage from "../images/PerfilGreenneat.png";
 import { mainListItems } from '../components/menus/menuGreenneat';
+import PartnerSupplierRegionChart from '../components/Charts/PartnerSupplierRegionChart';
+import SupplierSizeChart from '../components/Charts/SupplierSizeChart';
+import RegionChart from '../components/Charts/RegionChart';
+import PartnerCredit from '../components/Charts/PartnerCredit';
 
 const settings = [
   { name: 'Meu Perfil' },
@@ -248,25 +253,49 @@ export default function DashboardGreenneat() {
         }}
         >
           <Toolbar />
-          <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{ marginBottom: '5px', marginTop: '40px' }}>
-            <Paper sx={{ width: '80%', margin: '0 auto', display: 'flex', flexDirection: 'column' }} elevation={2}>
-              <Container maxWidth="lg" sx={{ m: 'auto', marginBottom: '16px', overflow: 'auto'}}>
-                <Grid
-                    container
-                    rowSpacing={1}
-                    columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-                    sx={{ marginBottom: "20px", marginTop: "20px" }}
-                  >
-                    <Grid item xs={6}>
-                      <Title>Dashboards</Title>
+          <Grid container spacing={2} sx={{marginTop: '40px', width: '80%' }}>
+            <Grid item xs={7}>
+              <Paper sx={{ margin: '0 auto', display: 'flex', flexDirection: 'column', height: '100%' }} elevation={2}>
+                <Container maxWidth="lg" sx={{ m: 'auto', overflow: 'auto' }}>
+                  <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{ display: 'flex', flexDirection: 'column', marginTop: '10px', marginBottom: '10px', marginLeft: '10px' }}>
+                    <center><SubTitle>Parceiros e estabelecimentos por região</SubTitle></center>
+                    <PartnerSupplierRegionChart/>
                     </Grid>
-                </Grid>
-                <Box sx={{ overflow: 'hidden' }}>
-                  <Media loading /> {/*Retangulos*/}
-                  <Media loading /> {/*Retangulos*/}
-                </Box>
-              </Container>
-            </Paper>
+                </Container>
+              </Paper>
+            </Grid>
+            <Grid item xs={5}>
+              <Paper sx={{ margin: '0 auto', display: 'flex', flexDirection: 'column', height: '100%' }} elevation={2}>
+                <Container maxWidth="lg" sx={{ m: 'auto', overflow: 'auto' }}>
+                  <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{ display: 'flex', flexDirection: 'column', marginTop: '10px', marginBottom: '10px', marginLeft: '10px' }}>
+                    <center><SubTitle>Volumes de óleo descartados corretamente por estabelecimentos</SubTitle></center>
+                    <SupplierSizeChart/>
+                  </Grid>
+                </Container>
+              </Paper>
+            </Grid>
+          </Grid>
+          <Grid container spacing={2} sx={{ marginBottom: '5px', marginTop: '20px', width: '80%' }}>
+            <Grid item xs={7} sx={{ marginBottom: '40px' }}>
+              <Paper sx={{ margin: '0 auto', display: 'flex', flexDirection: 'column', height: '100%' }} elevation={2}>
+                <Container maxWidth="lg" sx={{ m: 'auto', overflow: 'auto' }}>
+                  <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{ display: 'flex', flexDirection: 'column', marginTop: '10px', marginBottom: '10px', marginLeft: '10px' }}>
+                    <center><SubTitle>Regiões com melhor performance de descarte</SubTitle></center>
+                    <RegionChart/>
+                    </Grid>
+                </Container>
+              </Paper>
+            </Grid>
+            <Grid item xs={5} sx={{ marginBottom: '40px' }}>
+              <Paper sx={{ margin: '0 auto', display: 'flex', flexDirection: 'column', height: '100%' }} elevation={2}>
+                <Container maxWidth="lg" sx={{ m: 'auto', overflow: 'auto' }}>
+                  <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{ display: 'flex', flexDirection: 'column', marginTop: '10px', marginBottom: '10px', marginLeft: '10px' }}>
+                    <center><SubTitle>Parceiros que mais participam da economia circular</SubTitle></center>
+                    <PartnerCredit/>
+                  </Grid>
+                </Container>
+              </Paper>
+            </Grid>
           </Grid>
         </Box>
       </Box>
