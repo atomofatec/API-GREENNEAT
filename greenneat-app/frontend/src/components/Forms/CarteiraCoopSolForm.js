@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
+import InputAdornment from '@mui/material/InputAdornment';
 import TextField from '@mui/material/TextField';
 
 function CarteiraCoopSolForm( props ) {
   
-
   return (
     <>
       <TextField
@@ -31,6 +31,9 @@ function CarteiraCoopSolForm( props ) {
         style={{ backgroundColor: 'white' }}
         value={props.valor}
         onChange={props.onChange}
+        InputProps={{
+          endAdornment: <InputAdornment position="end">R$</InputAdornment>,
+        }}
       />
     </>
   );

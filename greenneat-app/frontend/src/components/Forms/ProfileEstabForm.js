@@ -2,7 +2,10 @@ import { Button, Grid, TextField } from "@mui/material";
 import Autocomplete from '@mui/material/Autocomplete';
 import { useTheme } from '@mui/material/styles';
 
-export default function RegisterSupplierForm(props) {
+export default function ProfileEstabForm(props) {
+
+    const theme = useTheme(); 
+    
     const locations = [
         'Norte',
         'Sul',
@@ -10,53 +13,38 @@ export default function RegisterSupplierForm(props) {
         'Oeste'
     ];
 
-    const theme = useTheme(); 
-    
     return (
         <>
-            <Grid container spacing={0}>
-                <Grid item xs={12}>
+            <Grid container spacing={2}>
+                <Grid item xs={6} sx={{ marginBottom: theme.spacing('-20px') }}>
                     <TextField
                         margin="normal"
                         color="success"
                         fullWidth
+                        disabled
                         id="document"
                         label="CNPJ"
                         name="document"
                         autoComplete="cnpj"
-                        required
                         autoFocus
                         style={{ backgroundColor: 'white' }}
                     />
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={6} sx={{ marginBottom: theme.spacing('-20px') }}>
                     <TextField
                         margin="normal"
                         color="success"
                         fullWidth
+                        disabled
                         id="email"
-                        label="E-mail"
+                        label="@email.com"
                         name="email"
                         autoComplete="email"
-                        required
+                        autoFocus
                         style={{ backgroundColor: 'white' }}
                     />
                 </Grid>
-                <Grid item xs={12}>
-                    <TextField
-                        margin="normal"
-                        color="success"
-                        fullWidth
-                        name="password"
-                        label="Senha"
-                        type="password"
-                        id="password"
-                        autoComplete="current-password"
-                        required
-                        style={{ backgroundColor: 'white' }}
-                    />
-                </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={6} sx={{ marginBottom: theme.spacing('-20px') }}>
                     <TextField
                         margin="normal"
                         color="success"
@@ -68,7 +56,7 @@ export default function RegisterSupplierForm(props) {
                         style={{ backgroundColor: 'white' }}
                     />
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={6} sx={{ marginBottom: theme.spacing('-20px') }}>
                     <TextField
                         margin="normal"
                         color="success"
@@ -80,7 +68,7 @@ export default function RegisterSupplierForm(props) {
                         style={{ backgroundColor: 'white' }}
                     />
                 </Grid>
-                <Grid item xs={8}>
+                <Grid item xs={6} sx={{ marginBottom: theme.spacing('-20px') }}>
                     <TextField
                         margin="normal"
                         color="success"
@@ -92,7 +80,7 @@ export default function RegisterSupplierForm(props) {
                         style={{ backgroundColor: 'white' }}
                     />
                 </Grid>
-                <Grid item xs={4}>
+                <Grid item xs={6} sx={{ marginBottom: theme.spacing('-20px') }}>
                     <TextField
                         margin="normal"
                         color="success"
@@ -104,7 +92,7 @@ export default function RegisterSupplierForm(props) {
                         style={{ backgroundColor: 'white' }}
                     />
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={6} sx={{ marginBottom: theme.spacing('-20px') }}>
                     <TextField
                         margin="normal"
                         color="success"
@@ -116,7 +104,7 @@ export default function RegisterSupplierForm(props) {
                         style={{ backgroundColor: 'white' }}
                     />
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={6} sx={{ marginBottom: theme.spacing('-20px') }}>
                     <TextField
                         margin="normal"
                         color="success"
@@ -128,31 +116,31 @@ export default function RegisterSupplierForm(props) {
                         style={{ backgroundColor: 'white' }}
                     />
                 </Grid>
-                <Grid item xs={12}>
-                <Autocomplete
-                    name="location"
-                    id="location"
-                    value={props.location}
-                    options={locations}
-                    onChange={props.onChange}
-                    isOptionEqualToValue={(option, value) => option === value}
-                    style={{ backgroundColor: 'white', marginTop: '15px' }}
-                    renderInput={(params) => (
-                    <TextField
-                        {...params}
-                        label="Região"
-                        variant="outlined"
-                        color="success"
-                        required
-                        fullWidth
+                <Grid item xs={6} sx={{ marginBottom: theme.spacing('-20px') }}>
+                    <Autocomplete
+                        name="location"
+                        id="location"
+                        value={props.location}
+                        options={locations}
+                        onChange={props.onChange}
+                        isOptionEqualToValue={(option, value) => option === value}
+                        style={{ backgroundColor: 'white', marginTop: '15px' }}
+                        renderInput={(params) => (
+                        <TextField
+                            {...params}
+                            label="Região"
+                            variant="outlined"
+                            color="success"
+                            required
+                            fullWidth
+                        />
+                        )}
+                        renderOption={(props, option, { selected }) => (
+                        <li {...props} style={{ fontWeight: selected ? theme.typography.fontWeightMedium : theme.typography.fontWeightRegular }}>
+                            {option}
+                        </li>
+                        )}
                     />
-                    )}
-                    renderOption={(props, option, { selected }) => (
-                    <li {...props} style={{ fontWeight: selected ? theme.typography.fontWeightMedium : theme.typography.fontWeightRegular }}>
-                        {option}
-                    </li>
-                    )}
-                />
                 </Grid>
                 <Grid item xs={12}>
                     <Button
@@ -162,7 +150,7 @@ export default function RegisterSupplierForm(props) {
                         color="success"
                         sx={{ mt: 3, mb: 2, backgroundColor: '#0E681D' }}
                     >
-                        Cadastrar
+                        Salvar
                     </Button>
                 </Grid>
             </Grid>

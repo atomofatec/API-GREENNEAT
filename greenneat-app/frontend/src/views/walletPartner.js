@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import MuiDrawer from '@mui/material/Drawer';
@@ -17,12 +17,15 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import Divider from '@mui/material/Divider';
 import Grid from '@mui/material/Grid';
+import Paper from '@mui/material/Paper';
 import Container from '@mui/material/Container';
 import SolicitarCredButton from '../components/Buttons/SolicitarCredButton';
 import EnviarCredButton from '../components/Buttons/EnviarCredButton';
 import EnviarButton from '../components/Buttons/EnviarButton';
 import Title from '../components/Outros/Title';
 import SubTitle from '../components/Outros/SubTitle';
+import Alert from "@mui/material/Alert";
+import AlertTitle from "@mui/material/AlertTitle";
 import CarteiraCoopSolForm from '../components/Forms/CarteiraCoopSolForm';
 import CarteiraCoopEnvForm from '../components/Forms/CarteiraCoopEnvForm';
 import { mainListItems } from '../components/menus/menuPartner';
@@ -31,10 +34,17 @@ import { API_BASE_URL, PARTNER_TYPE_USER } from '../../env';
 
 const settings = [
   { name: 'Meu Perfil' },
-  { name: 'Ajuda' },
+  { ajuda: 'Ajuda #' },
   'divider',
-  { sair: 'Sair' }
+  { sair: 'Sair' },
 ];  
+
+const alertStyle = {
+  position: 'fixed',
+  top: '10px',
+  right: '10px',
+  zIndex: 9999,
+};
 
 const drawerWidth = 240;
 
@@ -133,6 +143,12 @@ export default function CarteiraCooperativo() {
     setShowEnviarCredito(true);
   };
 
+  const [errorAlertOpen, setErrorAlertOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const [successAlertOpen, setSuccessAlertOpen] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');  
+  
   const sendRequest = async () => {
     
     try{
@@ -150,7 +166,8 @@ export default function CarteiraCooperativo() {
 
       await axios.post(API_BASE_URL + "/transactions/request", data);
     
-      window.alert("Solicitação realizada!")
+      setSuccessMessage("Solicitação realizada!")
+      setSuccessAlertOpen(true);
     }
     else{
       const data = {
@@ -158,17 +175,50 @@ export default function CarteiraCooperativo() {
         amount: valor
       };
       await axios.post(API_BASE_URL + "/transactions/transfer", data);
-      window.alert("Transferencia realizada!")
+      setSuccessMessage("Transferencia realizada!")
+      setSuccessAlertOpen(true);
     }
 
     setValor("")
     setCnpj("")
 
     } catch(error){
-      window.alert(error.response.data)
+      setErrorMessage(error.response.data);
+      setErrorAlertOpen(true);
     }
   }
 
+  const [autoCloseTimeout, setAutoCloseTimeout] = useState(null);
+
+  useEffect(() => {
+    if (errorAlertOpen) {
+      const timeout = setTimeout(() => {
+        setErrorAlertOpen(false);
+      }, 5000);
+      setAutoCloseTimeout(timeout);
+    } else {
+      if (autoCloseTimeout) {
+        clearTimeout(autoCloseTimeout);
+        setAutoCloseTimeout(null);
+      }
+    }
+  }, [errorAlertOpen]);
+
+  const [autoCloseSuccessTimeout, setAutoCloseSuccessTimeout] = useState(null);
+
+  useEffect(() => {
+    if (successAlertOpen) {
+      const timeout = setTimeout(() => {
+        setSuccessAlertOpen(false);
+      }, 5000);
+      setAutoCloseSuccessTimeout(timeout);
+    } else {
+      if (autoCloseSuccessTimeout) {
+        clearTimeout(autoCloseSuccessTimeout);
+        setAutoCloseSuccessTimeout(null);
+      }
+    }
+  }, [successAlertOpen]);
 
   //obter o usuario dos cookies e verifica o type user 
   let user = document.cookie.split("=")
@@ -181,7 +231,7 @@ export default function CarteiraCooperativo() {
     <ThemeProvider theme={defaultTheme}>
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
-        <AppBar position="absolute" open={open} sx={{ backgroundColor: '#3B8F5C', height: 72 }} elevation={0}>
+        <AppBar position="absolute" open={open} sx={{ backgroundColor: '#3B8F5C', height: 72 }} elevation={2}>
           <Toolbar
             sx={{
               pr: '24px',
@@ -232,18 +282,22 @@ export default function CarteiraCooperativo() {
                     open={Boolean(anchorElUser)}
                     onClose={handleCloseUserMenu}
                     >
-                    <div style={{ margin: '5px 20px 10px 20px', color:'#0E681D' }}>
+                    <div style={{ margin: '5px 20px 0px 20px', color:'#0E681D' }}>
                         <strong>
                             Parceiro Cooperativo
                         </strong>
                     </div>
+                    <div style={{ margin: '0px 20px 10px 20px', color: 'grey' }}>
+											@email.com
+										</div>
                     <Divider />
                     {settings.map((setting, index) => (
                     setting === 'divider' ? (
                         <Divider key={index} />
                     ) : (
                         <MenuItem key={setting.name} onClick={handleCloseUserMenu}>
-                        <Typography textAlign="center">{setting.name}</Typography>
+                        <Typography textAlign="center"><Link href='/meu-perfil-cooperativo' sx={{textDecoration: 'none', color: 'inherit'}}>{setting.name}</Link></Typography>
+                        <Typography textAlign="center"><Link href='#' sx={{textDecoration: 'none', color: 'inherit'}}>{setting.ajuda}</Link></Typography>
                         <Typography textAlign="center"><Link href='/' sx={{textDecoration: 'none', color: 'inherit'}}>{setting.sair}</Link></Typography>
                         </MenuItem>
                     )
@@ -287,7 +341,7 @@ export default function CarteiraCooperativo() {
         <Box
           component="main"
           sx={{
-            backgroundColor: '#F6F2C7',
+            backgroundColor: 'white',
             flexGrow: 1,
             height: '100vh',
             display: 'flex',
@@ -314,7 +368,8 @@ export default function CarteiraCooperativo() {
 
 
           {showSolicitarCredito && (
-          <Container maxWidth="lg" sx={{ m: 'auto', backgroundColor: 'white', borderRadius: 1, marginTop: '20px', marginBottom: '16px', overflow: 'auto'}}>
+          <Paper sx={{ width: '84%',  display: 'flex', flexDirection: 'column', marginTop: '40px', }} elevation={2}>
+            <Container maxWidth="lg" sx={{ m: 'auto', backgroundColor: 'white', borderRadius: 1,  marginBottom: '16px', overflow: 'auto'}}>
               <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{marginBottom: '20px', marginTop: '20px' }}>
                 <Grid item xs={6}>
                   <Title>Solicitar Crédito</Title>
@@ -344,44 +399,63 @@ export default function CarteiraCooperativo() {
                   <EnviarButton onClick={sendRequest}/>
                 </Grid>
               </Grid>
-          </Container>
+            </Container>
+          </Paper>
           )}
 
           {showEnviarCredito && (
-          <Container maxWidth="lg" sx={{ m: 'auto', backgroundColor: 'white', borderRadius: 1, marginTop: '20px', marginBottom: '16px', overflow: 'auto'}}>
-            <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{marginBottom: '20px', marginTop: '20px' }}>
-              <Grid item xs={6}>
-                <Title>Enviar Crédito</Title>
-                <SubTitle>Estabelecimento</SubTitle>
+          <Paper sx={{ width: '84%',  display: 'flex', flexDirection: 'column', marginTop: '40px', }} elevation={2}>
+            <Container maxWidth="lg" sx={{ m: 'auto', backgroundColor: 'white', borderRadius: 1,  marginBottom: '16px', overflow: 'auto'}}>
+              <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{marginBottom: '20px', marginTop: '20px' }}>
+                <Grid item xs={6}>
+                  <Title>Enviar Crédito</Title>
+                  <SubTitle>Estabelecimento</SubTitle>
+                </Grid>
+                <Grid item xs={6}>
+                  <Box display="flex" justifyContent="flex-end" alignItems="center">
+                    <Title>$100</Title>
+                  </Box>
+                  <Box textAlign="right">
+                    <SubTitle>Moedas Greenneat</SubTitle>
+                  </Box>
+                </Grid>
               </Grid>
-              <Grid item xs={6}>
-                <Box display="flex" justifyContent="flex-end" alignItems="center">
-                  <Title>$100</Title>
-                </Box>
-                <Box textAlign="right">
-                  <SubTitle>Moedas Greenneat</SubTitle>
-                </Box>
+              <Divider />
+              <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{marginBottom: '20px', marginTop: '10px' }}>
+                <Grid item xs={6}>
+                  <CarteiraCoopEnvForm cnpj={cnpj} valor={valor} onChangeCnpj={handleCnpjChange} onChangeValor={handleValorChange}/>
+                </Grid>
+                <Grid item xs={6}>
+                </Grid>
               </Grid>
-            </Grid>
-            <Divider />
-            <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{marginBottom: '20px', marginTop: '10px' }}>
-              <Grid item xs={6}>
-                <CarteiraCoopEnvForm cnpj={cnpj} valor={valor} onChangeCnpj={handleCnpjChange} onChangeValor={handleValorChange}/>
+              <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{marginBottom: '20px', marginTop: '10px' }}>
+                <Grid item xs={6}>
+                </Grid>
+                <Grid item xs={6}>
+                  <EnviarButton onClick={sendRequest} />
+                </Grid>
               </Grid>
-              <Grid item xs={6}>
-              </Grid>
-            </Grid>
-            <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{marginBottom: '20px', marginTop: '10px' }}>
-              <Grid item xs={6}>
-              </Grid>
-              <Grid item xs={6}>
-                <EnviarButton onClick={sendRequest} />
-              </Grid>
-            </Grid>
-          </Container>
+            </Container>
+          </Paper>
           )}
         </Box>
       </Box>
+      {errorAlertOpen && (
+        <div style={alertStyle}>
+          <Alert severity="error">
+            <AlertTitle>Erro</AlertTitle>
+            {errorMessage}
+          </Alert>
+        </div>
+      )}
+      {successAlertOpen && (
+        <div style={alertStyle}>
+          <Alert severity="success">
+            <AlertTitle>Sucesso</AlertTitle>
+            {successMessage}
+          </Alert>
+        </div>
+      )}
     </ThemeProvider>
   );
 }
