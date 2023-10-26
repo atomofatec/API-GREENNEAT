@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from 'react';
 import { styled, createTheme, ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import MuiDrawer from "@mui/material/Drawer";
@@ -18,7 +18,9 @@ import MenuItem from "@mui/material/MenuItem";
 import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
 import Container from "@mui/material/Container";
-import TextField from "@mui/material/TextField";
+import Paper from '@mui/material/Paper';
+import Alert from "@mui/material/Alert";
+import AlertTitle from "@mui/material/AlertTitle";
 import CarteiraEstabForm from "../components/Forms/CarteiraEstabForm";
 import EnviarButton from "../components/Buttons/EnviarButton";
 import Title from "../components/Outros/Title";
@@ -28,11 +30,18 @@ import {API_BASE_URL, GREENEAT_DOCUMENT, SUPPLIER_TYPE_USER} from "../../env.js"
 import axios from "axios";
 
 const settings = [
-  { name: "Meu Perfil" },
-  { name: "Ajuda" },
-  "divider",
-  { sair: "Sair" },
-];
+  { name: 'Meu Perfil' },
+  { ajuda: 'Ajuda #' },
+  'divider',
+  { sair: 'Sair' },
+]; 
+
+const alertStyle = {
+  position: 'fixed',
+  top: '10px',
+  right: '10px',
+  zIndex: 9999,
+};
 
 const drawerWidth = 240;
 
@@ -106,6 +115,12 @@ export default function CarteiraEstabelecimento() {
     setAnchorElUser(null);
   };
 
+  const [errorAlertOpen, setErrorAlertOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const [successAlertOpen, setSuccessAlertOpen] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');  
+
   const sendTransfer = async () => {
 
     try{
@@ -122,11 +137,13 @@ export default function CarteiraEstabelecimento() {
 
       await axios.post(API_BASE_URL + "/transactions/transfer", data);
       
-      window.alert("Transferência realizada!")
+      setSuccessMessage('Transferência realizada!');
+      setSuccessAlertOpen(true);
       setValor("")
 
     } catch(error){
-      window.alert(error.response.data)
+      setErrorMessage(error.response.data);
+      setErrorAlertOpen(true);
     }
     
   };
@@ -146,7 +163,7 @@ export default function CarteiraEstabelecimento() {
           position="absolute"
           open={open}
           sx={{ backgroundColor: "#3B8F5C", height: 72 }}
-          elevation={0}
+          elevation={2}
         >
           <Toolbar
             sx={{
@@ -212,37 +229,23 @@ export default function CarteiraEstabelecimento() {
                       open={Boolean(anchorElUser)}
                       onClose={handleCloseUserMenu}
                     >
-                      <div
-                        style={{
-                          margin: "5px 20px 10px 20px",
-                          color: "#0E681D",
-                        }}
-                      >
-                        <strong>Estabelecimento</strong>
+                      <div style={{ margin: '5px 20px 0px 20px', color:'#0E681D' }}>
+                        <strong>
+                          Estabelecimento
+                        </strong>
+                      </div>
+                      <div style={{ margin: '0px 20px 10px 20px', color: 'grey' }}>
+                        @email.com
                       </div>
                       <Divider />
                       {settings.map((setting, index) =>
                         setting === "divider" ? (
                           <Divider key={index} />
                         ) : (
-                          <MenuItem
-                            key={setting.name}
-                            onClick={handleCloseUserMenu}
-                          >
-                            <Typography textAlign="center">
-                              {setting.name}
-                            </Typography>
-                            <Typography textAlign="center">
-                              <Link
-                                href="/"
-                                sx={{
-                                  textDecoration: "none",
-                                  color: "inherit",
-                                }}
-                              >
-                                {setting.sair}
-                              </Link>
-                            </Typography>
+                          <MenuItem key={setting.name} onClick={handleCloseUserMenu}>
+                          <Typography textAlign="center"><Link href='/meu-perfil-estabelecimento' sx={{textDecoration: 'none', color: 'inherit'}}>{setting.name}</Link></Typography>
+                          <Typography textAlign="center"><Link href='#' sx={{textDecoration: 'none', color: 'inherit'}}>{setting.ajuda}</Link></Typography>
+                          <Typography textAlign="center"><Link href='/' sx={{textDecoration: 'none', color: 'inherit'}}>{setting.sair}</Link></Typography>
                           </MenuItem>
                         )
                       )}
@@ -285,7 +288,7 @@ export default function CarteiraEstabelecimento() {
         <Box
           component="main"
           sx={{
-            backgroundColor: "#F6F2C7",
+            backgroundColor: "white",
             flexGrow: 1,
             height: "100vh",
             display: "flex",
@@ -294,17 +297,8 @@ export default function CarteiraEstabelecimento() {
           }}
         >
           <Toolbar />
-          <Container
-            maxWidth="lg"
-            sx={{
-              m: "auto",
-              backgroundColor: "white",
-              borderRadius: 1,
-              marginTop: "40px",
-              marginBottom: "16px",
-              overflow: "auto",
-            }}
-          >
+          <Paper sx={{ width: '84%',  display: 'flex', flexDirection: 'column', marginTop: '40px', }} elevation={2}>
+           <Container maxWidth="lg" sx={{ m: 'auto', backgroundColor: 'white', borderRadius: 1,  marginBottom: '16px', overflow: 'auto'}}>
             <Grid
               container
               rowSpacing={1}
@@ -351,9 +345,26 @@ export default function CarteiraEstabelecimento() {
                 <EnviarButton onClick={sendTransfer} />
               </Grid>
             </Grid>
-          </Container>
+            </Container>
+          </Paper>
         </Box>
       </Box>
+      {errorAlertOpen && (
+        <div style={alertStyle}>
+          <Alert severity="error">
+            <AlertTitle>Erro</AlertTitle>
+            {errorMessage}
+          </Alert>
+        </div>
+      )}
+      {successAlertOpen && (
+        <div style={alertStyle}>
+          <Alert severity="success">
+            <AlertTitle>Sucesso</AlertTitle>
+            {successMessage}
+          </Alert>
+        </div>
+      )}
     </ThemeProvider>
   );
 }

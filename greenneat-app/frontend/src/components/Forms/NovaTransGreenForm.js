@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
+import InputAdornment from '@mui/material/InputAdornment';
 import TextField from '@mui/material/TextField';
 
 function NovaTransGreenForm(props) {
   
-
   return (
     <>
       <TextField
@@ -33,6 +33,9 @@ function NovaTransGreenForm(props) {
         style={{ backgroundColor: 'white' }}
         value={props.valor}
         onChange={props.valueChange}
+        InputProps={{
+          endAdornment: <InputAdornment position="end">R$</InputAdornment>,
+        }}
       />
     </>
   );

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
+import InputAdornment from '@mui/material/InputAdornment';
 import TextField from '@mui/material/TextField';
 
 function CarteiraEstabForm(props) {
-  
 
   return (
     <>
@@ -31,6 +31,9 @@ function CarteiraEstabForm(props) {
         style={{ backgroundColor: 'white' }}
         value={props.value}
         onChange={props.onChange}
+        InputProps={{
+          endAdornment: <InputAdornment position="end">R$</InputAdornment>,
+        }}
       />
     </>
   );

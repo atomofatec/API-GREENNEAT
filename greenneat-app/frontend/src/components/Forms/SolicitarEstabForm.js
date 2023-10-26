@@ -76,7 +76,7 @@ function SolicitarEstabForm({ style }) {
         value={props.quantity}
         onChange={props.quantityChange}
         InputProps={{
-          endAdornment: <InputAdornment position="end">ml</InputAdornment>,
+          endAdornment: <InputAdornment position="end">L</InputAdornment>,
         }}
       />
       <TextField
@@ -127,10 +127,14 @@ function SolicitarEstabForm({ style }) {
         label="Valor"
         name="value"
         autoComplete="value"
+        required
         autoFocus
         style={{ backgroundColor: 'white' }}
         value={props.value}
         onChange={props.valueChange}
+        InputProps={{
+          endAdornment: <InputAdornment position="end">R$</InputAdornment>,
+        }}
       />
     </>
   );

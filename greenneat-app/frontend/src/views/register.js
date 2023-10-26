@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState, useEffect } from 'react';
 import Button from "@mui/material/Button";
 //import CssBaseline from '@mui/material/CssBaseline';
 import { Link, useNavigate } from "react-router-dom";
@@ -6,6 +6,8 @@ import { Link, useNavigate } from "react-router-dom";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
+import Alert from "@mui/material/Alert";
+import AlertTitle from "@mui/material/AlertTitle";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Container, Divider } from "@mui/material";
 import Logo from "../images/logo_greenneat.png";
@@ -17,11 +19,18 @@ import {API_BASE_URL, SUPPLIER_TYPE_USER, PARTNER_TYPE_USER} from "../../env.js"
 const defaultTheme = createTheme();
 
 const backgroundColor = {
-  backgroundColor: "#F6F2C7",
+  backgroundColor: "white",
 };
 
 const fontColor = {
   color: "#0E681D",
+};
+
+const alertStyle = {
+  position: 'fixed',
+  top: '10px',
+  right: '10px',
+  zIndex: 9999,
 };
 
 export default function Register() {
@@ -76,10 +85,12 @@ export default function Register() {
 
     try {
       await axios.post(API_BASE_URL + "/users", body);
-      window.alert("Cadastro realizado com sucesso");
+      setSuccessMessage("Cadastro realizado com sucesso");
+      setSuccessAlertOpen(true);
       navigate("/");
     } catch (error) {
-      window.alert(error.response.data);
+      setErrorMessage(error.response.data);
+      setErrorAlertOpen(true);
     }
   };
 
@@ -100,6 +111,44 @@ export default function Register() {
       return "Cadastro Cooperativo";
     }
   };
+
+  const [errorAlertOpen, setErrorAlertOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const [successAlertOpen, setSuccessAlertOpen] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');  
+
+  const [autoCloseTimeout, setAutoCloseTimeout] = useState(null);
+
+  useEffect(() => {
+    if (errorAlertOpen) {
+      const timeout = setTimeout(() => {
+        setErrorAlertOpen(false);
+      }, 5000);
+      setAutoCloseTimeout(timeout);
+    } else {
+      if (autoCloseTimeout) {
+        clearTimeout(autoCloseTimeout);
+        setAutoCloseTimeout(null);
+      }
+    }
+  }, [errorAlertOpen]);
+
+  const [autoCloseSuccessTimeout, setAutoCloseSuccessTimeout] = useState(null);
+
+  useEffect(() => {
+    if (successAlertOpen) {
+      const timeout = setTimeout(() => {
+        setSuccessAlertOpen(false);
+      }, 5000);
+      setAutoCloseSuccessTimeout(timeout);
+    } else {
+      if (autoCloseSuccessTimeout) {
+        clearTimeout(autoCloseSuccessTimeout);
+        setAutoCloseSuccessTimeout(null);
+      }
+    }
+  }, [successAlertOpen]);
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -122,7 +171,7 @@ export default function Register() {
               <Grid item xs={0} md={6} lg={6}>
                 <Box
                   sx={{
-                    backgroundColor: "#136935",
+                    backgroundColor: "#0E681D",
                     height: "100%",
                     flexDirection: "column",
                     alignItems: "center",
@@ -140,7 +189,7 @@ export default function Register() {
                     color={"white"}
                     fontWeight={"bold"}
                     mt={5}
-                    fontSize={"3vw"}
+                    fontSize={"25px"}
                     sx={{
                       textAlign: "center",
                     }}
@@ -152,7 +201,7 @@ export default function Register() {
                     variant="h5"
                     color={"white"}
                     fontWeight={"bold"}
-                    fontSize={"3vw"}
+                    fontSize={"25px"}
                     sx={{
                       textAlign: "center",
                     }}
@@ -164,7 +213,7 @@ export default function Register() {
                       my: 5,
                       backgroundColor: "white",
                       width: "85%",
-                      height: "5px",
+                      height: "3px",
                     }}
                   />
                   {/*Botões*/}
@@ -179,7 +228,7 @@ export default function Register() {
                       backgroundColor:
                         selectedOption === "estabelecimento"
                           ? "white"
-                          : "#136935",
+                          : "#0E681D",
                       border: `3px solid ${
                         selectedOption === "estabelecimento"
                           ? "#3B8F5C"
@@ -204,7 +253,7 @@ export default function Register() {
                       mt: 3,
                       mb: 2,
                       backgroundColor:
-                        selectedOption === "cooperativo" ? "white" : "#136935",
+                        selectedOption === "cooperativo" ? "white" : "#0E681D",
                       border: `3px solid ${
                         selectedOption === "cooperativo" ? "#3B8F5C" : "#F3EEBF"
                       }`,
@@ -218,7 +267,7 @@ export default function Register() {
                   </Button>
                   <Typography
                     color={"#C8C8C8"}
-                    fontSize={20}
+                    fontSize={'1vw'}
                     sx={{ textAlign: "center", mt: 2 }}
                   >
                     Já possui uma conta? <br />
@@ -240,19 +289,19 @@ export default function Register() {
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "center",
-                    backgroundColor: "#F6F2C7",
+                    backgroundColor: "white",
                   }}
                 >
                   <Box
                     sx={{
                       display: "flex",
                       alignItems: "center",
-                      backgroundColor: "#F6F2C7",
+                      backgroundColor: "white",
                     }}
                   >
                     <Divider
                       sx={{
-                        backgroundColor: "#136935",
+                        backgroundColor: "#0E681D",
                         my: 1,
                         height: 3,
                         width: "10vw",
@@ -263,7 +312,7 @@ export default function Register() {
                       variant="h5"
                       style={fontColor}
                       fontWeight={"bold"}
-                      fontSize={35}
+                      fontSize={30}
                       sx={{ textAlign: "center" }}
                       mx={1}
                     >
@@ -272,7 +321,7 @@ export default function Register() {
                     </Typography>
                     <Divider
                       sx={{
-                        backgroundColor: "#136935",
+                        backgroundColor: "#0E681D",
                         my: 1,
                         height: 3,
                         width: "10vw",
@@ -294,6 +343,22 @@ export default function Register() {
           </Container>
         </Box>
       </Box>
+      {errorAlertOpen && (
+        <div style={alertStyle}>
+          <Alert severity="error">
+            <AlertTitle>Erro</AlertTitle>
+            {errorMessage}
+          </Alert>
+        </div>
+      )}
+      {successAlertOpen && (
+        <div style={alertStyle}>
+          <Alert severity="success">
+            <AlertTitle>Sucesso</AlertTitle>
+            {successMessage}
+          </Alert>
+        </div>
+      )}
     </ThemeProvider>
   );
 }

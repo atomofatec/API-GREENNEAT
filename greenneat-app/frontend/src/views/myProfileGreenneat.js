@@ -15,26 +15,22 @@ import Menu from '@mui/material/Menu';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import Divider from '@mui/material/Divider';
-import Skeleton from '@mui/material/Skeleton';
-import PropTypes from 'prop-types';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import Title from '../components/Outros/Title';
 import SubTitle from '../components/Outros/SubTitle';
 import Container from '@mui/material/Container';
-import AvatarImage from "../images/PerfilGreenneat.png";
+import ProfileGreenForm from "../components/Forms/ProfileGreenForm";
+import SenhaForm from "../components/Forms/SenhaForm";
 import { mainListItems } from '../components/menus/menuGreenneat';
-import PartnerSupplierRegionChart from '../components/Charts/PartnerSupplierRegionChart';
-import SupplierSizeChart from '../components/Charts/SupplierSizeChart';
-import RegionChart from '../components/Charts/RegionChart';
-import PartnerCredit from '../components/Charts/PartnerCredit';
+import AvatarImage from "../images/PerfilGreenneat.png";
 
 const settings = [
   { name: 'Meu Perfil' },
   { ajuda: 'Ajuda #' },
   'divider',
   { sair: 'Sair' },
-];  
+];
 
 const drawerWidth = 240;
 
@@ -84,36 +80,6 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 
-//Retangulos
-function Media(props) {
-  const { loading = false } = props;
-
-  return (
-    <Container maxWidth="lg">
-      <Grid container spacing={2} justify="center">
-        {(loading ? Array.from(new Array(3)) : []).map((item, index) => (
-          <Grid item xs={12} sm={6} md={4} lg={3} key={index} sx={{ mx: 3 }}>
-            <Box sx={{ width: '100%', my: 2 }}>
-              {item ? (
-                <img
-                  style={{ width: 300, height: 200 }}
-                />
-              ) : (
-                <Skeleton variant="rectangular" width={300} height={200} />
-              )}
-            </Box>
-          </Grid>
-        ))}
-      </Grid>
-    </Container>
-  );
-}
-
-Media.propTypes = {
-  loading: PropTypes.bool,
-};
-//Fim Retangulos
-
 export default function DashboardGreenneat() {
   const [open, setOpen] = React.useState(false);
   const toggleDrawer = () => {
@@ -132,7 +98,7 @@ export default function DashboardGreenneat() {
 
   return (
     <ThemeProvider theme={defaultTheme}>
-      <Box sx={{ display: 'flex', marginBottom: '40px' }}>
+      <Box sx={{ display: 'flex' }}>
         <CssBaseline />
         <AppBar position="absolute" open={open} sx={{ backgroundColor: '#3B8F5C', height: 72 }} elevation={2}>
           <Toolbar
@@ -165,25 +131,25 @@ export default function DashboardGreenneat() {
                 <Typography variant="body2" color="white" fontFamily="'Century Gothic', Futura, sans-serif">
                   <Box sx={{ flexGrow: 0 }}>
                     <Tooltip title="Abrir configurações">
-                    <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                      <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                         <img src={AvatarImage} alt="Avatar" style={{ width: '40px', height: '40px', borderRadius: '50%' }} />
-                    </IconButton>
+                      </IconButton>
                     </Tooltip>
                     <Menu
-                    sx={{ mt: '45px' }}
-                    id="menu-appbar"
-                    anchorEl={anchorElUser}
-                    anchorOrigin={{
+                      sx={{ mt: '45px' }}
+                      id="menu-appbar"
+                      anchorEl={anchorElUser}
+                      anchorOrigin={{
                         vertical: 'top',
                         horizontal: 'right',
-                    }}
-                    keepMounted
-                    transformOrigin={{
+                      }}
+                      keepMounted
+                      transformOrigin={{
                         vertical: 'top',
                         horizontal: 'right',
-                    }}
-                    open={Boolean(anchorElUser)}
-                    onClose={handleCloseUserMenu}
+                      }}
+                      open={Boolean(anchorElUser)}
+                      onClose={handleCloseUserMenu}
                     >
                       <div style={{ margin: '5px 20px 0px 20px', color: '#0E681D' }}>
                         <strong>
@@ -193,18 +159,18 @@ export default function DashboardGreenneat() {
                       <div style={{ margin: '0px 20px 10px 20px', color: 'grey' }}>
 												greenneat@email.com
 											</div>
-                    <Divider />
-                    {settings.map((setting, index) => (
-                    setting === 'divider' ? (
-                        <Divider key={index} />
-                    ) : (
-                        <MenuItem key={setting.name} onClick={handleCloseUserMenu}>
-                        <Typography textAlign="center"><Link href='/meu-perfil-Greenneat' sx={{textDecoration: 'none', color: 'inherit'}}>{setting.name}</Link></Typography>
-                        <Typography textAlign="center"><Link href='#' sx={{textDecoration: 'none', color: 'inherit'}}>{setting.ajuda}</Link></Typography>
-                        <Typography textAlign="center"><Link href='/' sx={{textDecoration: 'none', color: 'inherit'}}>{setting.sair}</Link></Typography>
-                        </MenuItem>
-                    )
-                    ))}
+                      <Divider />
+                      {settings.map((setting, index) => (
+                        setting === 'divider' ? (
+                          <Divider key={index} />
+                        ) : (
+                          <MenuItem key={setting.name} onClick={handleCloseUserMenu}>
+                            <Typography textAlign="center"><Link href='/meu-perfil-Greenneat' sx={{ textDecoration: 'none', color: 'inherit' }}>{setting.name}</Link></Typography>
+                            <Typography textAlign="center"><Link href='#' sx={{ textDecoration: 'none', color: 'inherit' }}>{setting.ajuda}</Link></Typography>
+                            <Typography textAlign="center"><Link href='/' sx={{ textDecoration: 'none', color: 'inherit' }}>{setting.sair}</Link></Typography>
+                          </MenuItem>
+                        )
+                      ))}
                     </Menu>
                   </Box>
                 </Typography>
@@ -250,66 +216,48 @@ export default function DashboardGreenneat() {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-        }}
+          }}
         >
           <Toolbar />
-          <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{ marginBottom: '5px', marginTop: '40px' }}>
-            <Paper sx={{ width: '80%', margin: '0 auto', display: 'flex', flexDirection: 'column', marginBottom: '40px' }} elevation={2}>
-              <Container maxWidth="lg" sx={{ m: 'auto', overflow: 'auto'}}>
-                <Grid
-                    container
-                    rowSpacing={1}
-                    columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-                    sx={{ marginBottom: "20px", marginTop: "20px" }}
-                  >
+          <Grid container spacing={2} sx={{ marginBottom: '5px', marginTop: '40px', width: '80%' }}>
+            <Grid item xs={4}>
+              <Paper sx={{ margin: '0 auto', display: 'flex', flexDirection: 'column', height: '100%' }} elevation={2}>
+                <Container maxWidth="lg" sx={{ m: 'auto', overflow: 'auto' }}>
+                  <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                    <img src={AvatarImage} alt="Perfil" height="122px" />
+                    <Title>Greenneat</Title>
+                    <SubTitle>Limpeza sustentável</SubTitle>
+                    <SubTitle>Administrador</SubTitle>
+                  </Grid>
+                </Container>
+              </Paper>
+            </Grid>
+            <Grid item xs={8}>
+              <Paper sx={{ margin: '0 auto', display: 'flex', flexDirection: 'column' }} elevation={2}>
+                <Container maxWidth="lg" sx={{ m: 'auto', marginBottom: '16px', overflow: 'auto' }}>
+                  <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{ marginTop: "20px" }}>
                     <Grid item xs={6}>
-                      <Title>Dashboards</Title>
+                      <Title>Meu Perfil</Title>
+                      <SubTitle>As informações não podem ser editadas</SubTitle>
                     </Grid>
-                </Grid>
-                <Grid container spacing={2}>
-                  <Grid item xs={7}>
-                    <Paper sx={{ margin: '0 auto', display: 'flex', flexDirection: 'column', height: '100%' }} elevation={2}>
-                      <Container maxWidth="lg" sx={{ m: 'auto', overflow: 'auto' }}>
-                        <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{ display: 'flex', flexDirection: 'column', marginTop: '15px', marginBottom: '10px', marginLeft: '10px' }}>
-                          <center><SubTitle>Parceiros e estabelecimentos por região</SubTitle></center>
-                          <PartnerSupplierRegionChart/>
-                        </Grid>
-                      </Container>
-                    </Paper>
                   </Grid>
-                  <Grid item xs={5}>
-                    <Paper sx={{ margin: '0 auto', display: 'flex', flexDirection: 'column', height: '100%', overflow: 'auto' }} elevation={2}>  
-                      <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{ display: 'flex', flexDirection: 'column', marginTop: '15px', marginBottom: '10px' }}>
-                        <center><SubTitle>Volumes de óleo descartados corretamente</SubTitle></center>
-                        <center><SubTitle>por estabelecimentos</SubTitle></center>
-                        <SupplierSizeChart/>
-                      </Grid>
-                    </Paper>
-                  </Grid>
-                </Grid>
-                <Grid container spacing={2} sx={{ marginBottom: '5px', marginTop: '20px'}}>
-                  <Grid item xs={7} sx={{ marginBottom: '40px' }}>
-                    <Paper sx={{ margin: '0 auto', display: 'flex', flexDirection: 'column', height: '100%' }} elevation={2}>
-                      <Container maxWidth="lg" sx={{ m: 'auto', overflow: 'auto' }}>
-                        <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{ display: 'flex', flexDirection: 'column', marginTop: '15px', marginBottom: '10px', marginLeft: '10px' }}>
-                          <center><SubTitle>Regiões com melhor performance de descarte</SubTitle></center>
-                          <RegionChart/>
-                          </Grid>
-                      </Container>
-                    </Paper>
-                  </Grid>
-                  <Grid item xs={5} sx={{ marginBottom: '40px' }}>
-                    <Paper sx={{ margin: '0 auto', display: 'flex', flexDirection: 'column', height: '100%', overflow: 'auto' }} elevation={2}>  
-                      <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{ display: 'flex', flexDirection: 'column', marginTop: '15px', marginBottom: '10px' }}>
-                        <center><SubTitle>Parceiros que mais participam da economia circular</SubTitle></center>
-                        <PartnerCredit/>
-                      </Grid>
-                    </Paper>
-                  </Grid>
-                </Grid>
-              </Container>
-            </Paper>
+                  <ProfileGreenForm />
+                </Container>
+              </Paper>
+            </Grid>
           </Grid>
+          <Paper sx={{ width: '80%', display: 'flex', flexDirection: 'column', marginTop: '40px', marginBottom: '40px' }} elevation={2}>
+            <Container maxWidth="lg" sx={{ m: 'auto', backgroundColor: 'white', borderRadius: 1, marginBottom: '16px', overflow: 'auto' }}>
+              <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{ marginTop: "20px" }}>
+                <Grid item xs={6}>
+                  <Title>Senha</Title>
+                  <SubTitle>A senha pode ser editada</SubTitle>
+                </Grid>
+              </Grid>
+              <SenhaForm />
+            </Container>
+          </Paper>
+          <Grid>.</Grid>
         </Box>
       </Box>
     </ThemeProvider>

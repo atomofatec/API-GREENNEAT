@@ -12,7 +12,7 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import List from '@mui/material/List';
 import Link from '@mui/material/Link';
 import Menu from '@mui/material/Menu';
-import Avatar from '@mui/material/Avatar';
+import AvatarImage from "../images/PerfilGreenneat.png";
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import Divider from '@mui/material/Divider';
@@ -21,13 +21,12 @@ import TableUsersGreenneat from '../components/Tables/TableUsersGreenneat';
 import { mainListItems } from '../components/menus/menuGreenneat';
 import { GREENNEAT_TYPE_USER } from '../../env';
 
-
 const settings = [
 	{ name: 'Meu Perfil' },
-	{ name: 'Ajuda' },
+	{ ajuda: 'Ajuda #' },
 	'divider',
 	{ sair: 'Sair' },
-];
+  ]; 
 
 const drawerWidth = 240;
 
@@ -137,7 +136,7 @@ export default function UsuariosGreenneat() {
 									<Typography variant="body2" color="white" fontFamily="'Century Gothic', Futura, sans-serif">
 										<Tooltip title="Abrir configurações">
 											<IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-												<Avatar sx={{ bgcolor: 'white', color: '#0E681D' }}>G</Avatar>
+												<img src={AvatarImage} alt="Avatar" style={{ width: '40px', height: '40px', borderRadius: '50%' }} />
 											</IconButton>
 										</Tooltip>
 										<Menu
@@ -156,10 +155,13 @@ export default function UsuariosGreenneat() {
 											open={Boolean(anchorElUser)}
 											onClose={handleCloseUserMenu}
 										>
-											<div style={{ margin: '5px 20px 10px 20px', color: '#0E681D' }}>
+											<div style={{ margin: '5px 20px 0px 20px', color: '#0E681D' }}>
 												<strong>
 													Greenneat
 												</strong>
+											</div>
+											<div style={{ margin: '0px 20px 10px 20px', color: 'grey' }}>
+												greenneat@email.com
 											</div>
 											<Divider />
 											{settings.map((setting, index) => (
@@ -167,8 +169,9 @@ export default function UsuariosGreenneat() {
 													<Divider key={index} />
 												) : (
 													<MenuItem key={setting.name} onClick={handleCloseUserMenu}>
-														<Typography textAlign="center">{setting.name}</Typography>
-														<Typography textAlign="center"><Link href='/' sx={{ textDecoration: 'none', color: 'inherit' }}>{setting.sair}</Link></Typography>
+													<Typography textAlign="center"><Link href='/meu-perfil-Greenneat' sx={{textDecoration: 'none', color: 'inherit'}}>{setting.name}</Link></Typography>
+													<Typography textAlign="center"><Link href='#' sx={{textDecoration: 'none', color: 'inherit'}}>{setting.ajuda}</Link></Typography>
+													<Typography textAlign="center"><Link href='/' sx={{textDecoration: 'none', color: 'inherit'}}>{setting.sair}</Link></Typography>
 													</MenuItem>
 												)
 											))}

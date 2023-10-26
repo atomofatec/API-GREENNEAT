@@ -11,6 +11,9 @@ import UsersGreenneat from '../views/usersGreenneat';
 import RequestSupplier from '../views/requestSupplier';
 import ComparatorGreenneat from '../views/comparatorGreenneat';
 import RequestPartner from '../views/requestsViewPartner';
+import MyProfileGreenneat from '../views/myProfileGreenneat';
+import MyProfilePartner from '../views/myProfilePartner';
+import MyProfileSupplier from '../views/myProfileSupplier';
 
 function Router() {
     return(
@@ -27,7 +30,10 @@ function Router() {
             <Route path='/usuarios-Greenneat' element={<UsersGreenneat />}/>
             <Route path='/solicitar-estabelecimento' element={<RequestSupplier />}/>
             <Route path='/comparador-Greenneat' element={<ComparatorGreenneat />}/>
-            <Route path='/solicitacoes-coleta-parceiro' element={<RequestPartner />}/>
+            <Route path='/solicitacoes-coleta-cooperativo' element={<RequestPartner />}/>
+            <Route path='/meu-perfil-Greenneat' element={<MyProfileGreenneat />}/>
+            <Route path='/meu-perfil-cooperativo' element={<MyProfilePartner />}/>
+            <Route path='/meu-perfil-estabelecimento' element={<MyProfileSupplier />}/>
         </Routes>
         </BrowserRouter>
     )

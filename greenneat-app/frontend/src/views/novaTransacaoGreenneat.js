@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import MuiDrawer from '@mui/material/Drawer';
@@ -12,16 +12,19 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import List from '@mui/material/List';
 import Link from '@mui/material/Link';
 import Menu from '@mui/material/Menu';
-import Avatar from '@mui/material/Avatar';
+import AvatarImage from "../images/PerfilGreenneat.png";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import Divider from '@mui/material/Divider';
 import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
+import Paper from '@mui/material/Paper';
 import EnviarButton from '../components/Buttons/EnviarButton';
 import Title from '../components/Outros/Title';
 import SubTitle from '../components/Outros/SubTitle';
+import Alert from "@mui/material/Alert";
+import AlertTitle from "@mui/material/AlertTitle";
 import NovaTransGreenForm from '../components/Forms/NovaTransGreenForm';
 import { mainListItems } from '../components/menus/menuGreenneat';
 import { useNavigate } from 'react-router-dom';
@@ -30,10 +33,17 @@ import { API_BASE_URL, GREENNEAT_TYPE_USER } from '../../env.js'
 
 const settings = [
   { name: 'Meu Perfil' },
-  { name: 'Ajuda' },
+  { ajuda: 'Ajuda #' },
   'divider',
   { sair: 'Sair' },
 ];  
+
+const alertStyle = {
+  position: 'fixed',
+  top: '10px',
+  right: '10px',
+  zIndex: 9999,
+};
 
 const drawerWidth = 240;
 
@@ -127,6 +137,12 @@ export default function NovaTransacaoGreenneat() {
     setValor(numericValue || "0");
   };
 
+  const [errorAlertOpen, setErrorAlertOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const [successAlertOpen, setSuccessAlertOpen] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');  
+
   const sendTransfer = async () => {
 
     try{
@@ -144,16 +160,50 @@ export default function NovaTransacaoGreenneat() {
 
       await axios.post(API_BASE_URL + "/transactions/transfer", data);
       
-      window.alert("Transferência realizada!")
-      setValor("")
-      setCnpj("")
+      setSuccessMessage('Transferência realizada!');
+      setSuccessAlertOpen(true);
+      setValor('');
+      setCnpj('');
 
     } catch(error){
-      window.alert(error.response.data)
+      setErrorMessage(error.response.data);
+      setErrorAlertOpen(true);
     }
     
   };
   
+  const [autoCloseTimeout, setAutoCloseTimeout] = useState(null);
+
+  useEffect(() => {
+    if (errorAlertOpen) {
+      const timeout = setTimeout(() => {
+        setErrorAlertOpen(false);
+      }, 5000);
+      setAutoCloseTimeout(timeout);
+    } else {
+      if (autoCloseTimeout) {
+        clearTimeout(autoCloseTimeout);
+        setAutoCloseTimeout(null);
+      }
+    }
+  }, [errorAlertOpen]);
+
+  const [autoCloseSuccessTimeout, setAutoCloseSuccessTimeout] = useState(null);
+
+  useEffect(() => {
+    if (successAlertOpen) {
+      const timeout = setTimeout(() => {
+        setSuccessAlertOpen(false);
+      }, 5000);
+      setAutoCloseSuccessTimeout(timeout);
+    } else {
+      if (autoCloseSuccessTimeout) {
+        clearTimeout(autoCloseSuccessTimeout);
+        setAutoCloseSuccessTimeout(null);
+      }
+    }
+  }, [successAlertOpen]);
+
   //obter o usuario dos cookies e verifica o type user 
   let user = document.cookie.split("=")
   user = JSON.parse(user[2])
@@ -197,7 +247,7 @@ export default function NovaTransacaoGreenneat() {
                   <Box sx={{ flexGrow: 0 }}>
                     <Tooltip title="Abrir configurações">
                     <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                        <Avatar sx={{ bgcolor: 'white', color: '#0E681D' }}>G</Avatar>
+                        <img src={AvatarImage} alt="Avatar" style={{ width: '40px', height: '40px', borderRadius: '50%' }} />
                     </IconButton>
                     </Tooltip>
                     <Menu
@@ -216,18 +266,22 @@ export default function NovaTransacaoGreenneat() {
                     open={Boolean(anchorElUser)}
                     onClose={handleCloseUserMenu}
                     >
-                    <div style={{ margin: '5px 20px 10px 20px', color:'#0E681D' }}>
-                        <strong>
-                            Greenneat
-                        </strong>
+                    <div style={{ margin: '5px 20px 0px 20px', color: '#0E681D' }}>
+                      <strong>
+                        Greenneat
+                      </strong>
                     </div>
+                    <div style={{ margin: '0px 20px 10px 20px', color: 'grey' }}>
+											greenneat@email.com
+										</div>
                     <Divider />
                     {settings.map((setting, index) => (
                     setting === 'divider' ? (
                         <Divider key={index} />
                     ) : (
                         <MenuItem key={setting.name} onClick={handleCloseUserMenu}>
-                        <Typography textAlign="center">{setting.name}</Typography>
+                        <Typography textAlign="center"><Link href='/meu-perfil-Greenneat' sx={{textDecoration: 'none', color: 'inherit'}}>{setting.name}</Link></Typography>
+                        <Typography textAlign="center"><Link href='#' sx={{textDecoration: 'none', color: 'inherit'}}>{setting.ajuda}</Link></Typography>
                         <Typography textAlign="center"><Link href='/' sx={{textDecoration: 'none', color: 'inherit'}}>{setting.sair}</Link></Typography>
                         </MenuItem>
                     )
@@ -271,7 +325,7 @@ export default function NovaTransacaoGreenneat() {
         <Box
           component="main"
           sx={{
-            backgroundColor: '#F6F2C7',
+            backgroundColor: 'white',
             flexGrow: 1,
             height: '100vh',
             display: 'flex',
@@ -280,7 +334,8 @@ export default function NovaTransacaoGreenneat() {
         }}
         >
           <Toolbar />
-          <Container maxWidth="lg" sx={{ m: 'auto', backgroundColor: 'white', borderRadius: 1, marginTop: '40px', marginBottom: '16px', overflow: 'auto'}}>
+          <Paper sx={{ width: '80%',  display: 'flex', flexDirection: 'column', marginTop: '40px', }} elevation={2}>
+          <Container maxWidth="lg" sx={{ m: 'auto', backgroundColor: 'white', borderRadius: 1,  marginBottom: '16px', overflow: 'auto'}}>
             <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{ marginBottom: '20px', marginTop: '20px' }}>
               <Grid item xs={6} sx={{ display: 'flex', alignItems: 'center', marginBottom: '20px', marginTop: '10px' }}>
                 <ArrowBackIcon color="success" onClick={redirectToTransacoesGreenneat} style={{ cursor: 'pointer', marginRight: '5px', marginBottom: '30px' }} />
@@ -313,9 +368,26 @@ export default function NovaTransacaoGreenneat() {
                 <EnviarButton onClick={sendTransfer}/>
               </Grid>
             </Grid>
-          </Container>
+            </Container>
+          </Paper>
         </Box>
       </Box>
+      {errorAlertOpen && (
+        <div style={alertStyle}>
+          <Alert severity="error">
+            <AlertTitle>Erro</AlertTitle>
+            {errorMessage}
+          </Alert>
+        </div>
+      )}
+      {successAlertOpen && (
+        <div style={alertStyle}>
+          <Alert severity="success">
+            <AlertTitle>Sucesso</AlertTitle>
+            {successMessage}
+          </Alert>
+        </div>
+      )}
     </ThemeProvider>
   );
 }
