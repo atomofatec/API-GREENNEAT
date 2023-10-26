@@ -40,7 +40,7 @@ class SupplierSizeChart extends React.Component {
 
   render() {
     return (
-      <div id="chart">
+      <div id="chart" style={{ marginTop: '20px' }}>
         <ReactApexChart options={this.state.options} series={this.state.series} type="donut" />
       </div>
     );
