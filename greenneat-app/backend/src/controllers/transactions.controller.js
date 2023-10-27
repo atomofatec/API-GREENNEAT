@@ -100,9 +100,8 @@ exports.transfer = async (req, res) => {
             await Transaction.transfer(transaction, sender)
         }
         else{
-            const oilSupplierId = await OilSupplier.findByIdAndValue(receiver.id, amount)
             receiver.balance += amount
-            await Transaction.transfer(transaction, sender, receiver, oilSupplierId[0].id)
+            await Transaction.transfer(transaction, sender, receiver)
         }
 
         res.send()

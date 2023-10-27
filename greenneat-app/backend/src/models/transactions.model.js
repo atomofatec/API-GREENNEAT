@@ -55,7 +55,6 @@ Transaction.transfer = async (transaction, sender, receiver = null, oilSupplierI
         await Transaction.create(transaction)
         await User.updateBalance(sender)
         if (receiver) await User.updateBalance(receiver)
-        if (oilSupplierId) await OilSupplier.updateStatus(oilSupplierId)
         await sql.query('COMMIT')
 
     } catch(error){

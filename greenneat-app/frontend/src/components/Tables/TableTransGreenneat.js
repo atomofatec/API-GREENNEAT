@@ -305,7 +305,7 @@ export default function TableTransGreenneat() {
 					let receiver = await axios.get(API_BASE_URL + `/users/` + transaction.idreceiveruser)
 					receiver = receiver.data[0]
 
-					return createData(sender.businessname, receiver.businessname, transaction.amount, formatDate(transaction.date))
+					return createData(sender.businessname, receiver.businessname, transaction.amount, formatDate(transaction.date), receiver.document, transaction.status)
 				}))
 
 				setRows(r)
@@ -434,6 +434,8 @@ export default function TableTransGreenneat() {
 									<TableCell align="center">{row.receiver}</TableCell>
 									<TableCell align="center">{row.valor}</TableCell>
 									<TableCell align="center">{row.data}</TableCell>
+									<TableCell align="center">{row.documento}</TableCell>
+									<TableCell align="center">{row.situacao}</TableCell>
 									<TableCell align="center">{}</TableCell>
 									<TableCell align="center">{}</TableCell>
 								</TableRow>
