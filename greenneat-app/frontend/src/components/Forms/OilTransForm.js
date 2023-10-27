@@ -14,6 +14,18 @@ function OilTransForm(props) {
   
   return (
     <>
+    <TextField
+        margin="normal"
+        color="success"
+        fullWidth
+        disabled
+        id="greenneat"
+        label="Greenneat"
+        name="greenneat"
+        autoComplete="greenneat"
+        autoFocus
+        style={{ backgroundColor: 'white' }}
+      />
       <TextField
         margin="normal"
         color="success"
@@ -27,6 +39,9 @@ function OilTransForm(props) {
         style={{ backgroundColor: 'white' }}
         value={props.valor}
         onChange={props.valorChange}
+        InputProps={{
+          endAdornment: <InputAdornment position="end">R$</InputAdornment>,
+        }}
       />
       <TextField
         margin="normal"
@@ -38,9 +53,12 @@ function OilTransForm(props) {
         name="quantidade"
         autoComplete="quantidade"
         autoFocus
-        style={{ backgroundColor: 'white' }}
+        style={{ backgroundColor: 'white', marginBottom: '25px' }}
         value={props.quantidade}
         onChange={props.quantidadeChange}
+        InputProps={{
+          endAdornment: <InputAdornment position="end">L</InputAdornment>,
+        }}
       />
       <Autocomplete
         id="demo-single-chip"

@@ -299,7 +299,7 @@ export default function OilTransactionPartner() {
               <Grid item xs={6} sx={{ display: 'flex', alignItems: 'center', marginBottom: '20px', marginTop: '10px' }}>
                 <div>
                   <Title>Enviar Óleo</Title>
-                  <SubTitle>Parceiro Cooperativo</SubTitle>
+                  <SubTitle>Greenneat</SubTitle>
                 </div>
               </Grid>
             </Grid>
