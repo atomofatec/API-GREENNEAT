@@ -85,7 +85,7 @@ O desafio consiste em criar uma plataforma que gerencie os créditos a serem usa
 
 ## :calendar: Backlog do Produto
 
-<h1 align="center"><img src="https://github.com/atomofatec/API-GREENNEAT/blob/main/imagens/backlog_produto.png" alt="Backlog do Produto"/></h1> 
+> [Product.Backlog.do.Projeto_Greenneat_atomo.xlsx](https://github.com/atomofatec/API-GREENNEAT/files/12920630/Product.Backlog.do.Projeto_Greenneat_atomo.xlsx)
 
 <br>
 
@@ -106,10 +106,6 @@ O desafio consiste em criar uma plataforma que gerencie os créditos a serem usa
 <br>
 
 <span id="user-stories">
-
-## :calendar: User Stories
-
-> [Product.Backlog.do.Projeto_Greenneat_atomo.xlsx](https://github.com/atomofatec/API-GREENNEAT/files/12920630/Product.Backlog.do.Projeto_Greenneat_atomo.xlsx)
 
 <br>
 
