@@ -46,7 +46,7 @@ class SupplierSizeChart extends React.Component {
       labels: this.props.chartData.map((item) => item.businessname),
     };
     return (
-      <div id="chart">
+      <div id="chart" style={{ marginTop: "20px" }}>
         <ReactApexChart options={options} series={series} type="donut" />
       </div>
     );

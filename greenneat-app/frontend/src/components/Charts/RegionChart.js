@@ -28,7 +28,18 @@ class RegionChart extends React.Component {
         grid: {
           show: false,
         },
+<<<<<<< HEAD
         colors: ["#FFBF00", "#8904B1"],
+=======
+        tooltip: {
+          y: {
+            formatter: function (val) {
+              return val + " litros";
+            }
+          }
+        },
+        colors: ['#FFBF00', '#8904B1'],
+>>>>>>> ca3ac977484a3fdadd05dd5be36caa2c817ab397
       },
     };
   }
@@ -50,12 +61,16 @@ class RegionChart extends React.Component {
     };
     return (
       <div id="chart">
+<<<<<<< HEAD
         <ReactApexChart
           options={options}
           series={series}
           type="bar"
           height={430}
         />
+=======
+        <ReactApexChart options={this.state.options} series={this.state.series} type="bar"  />
+>>>>>>> ca3ac977484a3fdadd05dd5be36caa2c817ab397
       </div>
     );
   }
