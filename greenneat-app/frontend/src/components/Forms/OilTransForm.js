@@ -28,6 +28,20 @@ function OilTransForm(props) {
         value={props.valor}
         onChange={props.valorChange}
       />
+      <TextField
+        margin="normal"
+        color="success"
+        fullWidth
+        required
+        id="quantidade"
+        label="Quantidade"
+        name="quantidade"
+        autoComplete="quantidade"
+        autoFocus
+        style={{ backgroundColor: 'white' }}
+        value={props.quantidade}
+        onChange={props.quantidadeChange}
+      />
       <Autocomplete
         id="demo-single-chip"
         value={props.oilType}
@@ -49,20 +63,6 @@ function OilTransForm(props) {
             {option}
           </li>
         )}
-      />
-      <TextField
-        margin="normal"
-        color="success"
-        fullWidth
-        required
-        id="quantidade"
-        label="Quantidade"
-        name="quantidade"
-        autoComplete="quantidade"
-        autoFocus
-        style={{ backgroundColor: 'white' }}
-        value={props.quantidade}
-        onChange={props.quantidadeChange}
       />
     </>
   );
