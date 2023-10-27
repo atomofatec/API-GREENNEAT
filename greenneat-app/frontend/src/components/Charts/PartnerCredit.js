@@ -73,7 +73,7 @@ class PartnerCredit extends React.Component {
       },
     };
     return (
-      <div id="chart" style={{ width: "400px", height: "400px" }}>
+      <div id="chart" style={{ marginTop: "20px", marginLeft: "20px" }}>
         <ReactApexChart
           options={options}
           series={series}

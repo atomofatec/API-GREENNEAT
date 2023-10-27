@@ -366,7 +366,7 @@ export default function DashboardGreenneat() {
                       <Container maxWidth="lg" sx={{ m: 'auto', overflow: 'auto' }}>
                         <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{ display: 'flex', flexDirection: 'column', marginTop: '15px', marginBottom: '10px', marginLeft: '10px' }}>
                           <center><SubTitle>Parceiros e estabelecimentos por região</SubTitle></center>
-                          <PartnerSupplierRegionChart/>
+                          <PartnerSupplierRegionChart chartData={partnerSupplierRegionChartData}/>
                         </Grid>
                       </Container>
                     </Paper>
@@ -376,7 +376,7 @@ export default function DashboardGreenneat() {
                       <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{ display: 'flex', flexDirection: 'column', marginTop: '15px', marginBottom: '10px' }}>
                         <center><SubTitle>Volumes de óleo descartados corretamente</SubTitle></center>
                         <center><SubTitle>por estabelecimentos</SubTitle></center>
-                        <SupplierSizeChart/>
+                        <SupplierSizeChart chartData={supplierSizeChartData}/>
                       </Grid>
                     </Paper>
                   </Grid>
@@ -387,7 +387,7 @@ export default function DashboardGreenneat() {
                       <Container maxWidth="lg" sx={{ m: 'auto', overflow: 'auto' }}>
                         <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{ display: 'flex', flexDirection: 'column', marginTop: '15px', marginBottom: '10px', marginLeft: '10px' }}>
                           <center><SubTitle>Regiões com melhor performance de descarte</SubTitle></center>
-                          <RegionChart/>
+                          <RegionChart chartData={regionChartData}/>
                           </Grid>
                       </Container>
                     </Paper>
@@ -396,7 +396,7 @@ export default function DashboardGreenneat() {
                     <Paper sx={{ margin: '0 auto', display: 'flex', flexDirection: 'column', height: '100%', overflow: 'auto' }} elevation={2}>  
                       <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{ display: 'flex', flexDirection: 'column', marginTop: '15px', marginBottom: '10px' }}>
                         <center><SubTitle>Parceiros que mais participam da economia circular</SubTitle></center>
-                        <PartnerCredit/>
+                        <PartnerCredit chartData={partnerCreditChartData}/>
                       </Grid>
                     </Paper>
                   </Grid>
