@@ -14,6 +14,7 @@ import RequestPartner from '../views/requestsViewPartner';
 import MyProfileGreenneat from '../views/myProfileGreenneat';
 import MyProfilePartner from '../views/myProfilePartner';
 import MyProfileSupplier from '../views/myProfileSupplier';
+import OilTransactionPartner from '../views/oilTransactionPartner';
 
 function Router() {
     return(
@@ -34,6 +35,7 @@ function Router() {
             <Route path='/meu-perfil-Greenneat' element={<MyProfileGreenneat />}/>
             <Route path='/meu-perfil-cooperativo' element={<MyProfilePartner />}/>
             <Route path='/meu-perfil-estabelecimento' element={<MyProfileSupplier />}/>
+            <Route path='/transacao-oleo' element={<OilTransactionPartner />}/>
         </Routes>
         </BrowserRouter>
     )
