@@ -11,7 +11,7 @@ export const api = axios.create({
     "Access-Control-Allow-Credentials": true,
     "Access-Control-Allow-Origin": "*",
     "Content-Type": "application/json",
-    Authorization: token,
+    "Authorization": token,
   },
 });
 

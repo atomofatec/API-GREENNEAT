@@ -28,6 +28,7 @@ import AlertTitle from "@mui/material/AlertTitle";
 import { mainListItems } from '../components/menus/menuSupplier';
 import axios from 'axios';
 import { API_BASE_URL, SUPPLIER_TYPE_USER } from '../../env.js'
+import { getUser, getUserToken } from '../utils/util';
 
 const settings = [
   { name: 'Meu Perfil' },
@@ -146,10 +147,7 @@ export default function SolicitarEstabelecimento() {
       };
 
       //obter o token do cookie e formata para enviar para o backend
-      const tokenCookie = document.cookie.split(" ")
-      let token = tokenCookie[0].split("=")[1]
-      token = token.substring(0, token.length - 1)
-
+      const token = getUserToken()
       axios.defaults.headers.common['Authorization'] = token
 
       await axios.post(API_BASE_URL + "/oils/available", data);
@@ -197,8 +195,7 @@ export default function SolicitarEstabelecimento() {
   }, [successAlertOpen]);
 
   //obter o usuario dos cookies e verifica o type user 
-  let user = document.cookie.split("=")
-  user = JSON.parse(user[2])
+  const user = getUser()
 
   if (user.idusertype != SUPPLIER_TYPE_USER)
     return <span> Acesso negado </span>

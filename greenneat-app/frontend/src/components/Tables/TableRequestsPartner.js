@@ -30,6 +30,7 @@ import axios from 'axios';
 import { API_BASE_URL } from '../../../env';
 
 import { visuallyHidden } from '@mui/utils';
+import { getUserToken } from '../../utils/util';
 
 function createData(supplier, oil_amount, status, data) {
 	return {
@@ -343,9 +344,7 @@ export default function TableRequestsPartner() {
 			try {
 				
 				//obter o token do cookie e formata para enviar para o backend
-				const tokenCookie = document.cookie.split(" ")
-				let token = tokenCookie[0].split("=")[1]
-				token = token.substring(0, token.length - 1)
+				const token = getUserToken()
 				axios.defaults.headers.common['Authorization'] = token
 
 				const response = await axios.get(API_BASE_URL + `/oils/available`)

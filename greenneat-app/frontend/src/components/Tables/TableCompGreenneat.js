@@ -14,6 +14,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import axios from 'axios';
 import { API_BASE_URL } from '../../../env';
+import { getUserToken } from '../../utils/util';
 
 function createData(tipo, valor, data, regiao) {
 	return {
@@ -139,9 +140,7 @@ export default function TableUsersGreenneat() {
 				const results = []
 
 				//obter o token do cookie e formata para enviar para o backend
-				const tokenCookie = document.cookie.split(" ")
-				let token = tokenCookie[0].split("=")[1]
-				token = token.substring(0, token.length - 1)
+				const token = getUserToken() 
 				axios.defaults.headers.common['Authorization'] = token
 
 				//obter media de preços para cada comparação região/tipo de oleo

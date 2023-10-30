@@ -20,6 +20,7 @@ import Grid from '@mui/material/Grid';
 import TableUsersGreenneat from '../components/Tables/TableUsersGreenneat';
 import { mainListItems } from '../components/menus/menuGreenneat';
 import { GREENNEAT_TYPE_USER } from '../../env';
+import { getUser } from '../utils/util';
 
 const settings = [
 	{ name: 'Meu Perfil' },
@@ -93,8 +94,7 @@ export default function UsuariosGreenneat() {
 	};
 
 	//obter o usuario dos cookies e verifica o type user 
-	let user = document.cookie.split("=")
-	user = JSON.parse(user[2])
+	const user = getUser()
   
 	if (user.idusertype != GREENNEAT_TYPE_USER)
 	  return <span> Acesso negado </span>
