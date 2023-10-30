@@ -1,6 +1,5 @@
 import React from "react";
 import ReactApexChart from 'react-apexcharts';
-import ReactDOM from 'react-dom';
 
 class PartnerCredit extends React.Component {
   constructor(props) {

@@ -1,5 +1,4 @@
 import React from "react";
-import Paper from '@mui/material/Paper';
 import FiltroComparatorCharts from '../Buttons/FiltroComparatorChart';
 import Container from '@mui/material/Container';
 import { BarChart, Bar, XAxis, Tooltip, ResponsiveContainer } from "recharts";
