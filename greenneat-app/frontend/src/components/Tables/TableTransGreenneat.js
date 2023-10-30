@@ -13,7 +13,6 @@ import TableSortLabel from '@mui/material/TableSortLabel';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
-import Checkbox from '@mui/material/Checkbox';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -30,13 +29,12 @@ import { API_BASE_URL } from '../../../env';
 
 import { visuallyHidden } from '@mui/utils';
 
-function createData(sender, receiver, valor, data, documento, situacao) {
+function createData(sender, receiver, valor, data, situacao) {
 	return {
 		sender,
 		receiver,
 		valor,
 		data,
-		documento,
 		situacao,
 	};
 }
@@ -96,12 +94,6 @@ const headCells = [
 		label: 'Data',
 	},
 	{
-		id: 'documento',
-		numeric: false,
-		disablePadding: false,
-		label: 'Documento',
-	},
-	{
 		id: 'situacao',
 		numeric: false,
 		disablePadding: true,
@@ -126,17 +118,6 @@ function EnhancedTableHead(props) {
 	return (
 		<TableHead>
 			<TableRow>
-				<TableCell padding="checkbox">
-					<Checkbox
-						color="success"
-						indeterminate={numSelected > 0 && numSelected < rowCount}
-						checked={rowCount > 0 && numSelected === rowCount}
-						onChange={onSelectAllClick}
-						inputProps={{
-							'aria-label': 'select all desserts',
-						}}
-					/>
-				</TableCell>
 				{headCells.map((headCell) => (
 					<StyledTableCell
 						key={headCell.id}
@@ -184,22 +165,8 @@ function EnhancedTableToolbar(props) {
 			sx={{
 				pl: { sm: 2 },
 				pr: { xs: 1, sm: 1 },
-				...(numSelected > 0 && {
-					bgcolor: (theme) =>
-						alpha(theme.palette.success.main, theme.palette.action.activatedOpacity),
-				}),
 			}}
 		>
-			{numSelected > 0 ? (
-				<Typography
-					sx={{ flex: '1 1 100%' }}
-					color="inherit"
-					variant="subtitle1"
-					component="div"
-				>
-					{numSelected} selecionado(s)
-				</Typography>
-			) : (
 				<Typography
 					sx={{ flex: '1 1 100%' }}
 					variant="h6"
@@ -217,17 +184,6 @@ function EnhancedTableToolbar(props) {
                   </Grid>
               	</Grid>
 				</Typography>
-			)}
-
-			{numSelected > 0 ? (
-				<Tooltip title="Delete">
-					<IconButton>
-						<DeleteIcon />
-					</IconButton>
-				</Tooltip>
-			) : (
-				<Tooltip></Tooltip>
-			)}
 		</Toolbar>
 	);
 }
@@ -305,7 +261,7 @@ export default function TableTransGreenneat() {
 					let receiver = await axios.get(API_BASE_URL + `/users/` + transaction.idreceiveruser)
 					receiver = receiver.data[0]
 
-					return createData(sender.businessname, receiver.businessname, transaction.amount, formatDate(transaction.date))
+					return createData(sender.businessname, receiver.document, transaction.amount, formatDate(transaction.date), transaction.status)
 				}))
 
 				setRows(r)
@@ -410,18 +366,7 @@ export default function TableTransGreenneat() {
 									aria-checked={isItemSelected}
 									tabIndex={-1}
 									key={row.sender}
-									selected={isItemSelected}
-									sx={{ cursor: 'pointer' }}
 								>
-									<TableCell padding="checkbox">
-										<Checkbox
-											color="success"
-											checked={isItemSelected}
-											inputProps={{
-												'aria-labelledby': labelId,
-											}}
-										/>
-									</TableCell>
 									<TableCell
 										component="th"
 										id={labelId}
@@ -434,8 +379,15 @@ export default function TableTransGreenneat() {
 									<TableCell align="center">{row.receiver}</TableCell>
 									<TableCell align="center">{row.valor}</TableCell>
 									<TableCell align="center">{row.data}</TableCell>
-									<TableCell align="center">{}</TableCell>
-									<TableCell align="center">{}</TableCell>
+									<TableCell align="center"
+									sx={{
+										color:
+											row.situacao === 'APROVADO' ? 'green' :
+											row.situacao === 'SOLICITADO' ? 'orange' :
+											row.situacao === 'RECUSADO' ? 'red' : 'inherit',
+									}}>
+										{row.situacao}
+									</TableCell>
 								</TableRow>
 							);
 						})}

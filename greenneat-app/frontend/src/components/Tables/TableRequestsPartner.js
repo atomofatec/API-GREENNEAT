@@ -31,10 +31,11 @@ import { API_BASE_URL } from '../../../env';
 
 import { visuallyHidden } from '@mui/utils';
 
-function createData(supplier, oil_amount, status, data) {
+function createData(supplier, oil_amount, preco, status, data) {
 	return {
 		supplier,
 		oil_amount,
+		preco,
 		status,
 		data,
 	};
@@ -120,17 +121,7 @@ function EnhancedTableHead(props) {
 	return (
 		<TableHead>
 			<TableRow>
-				<TableCell padding="checkbox">
-					<Checkbox
-						color="success"
-						indeterminate={numSelected > 0 && numSelected < rowCount}
-						checked={rowCount > 0 && numSelected === rowCount}
-						onChange={onSelectAllClick}
-						inputProps={{
-							'aria-label': 'select all desserts',
-						}}
-					/>
-				</TableCell>
+				
 				{headCells.map((headCell) => (
 					<StyledTableCell
 						key={headCell.id}
@@ -236,22 +227,8 @@ function EnhancedTableToolbar(props) {
 			sx={{
 				pl: { sm: 2 },
 				pr: { xs: 1, sm: 1 },
-				...(numSelected > 0 && {
-					bgcolor: (theme) =>
-						alpha(theme.palette.success.main, theme.palette.action.activatedOpacity),
-				}),
 			}}
 		>
-			{numSelected > 0 ? (
-				<Typography
-					sx={{ flex: '1 1 100%' }}
-					color="inherit"
-					variant="subtitle1"
-					component="div"
-				>
-					{numSelected} selecionado(s)
-				</Typography>
-			) : (
 				<Typography
 					sx={{ flex: '1 1 100%' }}
 					variant="h6"
@@ -269,17 +246,6 @@ function EnhancedTableToolbar(props) {
                   </Grid>
               	</Grid>
 				</Typography>
-			)}
-
-			{numSelected > 0 ? (
-				<Tooltip title="Delete">
-					<IconButton>
-						<DeleteIcon />
-					</IconButton>
-				</Tooltip>
-			) : (
-				<Tooltip></Tooltip>
-			)}
 		</Toolbar>
 	);
 }
@@ -350,7 +316,7 @@ export default function TableRequestsPartner() {
 
 				const response = await axios.get(API_BASE_URL + `/oils/available`)
 
-				const r = response.data.map(item => createData(item.businessname, item.quantity + ' ml', item.status, formatDate(item.date)))
+				const r = response.data.map(item => createData(item.businessname, item.quantity + ' L', item.price, item.status, formatDate(item.date)))
 				setRows(r)
 
 			} catch (error) {
@@ -453,18 +419,7 @@ export default function TableRequestsPartner() {
 									aria-checked={isItemSelected}
 									tabIndex={-1}
 									key={row.supplier}
-									selected={isItemSelected}
-									sx={{ cursor: 'pointer' }}
 								>
-									<TableCell padding="checkbox">
-										<Checkbox
-											color="success"
-											checked={isItemSelected}
-											inputProps={{
-												'aria-labelledby': labelId,
-											}}
-										/>
-									</TableCell>
 									<TableCell
 										component="th"
 										id={labelId}
