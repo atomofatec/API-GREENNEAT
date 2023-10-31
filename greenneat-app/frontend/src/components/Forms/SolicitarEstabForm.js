@@ -38,11 +38,28 @@ function SolicitarEstabForm(props) {
         autoComplete="valor"
         required
         autoFocus
-        style={{ backgroundColor: 'white', marginBottom: '25px' }}
+        style={{ backgroundColor: 'white' }}
         value={props.quantity}
         onChange={props.quantityChange}
         InputProps={{
           endAdornment: <InputAdornment position="end">L</InputAdornment>,
+        }}
+      />
+      <TextField
+        margin="normal"
+        color="success"
+        fullWidth
+        id="value"
+        label="Valor"
+        name="value"
+        autoComplete="value"
+        required
+        autoFocus
+        style={{ backgroundColor: 'white', marginBottom: '25px' }}
+        value={props.value}
+        onChange={props.valueChange}
+        InputProps={{
+          endAdornment: <InputAdornment position="end">R$</InputAdornment>,
         }}
       />
       <Autocomplete
@@ -66,23 +83,6 @@ function SolicitarEstabForm(props) {
             {option}
           </li>
         )}
-      />
-      <TextField
-        margin="normal"
-        color="success"
-        fullWidth
-        id="value"
-        label="Valor"
-        name="value"
-        autoComplete="value"
-        required
-        autoFocus
-        style={{ backgroundColor: 'white' }}
-        value={props.value}
-        onChange={props.valueChange}
-        InputProps={{
-          endAdornment: <InputAdornment position="end">R$</InputAdornment>,
-        }}
       />
     </>
   );

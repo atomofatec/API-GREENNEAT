@@ -30,8 +30,8 @@ class SupplierSizeChart extends React.Component {
             },
           },
         },
-        colors: ["#FF0040", "#8904B1", "#FFBF00", "#01DF74", "#2E9AFE"],
-      },
+        colors: ['#01DF74',  '#FF0040', '#8904B1', '#FFBF00', '#2E9AFE'],
+      }
     };
   }
 

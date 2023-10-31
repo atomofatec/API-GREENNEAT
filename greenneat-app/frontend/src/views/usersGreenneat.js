@@ -223,7 +223,7 @@ export default function UsuariosGreenneat() {
 					}}
 				>
 					<Toolbar />
-					<Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{ marginBottom: '5px', marginTop: '40px' }}>
+					<Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{ marginBottom: '20px', marginTop: '40px' }}>
 						<TableUsersGreenneat />
 					</Grid>
 				</Box>

@@ -122,48 +122,35 @@ function EnhancedTableHead(props) {
     onRequestSort(event, property);
   };
 
-  return (
-    <TableHead>
-      <TableRow>
-        <TableCell padding="checkbox">
-          <Checkbox
-            color="success"
-            indeterminate={numSelected > 0 && numSelected < rowCount}
-            checked={rowCount > 0 && numSelected === rowCount}
-            onChange={onSelectAllClick}
-            inputProps={{
-              "aria-label": "select all desserts",
-            }}
-          />
-        </TableCell>
-        {headCells.map((headCell) => (
-          <StyledTableCell
-            key={headCell.id}
-            align={headCell.numeric ? "center" : "center"}
-            padding={headCell.disablePadding ? "none" : "normal"}
-            sortDirection={orderBy === headCell.id ? order : false}
-          >
-            <TableSortLabel
-              active={orderBy === headCell.id}
-              direction={orderBy === headCell.id ? order : "asc"}
-              onClick={createSortHandler(headCell.id)}
-            >
-              <Typography sx={{ fontWeight: "bold" }}>
-                {headCell.label}
-                {orderBy === headCell.id ? (
-                  <Box component="span" sx={visuallyHidden}>
-                    {order === "desc"
-                      ? "sorted descending"
-                      : "sorted ascending"}
-                  </Box>
-                ) : null}
-              </Typography>
-            </TableSortLabel>
-          </StyledTableCell>
-        ))}
-      </TableRow>
-    </TableHead>
-  );
+	return (
+		<TableHead>
+			<TableRow>
+				{headCells.map((headCell) => (
+					<StyledTableCell
+						key={headCell.id}
+						align={headCell.numeric ? 'center' : 'center'}
+						padding={headCell.disablePadding ? 'none' : 'normal'}
+						sortDirection={orderBy === headCell.id ? order : false}
+					>
+						<TableSortLabel
+							active={orderBy === headCell.id}
+							direction={orderBy === headCell.id ? order : 'asc'}
+							onClick={createSortHandler(headCell.id)}
+						>
+							<Typography sx={{fontWeight: 'bold'}}>
+								{headCell.label}
+								{orderBy === headCell.id ? (
+									<Box component="span" sx={visuallyHidden}>
+										{order === 'desc' ? 'sorted descending' : 'sorted ascending'}
+									</Box>
+								) : null}
+							</Typography>
+						</TableSortLabel>
+					</StyledTableCell>
+				))}
+			</TableRow>
+		</TableHead>
+	);
 }
 
 EnhancedTableHead.propTypes = {
@@ -180,60 +167,32 @@ const ITEM_HEIGHT = 48;
 function EnhancedTableToolbar(props) {
   const { numSelected } = props;
 
-  return (
-    <Toolbar
-      sx={{
-        pl: { sm: 2 },
-        pr: { xs: 1, sm: 1 },
-        ...(numSelected > 0 && {
-          bgcolor: (theme) =>
-            alpha(
-              theme.palette.success.main,
-              theme.palette.action.activatedOpacity
-            ),
-        }),
-      }}
-    >
-      {numSelected > 0 ? (
-        <Typography
-          sx={{ flex: "1 1 100%" }}
-          color="inherit"
-          variant="subtitle1"
-          component="div"
-        >
-          {numSelected} selecionado(s)
-        </Typography>
-      ) : (
-        <Typography
-          sx={{ flex: "1 1 100%" }}
-          variant="h6"
-          id="tableTitle"
-          component="div"
-        >
-          <Grid
-            container
-            rowSpacing={1}
-            columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-            sx={{ marginBottom: "20px", marginTop: "20px" }}
-          >
-            <Grid item xs={6}>
-              <Title>Transações</Title>
-            </Grid>
-          </Grid>
-        </Typography>
-      )}
-
-      {numSelected > 0 ? (
-        <Tooltip title="Delete">
-          <IconButton>
-            <DeleteIcon />
-          </IconButton>
-        </Tooltip>
-      ) : (
-        <Tooltip></Tooltip>
-      )}
-    </Toolbar>
-  );
+	return (
+		<Toolbar
+			sx={{
+				pl: { sm: 2 },
+				pr: { xs: 1, sm: 1 },
+			}}
+		>
+				<Typography
+					sx={{ flex: '1 1 100%' }}
+					variant="h6"
+					id="tableTitle"
+					component="div"
+				>
+				<Grid
+                  container
+                  rowSpacing={1}
+                  columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+                  sx={{ marginBottom: "20px", marginTop: "20px" }}
+                >
+                  <Grid item xs={6}>
+                    <Title>Transações</Title>
+                  </Grid>
+              	</Grid>
+				</Typography>
+		</Toolbar>
+	);
 }
 
 EnhancedTableToolbar.propTypes = {
@@ -287,45 +246,37 @@ export default function TableTransGreenneat() {
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
   React.useEffect(() => {
-    const request = async () => {
-      try {
-        //obter o token do cookie e formata para enviar para o backend
-        const token = getUserToken();
-        axios.defaults.headers.common["Authorization"] = token;
 
-        const response = await axios.get(API_BASE_URL + `/transactions`);
-        const transactions = response.data;
+		const request = async () => {
 
-        const r = await Promise.all(
-          transactions.map(async (transaction) => {
-            let sender = await axios.get(
-              API_BASE_URL + `/users/` + transaction.idsenderuser
-            );
-            sender = sender.data[0];
-            let receiver = await axios.get(
-              API_BASE_URL + `/users/` + transaction.idreceiveruser
-            );
-            receiver = receiver.data[0];
+			try {
+				
+				//obter o token do cookie e formata para enviar para o backend
+				const token = getUserToken()
+				axios.defaults.headers.common['Authorization'] = token
 
-            return createData(
-              sender.businessname,
-              receiver.businessname,
-              transaction.amount,
-              formatDate(transaction.date),
-              receiver.document,
-              transaction.status
-            );
-          })
-        );
+				const response = await axios.get(API_BASE_URL + `/transactions`)
+				const transactions = response.data
+				
+				const r = await Promise.all(transactions.map(async transaction => {
+					
+					let sender = await axios.get(API_BASE_URL + `/users/` + transaction.idsenderuser)
+					sender = sender.data[0]
+					let receiver = await axios.get(API_BASE_URL + `/users/` + transaction.idreceiveruser)
+					receiver = receiver.data[0]
 
-        setRows(r);
-      } catch (error) {
-        alert("Erro ao obter dados");
-      }
-    };
+					return createData(sender.businessname, receiver.businessname, transaction.amount, formatDate(transaction.date))
+				}))
 
-    request();
-  }, []);
+				setRows(r)
+
+			} catch (error) {
+				alert("Erro ao obter dados")
+			}
+		}
+
+		request();
+	}, [])
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";

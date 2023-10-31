@@ -322,9 +322,9 @@ export default function SolicitarEstabelecimento() {
             alignItems: 'center',
         }}
         >
-          <Toolbar />
-          <Paper sx={{ width: '84%',  display: 'flex', flexDirection: 'column', marginTop: '40px', }} elevation={2}>
-           <Container maxWidth="lg" sx={{ m: 'auto', backgroundColor: 'white', borderRadius: 1,  marginBottom: '16px', overflow: 'auto'}}>
+          <Toolbar/>
+          <Paper sx={{ width: '84%',  display: 'flex', flexDirection: 'column', marginTop: '40px'}} elevation={2}>
+           <Container maxWidth="lg" sx={{ m: 'auto', backgroundColor: 'white', borderRadius: 1,  marginBottom: '10px', overflow: 'auto' }}>
             <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{marginBottom: '20px', marginTop: '20px' }}>
               <Grid item xs={6}>
                 <Title>Solicitar retirada de Óleo</Title>
@@ -348,6 +348,7 @@ export default function SolicitarEstabelecimento() {
             </Grid>
           </Container>
           </Paper>
+          .
         </Box>
       </Box>
       {errorAlertOpen && (

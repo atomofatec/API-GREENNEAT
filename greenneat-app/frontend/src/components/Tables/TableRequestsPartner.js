@@ -1,6 +1,5 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import { alpha } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -13,16 +12,13 @@ import TableSortLabel from '@mui/material/TableSortLabel';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
-import Checkbox from '@mui/material/Checkbox';
 import IconButton from '@mui/material/IconButton';
-import Tooltip from '@mui/material/Tooltip';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { styled } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import Grid from '@mui/material/Grid';
 import Title from '../Outros/Title';
-import DeleteIcon from '@mui/icons-material/Delete';
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
@@ -32,12 +28,14 @@ import { API_BASE_URL } from '../../../env';
 import { visuallyHidden } from '@mui/utils';
 import { getUserToken } from '../../utils/util';
 
-function createData(supplier, oil_amount, status, data) {
+function createData(supplier, cnpj, oil_amount, preco, data, status) {
 	return {
 		supplier,
+		cnpj,
 		oil_amount,
-		status,
+		preco,
 		data,
+		status,
 	};
 }
 
@@ -77,6 +75,12 @@ const headCells = [
 		label: 'Estabelecimento',
 	},
 	{
+		id: 'cnpj',
+		numeric: true,
+		disablePadding: false,
+		label: 'CNPJ',
+	},
+	{
 		id: 'oil_amount',
 		numeric: false,
 		disablePadding: false,
@@ -89,16 +93,16 @@ const headCells = [
 		label: 'Preço',
 	},
 	{
-		id: 'status',
-		numeric: true,
-		disablePadding: false,
-		label: 'Status',
-	},
-	{
 		id: 'data',
 		numeric: false,
 		disablePadding: true,
 		label: 'Data',
+	},
+	{
+		id: 'status',
+		numeric: true,
+		disablePadding: false,
+		label: 'Status',
 	},
 	{
 	},
@@ -121,17 +125,7 @@ function EnhancedTableHead(props) {
 	return (
 		<TableHead>
 			<TableRow>
-				<TableCell padding="checkbox">
-					<Checkbox
-						color="success"
-						indeterminate={numSelected > 0 && numSelected < rowCount}
-						checked={rowCount > 0 && numSelected === rowCount}
-						onChange={onSelectAllClick}
-						inputProps={{
-							'aria-label': 'select all desserts',
-						}}
-					/>
-				</TableCell>
+				
 				{headCells.map((headCell) => (
 					<StyledTableCell
 						key={headCell.id}
@@ -237,22 +231,8 @@ function EnhancedTableToolbar(props) {
 			sx={{
 				pl: { sm: 2 },
 				pr: { xs: 1, sm: 1 },
-				...(numSelected > 0 && {
-					bgcolor: (theme) =>
-						alpha(theme.palette.success.main, theme.palette.action.activatedOpacity),
-				}),
 			}}
 		>
-			{numSelected > 0 ? (
-				<Typography
-					sx={{ flex: '1 1 100%' }}
-					color="inherit"
-					variant="subtitle1"
-					component="div"
-				>
-					{numSelected} selecionado(s)
-				</Typography>
-			) : (
 				<Typography
 					sx={{ flex: '1 1 100%' }}
 					variant="h6"
@@ -270,17 +250,6 @@ function EnhancedTableToolbar(props) {
                   </Grid>
               	</Grid>
 				</Typography>
-			)}
-
-			{numSelected > 0 ? (
-				<Tooltip title="Delete">
-					<IconButton>
-						<DeleteIcon />
-					</IconButton>
-				</Tooltip>
-			) : (
-				<Tooltip></Tooltip>
-			)}
 		</Toolbar>
 	);
 }
@@ -349,7 +318,7 @@ export default function TableRequestsPartner() {
 
 				const response = await axios.get(API_BASE_URL + `/oils/available`)
 
-				const r = response.data.map(item => createData(item.businessname, item.quantity + ' ml', item.status, formatDate(item.date)))
+				const r = response.data.map(item => createData(item.businessname, item.document, item.quantity + ' L', item.price, formatDate(item.date), item.status))
 				setRows(r)
 
 			} catch (error) {
@@ -452,18 +421,7 @@ export default function TableRequestsPartner() {
 									aria-checked={isItemSelected}
 									tabIndex={-1}
 									key={row.supplier}
-									selected={isItemSelected}
-									sx={{ cursor: 'pointer' }}
 								>
-									<TableCell padding="checkbox">
-										<Checkbox
-											color="success"
-											checked={isItemSelected}
-											inputProps={{
-												'aria-labelledby': labelId,
-											}}
-										/>
-									</TableCell>
 									<TableCell
 										component="th"
 										id={labelId}
@@ -473,10 +431,11 @@ export default function TableRequestsPartner() {
 									>
 										{row.supplier}
 									</TableCell>
+									<TableCell align="center">{row.document}</TableCell>
 									<TableCell align="center">{row.oil_amount}</TableCell>
 									<TableCell align="center">{row.preco}</TableCell>
-									<TableCell align="center">{row.status}</TableCell>
 									<TableCell align="center">{row.data}</TableCell>
+									<TableCell align="center" sx={{color: 'green'}}>{row.status}</TableCell>
 									<TableCell align="center">
 										<LongMenu />
 									</TableCell>
