@@ -11,7 +11,11 @@ module.exports = app => {
     router.post("/users", userController.create)
     router.delete("/users/:id",authenticateToken, userController.delete)
     router.post("/login", userController.login)
+    router.put("/users/:id/update", authenticateToken, userController.updateUserProfile)
 
     app.use("/api", router)
   
 };
+
+
+
