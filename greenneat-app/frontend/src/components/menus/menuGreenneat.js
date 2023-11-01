@@ -7,6 +7,7 @@ import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import BalanceIcon from '@mui/icons-material/Balance';
 import ReceiptIcon from '@mui/icons-material/Receipt';
 import Typography from '@mui/material/Typography';
+import HistoryIcon from '@mui/icons-material/History';
 import { Link } from 'react-router-dom';
 
 export const mainListItems = (
@@ -55,6 +56,18 @@ export const mainListItems = (
         primary={
           <Typography variant="body2" style={{ fontSize: '18px', fontFamily: "'Century Gothic', Futura, sans-serif" }}>
             Transações 
+          </Typography>
+        }
+      />
+    </ListItemButton>
+    <ListItemButton component={Link} to="/historico-movimentacao" sx={{ color: 'white', height: '4rem' }}>
+      <ListItemIcon>
+        <HistoryIcon sx={{ color: 'white' }} />
+      </ListItemIcon>
+      <ListItemText
+        primary={
+          <Typography variant="body2" style={{ fontSize: '18px', fontFamily: "'Century Gothic', Futura, sans-serif" }}>
+            Histórico
           </Typography>
         }
       />

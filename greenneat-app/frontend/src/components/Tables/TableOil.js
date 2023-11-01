@@ -15,28 +15,26 @@ import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
-import DeleteIcon from '@mui/icons-material/Delete';
+import CloseIcon from '@mui/icons-material/Close';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { styled } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
-import EditIcon from '@mui/icons-material/Edit';
+import CheckIcon from '@mui/icons-material/Check';
 import Grid from '@mui/material/Grid';
 import Title from '../Outros/Title';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import axios from 'axios';
 import { API_BASE_URL } from '../../../env';
 import { visuallyHidden } from '@mui/utils';
-import { getUserToken } from '../../utils/util';
-import { Navigate } from 'react-router-dom';
 
-function createData(cnpj, email, telefone, razao, nome) {
+function createData(estabelecimento, cnpj, quantidade, data, status) {
     return {
+        estabelecimento,
         cnpj,
-        email,
-        telefone,
-        razao,
-        nome,
+        quantidade,
+        data,
+        status
     };
 }
 
@@ -70,34 +68,34 @@ function stableSort(array, comparator) {
 
 const headCells = [
     {
+        id: 'estabelecimento',
+        numeric: false,
+        disablePadding: false,
+        label: 'Estabelecimento',
+    },
+    {
         id: 'cnpj',
         numeric: true,
         disablePadding: false,
-        label: 'CNPJ/CPF',
+        label: 'CNPJ',
     },
     {
-        id: 'email',
-        numeric: false,
-        disablePadding: false,
-        label: 'E-mail',
-    },
-    {
-        id: 'telefone',
+        id: 'quantidade',
         numeric: true,
         disablePadding: false,
-        label: 'Telefone',
+        label: 'Quantidade',
     },
     {
-        id: 'razao',
+        id: 'data',
         numeric: false,
         disablePadding: true,
-        label: 'Razão Social',
+        label: 'Data',
     },
     {
-        id: 'nome',
+        id: 'status',
         numeric: false,
         disablePadding: true,
-        label: 'Nome',
+        label: 'Status',
     },
     {
     },
@@ -152,8 +150,8 @@ EnhancedTableHead.propTypes = {
 };
 
 const options = [
-    { icon: <EditIcon style={{ color: '#3B8F5C', height: '1rem' }} />, label: 'Editar' },
-    { icon: <DeleteIcon style={{ color: '#3B8F5C', height: '1rem' }} />, label: 'Excluir' },
+    { icon: <CheckIcon style={{ color: '#3B8F5C', height: '1rem' }} />, label: 'Enviar' },
+    { icon: <CloseIcon style={{ color: '#3B8F5C', height: '1rem' }} />, label: 'Recusar' },
 ];
 
 const ITEM_HEIGHT = 48;
@@ -234,7 +232,7 @@ function EnhancedTableToolbar(props) {
                   sx={{ marginBottom: "20px", marginTop: "20px" }}
                 >
                   <Grid item xs={6}>
-                    <Title>Usuários</Title>
+                    <Title>Envio de óleo</Title>
                   </Grid>
               	</Grid>
                 </Typography>
@@ -266,40 +264,14 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
 }));
 
-export default function TableUsersGreenneat() {
+export default function TableOil() {
     const [order, setOrder] = React.useState('asc');
-    const [orderBy, setOrderBy] = React.useState('cnpj');
+    const [orderBy, setOrderBy] = React.useState('estabelecimento');
     const [selected, setSelected] = React.useState([]);
     const [page, setPage] = React.useState(0);
     const [dense, setDense] = React.useState(false);
     const [rows, setRows] = React.useState([]);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
-
-    React.useEffect(() => {
-
-		const request = async () => {
-
-			try {
-				
-				//obter o token do cookie e formata para enviar para o backend
-				const token = getUserToken()
-				axios.defaults.headers.common['Authorization'] = token
-
-				const response = await axios.get(API_BASE_URL + `/users`)
-
-				const users = response.data.filter(user => user.idusertype != 1)
-
-				const r = users.map(item => createData(item.document, item.email, item.telephone, item.businessname, item.name))
-				setRows(r)
-
-			} catch (error) {
-				alert("Erro ao obter dados")
-			}
-		}
-
-		request();
-	}, [])
-
 
     const handleRequestSort = (event, property) => {
         const isAsc = orderBy === property && order === 'asc';
@@ -307,12 +279,12 @@ export default function TableUsersGreenneat() {
         setOrderBy(property);
     };
 
-    const handleClick = (event, nome) => {
-        const selectedIndex = selected.indexOf(nome);
+    const handleClick = (event, estabelecimento) => {
+        const selectedIndex = selected.indexOf(estabelecimento);
         let newSelected = [];
 
         if (selectedIndex === -1) {
-            newSelected = newSelected.concat(selected, nome);
+            newSelected = newSelected.concat(selected, estabelecimento);
         } else if (selectedIndex === 0) {
             newSelected = newSelected.concat(selected.slice(1));
         } else if (selectedIndex === selected.length - 1) {
@@ -340,7 +312,7 @@ export default function TableUsersGreenneat() {
         setDense(event.target.checked);
     };
 
-    const isSelected = (nome) => selected.indexOf(nome) !== -1;
+    const isSelected = (estabelecimento) => selected.indexOf(estabelecimento) !== -1;
 
     const emptyRows =
         page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
@@ -370,17 +342,17 @@ export default function TableUsersGreenneat() {
                     />
                     <TableBody>
                         {visibleRows.map((row, index) => {
-                            const isItemSelected = isSelected(row.nome);
+                            const isItemSelected = isSelected(row.estabelecimento);
                             const labelId = `enhanced-table-checkbox-${index}`;
 
                             return (
                                 <TableRow
                                     hover
-                                    onClick={(event) => handleClick(event, row.nome)}
+                                    onClick={(event) => handleClick(event, row.estabelecimento)}
                                     role="checkbox"
                                     aria-checked={isItemSelected}
                                     tabIndex={-1}
-                                    key={row.nome}
+                                    key={row.estabelecimento}
                                 >
                                     <TableCell
                                         component="th"
@@ -389,12 +361,12 @@ export default function TableUsersGreenneat() {
                                         padding="none"
                                         align="center"
                                     >
-                                        {row.cnpj}
+                                        {row.estabelecimento}
                                     </TableCell>
-                                    <TableCell align="center">{row.email}</TableCell>
-                                    <TableCell align="center">{row.telefone}</TableCell>
-                                    <TableCell align="center">{row.razao}</TableCell>
-                                    <TableCell align="center">{row.nome}</TableCell>
+                                    <TableCell align="center">{row.cnpj}</TableCell>
+                                    <TableCell align="center">{row.quantidade}</TableCell>
+                                    <TableCell align="center">{row.data}</TableCell>
+                                    <TableCell align="center">{row.status}</TableCell>
                                     <TableCell align="center">
                                         <LongMenu />
                                     </TableCell>
