@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import MuiDrawer from '@mui/material/Drawer';
@@ -13,168 +13,92 @@ import List from '@mui/material/List';
 import Link from '@mui/material/Link';
 import Menu from '@mui/material/Menu';
 import AvatarImage from "../images/PerfilGreenneat.png";
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import Divider from '@mui/material/Divider';
 import Grid from '@mui/material/Grid';
-import Container from '@mui/material/Container';
-import Paper from '@mui/material/Paper';
-import EnviarButton from '../components/Buttons/EnviarButton';
-import Title from '../components/Outros/Title';
-import SubTitle from '../components/Outros/SubTitle';
-import Alert from "@mui/material/Alert";
-import AlertTitle from "@mui/material/AlertTitle";
-import NovaTransGreenForm from '../components/Forms/NovaTransGreenForm';
+import TableUsersGreenneat from '../components/Tables/TableUsersGreenneat';
 import { mainListItems } from '../components/menus/menuPartner';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import { API_BASE_URL, GREENNEAT_TYPE_USER } from '../../env.js'
-import OilTransForm from '../components/Forms/OilTransForm';
+import { GREENNEAT_TYPE_USER } from '../../env';
+import TableOil from '../components/Tables/TableOil';
+import { Avatar } from '@mui/material';
 
 const settings = [
-  { name: 'Meu Perfil' },
-  { ajuda: 'Ajuda #' },
-  'divider',
-  { sair: 'Sair' },
-];  
-
-const alertStyle = {
-  position: 'fixed',
-  top: '10px',
-  right: '10px',
-  zIndex: 9999,
-};
+	{ name: 'Meu Perfil' },
+	{ ajuda: 'Ajuda #' },
+	'divider',
+	{ sair: 'Sair' },
+  ]; 
 
 const drawerWidth = 240;
 
 const defaultTheme = createTheme();
 
 const AppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== 'open',
+	shouldForwardProp: (prop) => prop !== 'open',
 })(({ theme, open }) => ({
-  zIndex: theme.zIndex.drawer + 1,
-  transition: theme.transitions.create(['width', 'margin'], {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  ...(open && {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  }),
+	zIndex: theme.zIndex.drawer + 1,
+	transition: theme.transitions.create(['width', 'margin'], {
+		easing: theme.transitions.easing.sharp,
+		duration: theme.transitions.duration.leavingScreen,
+	}),
+	...(open && {
+		marginLeft: drawerWidth,
+		width: `calc(100% - ${drawerWidth}px)`,
+		transition: theme.transitions.create(['width', 'margin'], {
+			easing: theme.transitions.easing.sharp,
+			duration: theme.transitions.duration.enteringScreen,
+		}),
+	}),
 }));
 
 const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
-  ({ theme, open }) => ({
-    '& .MuiDrawer-paper': {
-      position: 'relative',
-      whiteSpace: 'nowrap',
-      width: drawerWidth,
-      transition: theme.transitions.create('width', {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
-      boxSizing: 'border-box',
-      ...(!open && {
-        overflowX: 'hidden',
-        transition: theme.transitions.create('width', {
-          easing: theme.transitions.easing.sharp,
-          duration: theme.transitions.duration.leavingScreen,
-        }),
-        width: theme.spacing(0),
-        [theme.breakpoints.up('sm')]: {
-          width: theme.spacing(0),
-        },
-      }),
-    },
-  }),
+	({ theme, open }) => ({
+		'& .MuiDrawer-paper': {
+			position: 'relative',
+			whiteSpace: 'nowrap',
+			width: drawerWidth,
+			transition: theme.transitions.create('width', {
+				easing: theme.transitions.easing.sharp,
+				duration: theme.transitions.duration.enteringScreen,
+			}),
+			boxSizing: 'border-box',
+			...(!open && {
+				overflowX: 'hidden',
+				transition: theme.transitions.create('width', {
+					easing: theme.transitions.easing.sharp,
+					duration: theme.transitions.duration.leavingScreen,
+				}),
+				width: theme.spacing(0),
+				[theme.breakpoints.up('sm')]: {
+					width: theme.spacing(0),
+				},
+			}),
+		},
+	}),
 );
 
 export default function OilTransactionPartner() {
-  const navigate = useNavigate();
+	const [open, setOpen] = React.useState(false);
+	const toggleDrawer = () => {
+		setOpen(!open);
+	};
 
-  const [open, setOpen] = React.useState(false);
-  const toggleDrawer = () => {
-    setOpen(!open);
-  };
+	const [anchorElUser, setAnchorElUser] = React.useState(null);
 
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
+	const handleOpenUserMenu = (event) => {
+		setAnchorElUser(event.currentTarget);
+	};
 
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
-  };
+	const handleCloseUserMenu = () => {
+		setAnchorElUser(null);
+	};
 
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
-
-  const [quantidade, setQuantidade] = useState("");
-  const [valor, setValor] = useState("");
-  const [oilType, setType] = useState("");
-
-  const handleQuantidadeChange = (event) => {
-    const input = event.target.value;
-    const numericValue = input.replace(/[^0-9]/g, "").replace(/^0+/, "");
-    setQuantidade(numericValue || "0");
-  };
-
-  const handleValorChange = (event) => {
-    const input = event.target.value;
-    const numericValue = input.replace(/[^0-9]/g, "").replace(/^0+/, "");
-    setValor(numericValue || "0");
-  };
-
-  const handleTypeChange = (event, newValue) => {
-    setType(newValue)
-  };
-
-  const [errorAlertOpen, setErrorAlertOpen] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
-
-  const [successAlertOpen, setSuccessAlertOpen] = useState(false);
-  const [successMessage, setSuccessMessage] = useState('');  
-  
-  const [autoCloseTimeout, setAutoCloseTimeout] = useState(null);
-
-  useEffect(() => {
-    if (errorAlertOpen) {
-      const timeout = setTimeout(() => {
-        setErrorAlertOpen(false);
-      }, 5000);
-      setAutoCloseTimeout(timeout);
-    } else {
-      if (autoCloseTimeout) {
-        clearTimeout(autoCloseTimeout);
-        setAutoCloseTimeout(null);
-      }
-    }
-  }, [errorAlertOpen]);
-
-  const [autoCloseSuccessTimeout, setAutoCloseSuccessTimeout] = useState(null);
-
-  useEffect(() => {
-    if (successAlertOpen) {
-      const timeout = setTimeout(() => {
-        setSuccessAlertOpen(false);
-      }, 5000);
-      setAutoCloseSuccessTimeout(timeout);
-    } else {
-      if (autoCloseSuccessTimeout) {
-        clearTimeout(autoCloseSuccessTimeout);
-        setAutoCloseSuccessTimeout(null);
-      }
-    }
-  }, [successAlertOpen]);
-
-  return (
-    <ThemeProvider theme={defaultTheme}>
-      <Box sx={{ display: 'flex' }}>
+	return (
+		<ThemeProvider theme={defaultTheme}>
+			<Box sx={{ display: 'flex' }}>
         <CssBaseline />
-        <AppBar position="absolute" open={open} sx={{ backgroundColor: '#3B8F5C', height: 72 }} elevation={0}>
+        <AppBar position="absolute" open={open} sx={{ backgroundColor: '#3B8F5C', height: 72 }} elevation={2}>
           <Toolbar
             sx={{
               pr: '24px',
@@ -206,7 +130,7 @@ export default function OilTransactionPartner() {
                   <Box sx={{ flexGrow: 0 }}>
                     <Tooltip title="Abrir configurações">
                     <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                        <img src={AvatarImage} alt="Avatar" style={{ width: '40px', height: '40px', borderRadius: '50%' }} />
+                        <Avatar sx={{ bgcolor: 'white', color: '#0E681D' }}>PC</Avatar>
                     </IconButton>
                     </Tooltip>
                     <Menu
@@ -225,13 +149,13 @@ export default function OilTransactionPartner() {
                     open={Boolean(anchorElUser)}
                     onClose={handleCloseUserMenu}
                     >
-                    <div style={{ margin: '5px 20px 0px 20px', color: '#0E681D' }}>
-                      <strong>
-                        Parceiro Cooperativo
-                      </strong>
+                    <div style={{ margin: '5px 20px 0px 20px', color:'#0E681D' }}>
+                        <strong>
+                            Parceiro Cooperativo
+                        </strong>
                     </div>
                     <div style={{ margin: '0px 20px 10px 20px', color: 'grey' }}>
-                    @email.com
+												@email.com
 										</div>
                     <Divider />
                     {settings.map((setting, index) => (
@@ -281,63 +205,23 @@ export default function OilTransactionPartner() {
             </List>
           </Box>
         </Drawer>
-        <Box
-          component="main"
-          sx={{
-            backgroundColor: 'white',
-            flexGrow: 1,
-            height: '100vh',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-        }}
-        >
-          <Toolbar />
-          <Paper sx={{ width: '80%',  display: 'flex', flexDirection: 'column', marginTop: '40px', }} elevation={2}>
-          <Container maxWidth="lg" sx={{ m: 'auto', backgroundColor: 'white', borderRadius: 1,  marginBottom: '16px', overflow: 'auto'}}>
-            <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{ marginBottom: '20px', marginTop: '20px' }}>
-              <Grid item xs={6} sx={{ display: 'flex', alignItems: 'center', marginBottom: '20px', marginTop: '10px' }}>
-                <div>
-                  <Title>Enviar Óleo</Title>
-                  <SubTitle>Greenneat</SubTitle>
-                </div>
-              </Grid>
-            </Grid>
-            <Divider />
-            <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{marginBottom: '20px', marginTop: '10px' }}>
-              <Grid item xs={6}>
-                <OilTransForm valor={valor} quantidade={quantidade} oilType={oilType} valorChange={handleValorChange} quantidadeChange={handleQuantidadeChange} typeChange={handleTypeChange}/>
-              </Grid>
-              <Grid item xs={6}>
-              </Grid>
-            </Grid>
-            <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{marginBottom: '20px', marginTop: '10px' }}>
-              <Grid item xs={6}>
-              </Grid>
-              <Grid item xs={6}>
-                <EnviarButton/>
-              </Grid>
-            </Grid>
-            </Container>
-          </Paper>
-        </Box>
-      </Box>
-      {errorAlertOpen && (
-        <div style={alertStyle}>
-          <Alert severity="error">
-            <AlertTitle>Erro</AlertTitle>
-            {errorMessage}
-          </Alert>
-        </div>
-      )}
-      {successAlertOpen && (
-        <div style={alertStyle}>
-          <Alert severity="success">
-            <AlertTitle>Sucesso</AlertTitle>
-            {successMessage}
-          </Alert>
-        </div>
-      )}
-    </ThemeProvider>
-  );
+				<Box
+					component="main"
+					sx={{
+						backgroundColor: 'white',
+						flexGrow: 1,
+						height: '100vh',
+						display: 'flex',
+						flexDirection: 'column',
+						alignItems: 'center',
+					}}
+				>
+					<Toolbar />
+					<Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{ marginBottom: '20px', marginTop: '40px' }}>
+						<TableOil />
+					</Grid>
+				</Box>
+			</Box>
+		</ThemeProvider>
+	);
 }
