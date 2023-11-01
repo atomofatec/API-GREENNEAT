@@ -16,6 +16,7 @@ import MyProfilePartner from '../views/myProfilePartner';
 import MyProfileSupplier from '../views/myProfileSupplier';
 import OilTransactionPartner from '../views/oilTransactionPartner';
 import EditUser from '../views/editUser';
+import HistGreenneat from '../views/histGreenneat';
 
 function Router() {
     return(
@@ -38,6 +39,7 @@ function Router() {
             <Route path='/meu-perfil-estabelecimento' element={<MyProfileSupplier />}/>
             <Route path='/transacao-oleo' element={<OilTransactionPartner />}/>
             <Route path='/editar-usuario' element={<EditUser />}/>
+            <Route path='/historico-movimentacao' element={<HistGreenneat />}/>
         </Routes>
         </BrowserRouter>
     )

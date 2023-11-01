@@ -26,6 +26,7 @@ import { mainListItems } from '../components/menus/menuGreenneat';
 import AvatarImage from "../images/PerfilGreenneat.png";
 import ProfileCoopForm from '../components/Forms/ProfileCoopForm';
 import ProfileEstabForm from '../components/Forms/ProfileEstabForm';
+import EditUserForm from '../components/Forms/EditUserForm';
 
 const settings = [
   { name: 'Meu Perfil' },
@@ -108,18 +109,6 @@ export default function EditUser() {
               pr: '24px',
             }}
           >
-            <IconButton
-              edge="start"
-              color="inherit"
-              aria-label="open drawer"
-              onClick={toggleDrawer}
-              sx={{
-                marginRight: '15px',
-                ...(open && { display: 'none' }),
-              }}
-            >
-              <MenuIcon />
-            </IconButton>
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
               <strong><h2>GREENNEAT</h2></strong>
             </Box>
@@ -213,7 +202,7 @@ export default function EditUser() {
                       <SubTitle>Edite as informações do usuário</SubTitle>
                     </Grid>
                   </Grid>
-                  <ProfileEstabForm />
+                  <EditUserForm />
                 </Container>
               </Paper>
             </Grid>
