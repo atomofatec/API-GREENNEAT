@@ -29,6 +29,7 @@ import { API_BASE_URL } from '../../../env';
 import { visuallyHidden } from '@mui/utils';
 import { getUserToken } from '../../utils/util';
 import { Navigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 function createData(cnpj, email, telefone, razao, nome) {
     return {
@@ -152,7 +153,14 @@ EnhancedTableHead.propTypes = {
 };
 
 const options = [
-    { icon: <EditIcon style={{ color: '#3B8F5C', height: '1rem' }} />, label: 'Editar' },
+    {
+        icon: (
+            <Link to="/editar-usuario">
+                <EditIcon style={{ color: '#3B8F5C', height: '1rem' }} />
+            </Link>
+        ),
+        label: 'Editar'
+    },
     { icon: <DeleteIcon style={{ color: '#3B8F5C', height: '1rem' }} />, label: 'Excluir' },
 ];
 
