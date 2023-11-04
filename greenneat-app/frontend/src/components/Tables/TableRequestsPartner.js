@@ -1,5 +1,6 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
+import { alpha } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -12,29 +13,33 @@ import TableSortLabel from '@mui/material/TableSortLabel';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
+import Checkbox from '@mui/material/Checkbox';
 import IconButton from '@mui/material/IconButton';
+import Tooltip from '@mui/material/Tooltip';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { styled } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import Grid from '@mui/material/Grid';
 import Title from '../Outros/Title';
+import DeleteIcon from '@mui/icons-material/Delete';
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import axios from 'axios';
 import { API_BASE_URL } from '../../../env';
-
 import { visuallyHidden } from '@mui/utils';
+import { getUserToken, formatDate } from '../../utils/util';
 
-function createData(supplier, cnpj, oil_amount, preco, data, status) {
+function createData(id, supplier, oil_amount, price, status, data, document) {
 	return {
+		id,
 		supplier,
-		cnpj,
 		oil_amount,
-		preco,
-		data,
+		price,
 		status,
+		data,
+		document
 	};
 }
 
@@ -74,12 +79,6 @@ const headCells = [
 		label: 'Estabelecimento',
 	},
 	{
-		id: 'cnpj',
-		numeric: true,
-		disablePadding: false,
-		label: 'CNPJ',
-	},
-	{
 		id: 'oil_amount',
 		numeric: false,
 		disablePadding: false,
@@ -92,16 +91,16 @@ const headCells = [
 		label: 'Preço',
 	},
 	{
-		id: 'data',
-		numeric: false,
-		disablePadding: true,
-		label: 'Data',
-	},
-	{
 		id: 'status',
 		numeric: true,
 		disablePadding: false,
 		label: 'Status',
+	},
+	{
+		id: 'data',
+		numeric: false,
+		disablePadding: true,
+		label: 'Data',
 	},
 	{
 	},
@@ -124,7 +123,17 @@ function EnhancedTableHead(props) {
 	return (
 		<TableHead>
 			<TableRow>
-				
+				{/* <TableCell padding="checkbox">
+					<Checkbox
+						color="success"
+						indeterminate={numSelected > 0 && numSelected < rowCount}
+						checked={rowCount > 0 && numSelected === rowCount}
+						onChange={onSelectAllClick}
+						inputProps={{
+							'aria-label': 'select all desserts',
+						}}
+					/>
+				</TableCell> */}
 				{headCells.map((headCell) => (
 					<StyledTableCell
 						key={headCell.id}
@@ -163,13 +172,13 @@ EnhancedTableHead.propTypes = {
 };
 
 const options = [
-	{ icon: <CheckIcon style={{ color: '#3B8F5C', height: '1rem' }} />, label: 'Aceitar' },
-	{ icon: <CloseIcon style={{ color: '#3B8F5C', height: '1rem' }} />, label: 'Recusar' },
+    { icon: <CheckIcon style={{ color: '#3B8F5C', height: '1rem' }} />, label: 'Aceitar' },
+    { icon: <CloseIcon style={{ color: '#3B8F5C', height: '1rem' }} />, label: 'Recusar' },
 ];
 
 const ITEM_HEIGHT = 48;
 
-function LongMenu() {
+function LongMenu(props) {
 	const [anchorEl, setAnchorEl] = React.useState(null);
 	const open = Boolean(anchorEl);
 
@@ -208,15 +217,30 @@ function LongMenu() {
 					},
 				}}
 			>
+				{/* <MenuItem
+					key={'Aceitar'}
+					selected={'Aceitar' === 'Pyxis'}
+					onClick={props.onClickAccept}
+				>
+					<CheckIcon style={{ color: '#3B8F5C', height: '1rem' }} /> 
+					Aceitar
+				</MenuItem>
+				<MenuItem
+					key={'Recusar'}
+					selected={'Recusar' === 'Pyxis'}
+				>
+					<CloseIcon style={{ color: '#3B8F5C', height: '1rem' }} />
+					Recusar
+				</MenuItem> */}
 				{options.map((option) => (
-					<MenuItem
-						key={option.label}
-						selected={option.label === 'Pyxis'}
-						onClick={handleClose}
-					>
-						{option.icon} {option.label}
-					</MenuItem>
-				))}
+                    <MenuItem
+                        key={option.label}
+                        selected={option.label === 'Pyxis'}
+                        onClick={handleClose}
+                    >
+                        {option.icon} {option.label}
+                    </MenuItem>
+                ))}
 			</Menu>
 		</div>
 	);
@@ -230,8 +254,22 @@ function EnhancedTableToolbar(props) {
 			sx={{
 				pl: { sm: 2 },
 				pr: { xs: 1, sm: 1 },
+				// ...(numSelected > 0 && {
+				// 	bgcolor: (theme) =>
+				// 		alpha(theme.palette.success.main, theme.palette.action.activatedOpacity),
+				// }),
 			}}
 		>
+			{/* {numSelected > 0 ? (
+				<Typography
+					sx={{ flex: '1 1 100%' }}
+					color="inherit"
+					variant="subtitle1"
+					component="div"
+				>
+					{numSelected} selecionado(s)
+				</Typography>
+			) : ( */}
 				<Typography
 					sx={{ flex: '1 1 100%' }}
 					variant="h6"
@@ -249,6 +287,17 @@ function EnhancedTableToolbar(props) {
                   </Grid>
               	</Grid>
 				</Typography>
+			{/* )}
+
+			{numSelected > 0 ? (
+				<Tooltip title="Delete">
+					<IconButton>
+						<DeleteIcon />
+					</IconButton>
+				</Tooltip>
+			) : (
+				<Tooltip></Tooltip>
+			)} */}
 		</Toolbar>
 	);
 }
@@ -278,22 +327,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 	},
 }));
 
-function formatDate(date){
-	var data = new Date(date)
-	
-	var dia  = data.getDate();
-	if (dia< 10) {
-		dia  = "0" + dia;
-	}
-
-	var mes  = data.getMonth() + 1;
-	if (mes < 10) {
-		mes  = "0" + mes;
-	}
-
-	var ano  = data.getFullYear();
-	return dia + "/" + mes + "/" + ano;
-}
 
 export default function TableRequestsPartner() {
 
@@ -311,15 +344,12 @@ export default function TableRequestsPartner() {
 
 			try {
 				
-				//obter o token do cookie e formata para enviar para o backend
-				const tokenCookie = document.cookie.split(" ")
-				let token = tokenCookie[0].split("=")[1]
-				token = token.substring(0, token.length - 1)
+				const token = getUserToken()
 				axios.defaults.headers.common['Authorization'] = token
 
 				const response = await axios.get(API_BASE_URL + `/oils/available`)
 
-				const r = response.data.map(item => createData(item.businessname, item.document, item.quantity + ' L', item.price, formatDate(item.date), item.status))
+				const r = response.data.map(item => createData(item.id, item.businessname, item.quantity + ' ml', item.price, item.status, formatDate(item.availabledate), item.document))
 				setRows(r)
 
 			} catch (error) {
@@ -329,6 +359,31 @@ export default function TableRequestsPartner() {
 
 		request();
 	}, [])
+
+	const collectOil = async (id, document, amount) => {
+		try{
+			const token = getUserToken()
+			axios.defaults.headers.common['Authorization'] = token
+
+			await axios.put(API_BASE_URL + `/oils/collect/${id}`)
+			const body = { amount: parseInt(amount), document: document }
+			await axios.post(API_BASE_URL + `/transactions/transfer`, body)
+
+			alert("Oleo coletado com sucesso")
+			setRows(rows.map(item => {
+				if(item.id == id)
+					item.status = "COLETADO"
+				return item
+			}))
+			
+		} catch(error){
+			await axios.put(API_BASE_URL + `/oils/restore/${id}`)
+			console.log(error)
+			alert(error.response.data.message)
+		}	
+		
+
+	}
 
 	const handleRequestSort = (event, property) => {
 		const isAsc = orderBy === property && order === 'asc';
@@ -422,7 +477,18 @@ export default function TableRequestsPartner() {
 									aria-checked={isItemSelected}
 									tabIndex={-1}
 									key={row.supplier}
+									// selected={isItemSelected}
+									// sx={{ cursor: 'pointer' }}
 								>
+									{/* <TableCell padding="checkbox">
+										<Checkbox
+											color="success"
+											checked={isItemSelected}
+											inputProps={{
+												'aria-labelledby': labelId,
+											}}
+										/>
+									</TableCell> */}
 									<TableCell
 										component="th"
 										id={labelId}
@@ -432,13 +498,14 @@ export default function TableRequestsPartner() {
 									>
 										{row.supplier}
 									</TableCell>
-									<TableCell align="center">{row.document}</TableCell>
 									<TableCell align="center">{row.oil_amount}</TableCell>
-									<TableCell align="center">{row.preco}</TableCell>
+									<TableCell align="center">{row.price}</TableCell>
+									<TableCell align="center">{row.status}</TableCell>
 									<TableCell align="center">{row.data}</TableCell>
-									<TableCell align="center" sx={{color: 'green'}}>{row.status}</TableCell>
 									<TableCell align="center">
-										<LongMenu />
+										{row.status == "DISPONIVEL" &&
+											<LongMenu onClickAccept={() => collectOil(row.id, row.document, row.price)} row={row}/>
+										}
 									</TableCell>
 								</TableRow>
 							);

@@ -27,12 +27,15 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import axios from 'axios';
 import { API_BASE_URL } from '../../../env';
 import { visuallyHidden } from '@mui/utils';
+import { getUserToken, formatDate } from '../../utils/util';
 
-function createData(estabelecimento, cnpj, quantidade, data, status) {
+function createData(id, estabelecimento, cnpj, quantidade, preco, data, status) {
     return {
+        id, 
         estabelecimento,
         cnpj,
         quantidade,
+        preco,
         data,
         status
     };
@@ -86,10 +89,16 @@ const headCells = [
         label: 'Quantidade',
     },
     {
+        id: 'preco',
+        numeric: true,
+        disablePadding: false,
+        label: 'Preço',
+    },
+    {
         id: 'data',
         numeric: false,
         disablePadding: true,
-        label: 'Data',
+        label: 'Data de coleta',
     },
     {
         id: 'status',
@@ -149,14 +158,10 @@ EnhancedTableHead.propTypes = {
     orderBy: PropTypes.string.isRequired,
 };
 
-const options = [
-    { icon: <CheckIcon style={{ color: '#3B8F5C', height: '1rem' }} />, label: 'Enviar' },
-    { icon: <CloseIcon style={{ color: '#3B8F5C', height: '1rem' }} />, label: 'Recusar' },
-];
-
 const ITEM_HEIGHT = 48;
 
-function LongMenu() {
+function LongMenu(props) {
+
 	const [anchorEl, setAnchorEl] = React.useState(null);
 	const open = Boolean(anchorEl);
 
@@ -195,15 +200,21 @@ function LongMenu() {
 					},
 				}}
 			>
-				{options.map((option) => (
-					<MenuItem
-						key={option.label}
-						selected={option.label === 'Pyxis'}
-						onClick={handleClose}
-					>
-						{option.icon} {option.label}
-					</MenuItem>
-				))}
+				<MenuItem
+                    key={'Enviar'}
+                    selected={'Enviar' === 'Pyxis'}
+                    onClick={props.onClickSend}
+                >
+                    <CheckIcon style={{ color: '#3B8F5C', height: '1rem' }} /> 
+                    Enviar
+                </MenuItem>
+                <MenuItem
+                    key={'Recusar'}
+                    selected={'Recusar' === 'Pyxis'}
+                >
+                    <CloseIcon style={{ color: '#3B8F5C', height: '1rem' }} /> 
+                    Recusar
+                </MenuItem>
 			</Menu>
 		</div>
 	);
@@ -265,6 +276,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function TableOil() {
+
     const [order, setOrder] = React.useState('asc');
     const [orderBy, setOrderBy] = React.useState('estabelecimento');
     const [selected, setSelected] = React.useState([]);
@@ -272,6 +284,55 @@ export default function TableOil() {
     const [dense, setDense] = React.useState(false);
     const [rows, setRows] = React.useState([]);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
+
+    React.useEffect(() => {
+
+		const request = async () => {
+
+			try {
+				
+				const token = getUserToken()
+				axios.defaults.headers.common['Authorization'] = token
+
+				const response = await axios.get(API_BASE_URL + `/oils/collected`)
+
+				const r = response.data.map(item => createData(item.id,
+                                                               item.businessname,
+                                                               item.document,
+                                                               item.quantity + ' ml',
+                                                               item.price,
+                                                               formatDate(item.availabledate),
+                                                               item.status))
+				setRows(r)
+
+			} catch (error) {
+				alert("Erro ao obter dados")
+			}
+		}
+
+		request();
+	}, [])
+
+    const sendOilToGreeneat = async (id, document, amount) => {
+		try{
+			const token = getUserToken()
+			axios.defaults.headers.common['Authorization'] = token
+
+			await axios.put(API_BASE_URL + `/oils/deliver/${id}`)
+
+			alert("Oleo enviado com sucesso")
+			setRows(rows.map(item => {
+				if(item.id == id)
+					item.status = "ENTREGUE"
+                return item
+			}))
+			
+		} catch(error){
+			console.log(error)
+			alert(error.response.data.message)
+		}	
+		
+	}
 
     const handleRequestSort = (event, property) => {
         const isAsc = orderBy === property && order === 'asc';
@@ -348,15 +409,15 @@ export default function TableOil() {
                             return (
                                 <TableRow
                                     hover
-                                    onClick={(event) => handleClick(event, row.estabelecimento)}
-                                    role="checkbox"
-                                    aria-checked={isItemSelected}
+                                    // onClick={(event) => handleClick(event, row.estabelecimento)}
+                                    // role="checkbox"
+                                    // aria-checked={isItemSelected}
                                     tabIndex={-1}
                                     key={row.estabelecimento}
                                 >
                                     <TableCell
                                         component="th"
-                                        id={labelId}
+                                        // id={labelId}
                                         scope="row"
                                         padding="none"
                                         align="center"
@@ -365,10 +426,11 @@ export default function TableOil() {
                                     </TableCell>
                                     <TableCell align="center">{row.cnpj}</TableCell>
                                     <TableCell align="center">{row.quantidade}</TableCell>
+                                    <TableCell align="center">{row.preco}</TableCell>
                                     <TableCell align="center">{row.data}</TableCell>
                                     <TableCell align="center">{row.status}</TableCell>
                                     <TableCell align="center">
-                                        <LongMenu />
+                                        <LongMenu onClickSend={() => sendOilToGreeneat(row.id, row.document, row.price)} row={row}/>
                                     </TableCell>
                                 </TableRow>
                             );
