@@ -1,8 +1,73 @@
 import { Button, Grid, TextField } from "@mui/material";
 import Autocomplete from '@mui/material/Autocomplete';
 import { useTheme } from '@mui/material/styles';
+import axios from "axios";
+import {API_BASE_URL} from "../../../env.js";
+import { useState ,useEffect } from "react";
+import { getLocationCode, getUser, getUserToken } from "../../utils/util.js";
 
 export default function ProfileEstabForm(props) {
+
+    const [data, setData] = useState("");
+    const [telephone, setTelephone] = useState("");
+    const [address, setAdress] = useState("");
+    const [name, setName] = useState("");
+    const [businessName, setBusinessName] = useState("");
+    const [location, setLocation] = useState("");
+    
+    useEffect( () => {
+        getData()
+    }, [])
+
+    const sendRequest = async () => {
+        try{
+            const user = getUser()
+            const token = getUserToken()
+            const body = {
+                "name": name,
+                "telephone": telephone,
+                "address": address,
+                "businessname": businessName,
+                "location": getLocationCode(location)
+            }
+            
+            axios.defaults.headers.common['Authorization'] = token
+            const response = await axios.put(API_BASE_URL + `/users/${user.id}/update`, user);
+            
+            if (response.status = 200)
+                alert("Dados atualizados com sucesso")
+            
+
+        }catch(error){
+            console.log(error)
+            alert("Erro ao salvar os dados")
+        }
+    }
+
+    const getData = async () => {
+
+        try{
+            const user = getUser()
+            const token = getUserToken()
+
+            axios.defaults.headers.common['Authorization'] = token
+
+            const response = await axios.get(API_BASE_URL + "/users/" + user.id);
+            setData(response.data[0])
+            console.log('DADOS:', response.data[0])
+
+            setTelephone(response.data[0].telephone)
+            setAdress(response.data[0].address)
+            setName(response.data[0].name)
+            setBusinessName(response.data[0].businessname)
+            setLocation(response.data[0].location.namearea)
+
+        }catch(error){
+            console.log(error)
+            alert("Erro ao buscar os dados")
+        }
+        
+    }
 
     const theme = useTheme(); 
     
@@ -12,7 +77,7 @@ export default function ProfileEstabForm(props) {
         'Leste',
         'Oeste'
     ];
-
+    
     return (
         <>
             <Grid container spacing={2}>
@@ -28,6 +93,7 @@ export default function ProfileEstabForm(props) {
                         autoComplete="cnpj"
                         autoFocus
                         style={{ backgroundColor: 'white' }}
+                        value= {data.document || ''}
                     />
                 </Grid>
                 <Grid item xs={6} sx={{ marginBottom: theme.spacing('-20px') }}>
@@ -42,6 +108,7 @@ export default function ProfileEstabForm(props) {
                         autoComplete="email"
                         autoFocus
                         style={{ backgroundColor: 'white' }}
+                        value= {data.email || ''}
                     />
                 </Grid>
                 <Grid item xs={6} sx={{ marginBottom: theme.spacing('-20px') }}>
@@ -54,18 +121,8 @@ export default function ProfileEstabForm(props) {
                         id="telefone"
                         required
                         style={{ backgroundColor: 'white' }}
-                    />
-                </Grid>
-                <Grid item xs={6} sx={{ marginBottom: theme.spacing('-20px') }}>
-                    <TextField
-                        margin="normal"
-                        color="success"
-                        fullWidth
-                        name="bairro"
-                        label="Bairro"
-                        id="bairro"
-                        required
-                        style={{ backgroundColor: 'white' }}
+                        value= {telephone || ''}
+                        onChange={(value) => setTelephone(value.currentTarget.value)}
                     />
                 </Grid>
                 <Grid item xs={6} sx={{ marginBottom: theme.spacing('-20px') }}>
@@ -78,18 +135,8 @@ export default function ProfileEstabForm(props) {
                         id="endereco"
                         required
                         style={{ backgroundColor: 'white' }}
-                    />
-                </Grid>
-                <Grid item xs={6} sx={{ marginBottom: theme.spacing('-20px') }}>
-                    <TextField
-                        margin="normal"
-                        color="success"
-                        fullWidth
-                        name="numero"
-                        label="Número"
-                        id="numero"
-                        required
-                        style={{ backgroundColor: 'white' }}
+                        value= {address || ''}
+                        onChange={(value) => setAdress(value.currentTarget.value)}
                     />
                 </Grid>
                 <Grid item xs={6} sx={{ marginBottom: theme.spacing('-20px') }}>
@@ -102,6 +149,8 @@ export default function ProfileEstabForm(props) {
                         id="rSocial"
                         required
                         style={{ backgroundColor: 'white' }}
+                        value= {name || ''}
+                        onChange={(value) => setName(value.currentTarget.value)}
                     />
                 </Grid>
                 <Grid item xs={6} sx={{ marginBottom: theme.spacing('-20px') }}>
@@ -114,15 +163,17 @@ export default function ProfileEstabForm(props) {
                         id="nFantasia"
                         required
                         style={{ backgroundColor: 'white' }}
+                        value= {businessName || ''}
+                        onChange={(value) => setBusinessName(value.currentTarget.value)}
                     />
                 </Grid>
                 <Grid item xs={6} sx={{ marginBottom: theme.spacing('-20px') }}>
                     <Autocomplete
                         name="location"
                         id="location"
-                        value={props.location}
+                        value={location || ''}
                         options={locations}
-                        onChange={props.onChange}
+                        onChange={(value) => setLocation(value.target.outerText)}
                         isOptionEqualToValue={(option, value) => option === value}
                         style={{ backgroundColor: 'white', marginTop: '15px' }}
                         renderInput={(params) => (
@@ -149,6 +200,7 @@ export default function ProfileEstabForm(props) {
                         variant="contained"
                         color="success"
                         sx={{ mt: 3, mb: 2, backgroundColor: '#0E681D' }}
+                        onClick={sendRequest}
                     >
                         Salvar
                     </Button>
