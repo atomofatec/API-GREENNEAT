@@ -46,7 +46,6 @@ exports.findById = async (req, res) => {
 	}
 };
 
-
 exports.update = async (req, res) => {
 	try {
 		
@@ -90,6 +89,34 @@ exports.delete = async (req, res) => {
 	}
 };
 
+exports.updateUserProfile = async (req, res) => {
+  const userId = req.params.id; // Obtém o 'id' a partir dos parâmetros de rota
+
+  const requestData = req.body;
+
+  const user = {
+    id: userId, // Use o 'id' da rota
+    email: requestData.email,
+  };
+
+  const userDetail = {
+    name: requestData.name,
+    telephone: requestData.telephone,
+    document: requestData.document,
+    address: requestData.address,
+    businessName: requestData.businessName,
+    idUser: userId, // Use o 'id' da rota
+  };
+  console.log(user, userDetail)
+
+  try {
+    const result = await User.updateById(user, userDetail);
+
+    res.status(200).json(result);
+  } catch (error) {
+    res.status(500).json({ error: 'Falha ao atualizar o usuário.' });
+  }
+};
 
 exports.create = async (req, res) => {
   try {

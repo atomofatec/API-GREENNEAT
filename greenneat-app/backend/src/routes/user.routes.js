@@ -13,8 +13,11 @@ module.exports = app => {
     router.post("/login", userController.login)
     router.post("/users/password", authenticateToken, userController.changePassword)
    	router.put("/usersUpdate", authenticateToken, userController.update)
-
+    router.put("/users/:id/update", authenticateToken, userController.updateUserProfile)
 
     app.use("/api", router)
   
 };
+
+
+

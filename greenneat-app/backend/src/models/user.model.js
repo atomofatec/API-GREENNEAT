@@ -43,6 +43,24 @@ User.findByDocument = async (document) => {
     return result.rows
 }
 
+User.updateById = async (user, userDetail) => {
+    try {
+        await sql.query('BEGIN');
+
+        const userUpdate = await sql.query('UPDATE users SET email = $1 WHERE id = $2', [user.email, user.id]);
+
+        const userDetailsUpdate = await sql.query('UPDATE userdetails SET name = $1, telephone = $2, document = $3, address = $4, businessName = $5 WHERE idUser = $6', 
+        [userDetail.name, userDetail.telephone, userDetail.document, userDetail.address, userDetail.businessName, user.id]);
+
+        await sql.query('COMMIT');
+
+        return { userUpdate, userDetailsUpdate };
+    } catch (error) {
+        await sql.query('ROLLBACK');
+        throw error;
+    }
+}
+
 User.create = async (user, userDetail, location) => {
     
     try{
