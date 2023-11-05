@@ -113,5 +113,39 @@ User.findGreeneatUser = async () => {
                                     WHERE idUserType = ($1) `, [1])
     return result.rows
 }
+User.update = async (id, body) => {
+    try{
+        await sql.query('BEGIN')
+
+        await sql.query('UPDATE userdetails SET name = $1, telephone = $2, address = $3, businessname = $4 WHERE idUser = $5',
+                        [body.name, body.telephone, body.address, body.businessname, id])
+
+        await sql.query('UPDATE users SET updatedat = $1 WHERE id = $2', [new Date(), id])
+
+        if (body.location)
+            await sql.query('UPDATE suppliers_locations SET idLocations = $1 WHERE idUserSupplier = $2', [body.location, id])
+        
+        await sql.query('COMMIT')
+    }catch(error){
+        await sql.query('ROLLBACK')
+        throw error
+    }
+}
+
+User.updatePassword = async (id, password) => {
+    const result = await sql.query(`UPDATE users SET
+                                    password = $1,
+                                    updatedat = $2
+                                    WHERE id = $3`, [password, new Date(), id])
+    return result.rows
+}
+
+User.findUserLocation = async (id) => {
+    const result = await sql.query(`SELECT locations.id, locations.nameArea FROM locations 
+                                    JOIN suppliers_locations sl ON locations.id = sl.idLocations
+                                    JOIN users ON users.id = sl.idUserSupplier
+                                    WHERE users.id = $1`, [id])
+    return result.rows
+}
 
 module.exports = User;

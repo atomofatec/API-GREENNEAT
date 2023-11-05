@@ -25,19 +25,68 @@ exports.findAll = async (req, res) => {
 };
 
 exports.findById = async (req, res) => {
-  try {
-    const user = await User.findById(req.params.id);
+	try {
+		const user = await User.findById(req.params.id);
 
-    if (!user.length) {
-      res.status(400).send("Usuário não encontrado");
-      return;
-    }
+		if (!user.length) {
+			res.status(400).send("Usuário não encontrado");
+			return;
+		}
+		
+		if (user[0].idusertype == 2){
+			const location = await User.findUserLocation(user[0].id)
+			if(location.length)
+				user[0].location = {id: location[0].id, namearea: location[0].namearea}
+		}
 
-    res.send(user);
-  } catch (error) {
-    console.log(error);
-    res.status(500).send("Erro ao processar requisição!");
-  }
+		res.send(user);
+	} catch (error) {
+		console.log(error);
+		res.status(500).send("Erro ao processar requisição!");
+	}
+};
+
+exports.update = async (req, res) => {
+	try {
+		
+		const user = await User.findById(req.user.id);
+
+		if (!user.length) {
+			res.status(400).send("Usuário não encontrado!");
+			return;
+		}
+
+		await User.update(req.user.id, req.body)
+
+		res.status(200).send();
+
+	} catch (error) {
+		console.log(error);
+		res.status(500).send("Erro ao processar requisição!");
+	}
+};
+
+
+exports.delete = async (req, res) => {
+	try {
+
+		if (req.user.idusertype != GREENEAT_USER) {
+			res.status(400).send("Apenas a greeneat pode excluir o cadastro");
+			return;
+		}
+
+		const user = await User.findById(req.params.id);
+
+		if (!user.length) {
+			res.status(400).send("Usuário não encontrado!");
+			return;
+		}
+
+		res.send(await User.delete(req.params.id));
+	} catch (error) {
+		console.log(error);
+		res.status(500).send("Erro ao processar requisição!");
+	}
 };
 
 exports.updateUserProfile = async (req, res) => {
@@ -77,10 +126,10 @@ exports.create = async (req, res) => {
       return;
     }
 
-    if (req.body.idUserType == GREENEAT_USER) {
-      res.status(400).send("Não é possível criar esse tipo de usuário");
-      return;
-    }
+    //if (req.body.idUserType == GREENEAT_USER) {
+    //  res.status(400).send("Não é possível criar esse tipo de usuário");
+    //  return;
+    //}
 
     const user = new User({
       email: req.body.email,
@@ -106,21 +155,6 @@ exports.create = async (req, res) => {
   }
 };
 
-exports.delete = async (req, res) => {
-  try {
-    const user = await User.findById(req.params.id);
-
-    if (!user.length) {
-      res.status(400).send("Usuário não encontrado!");
-      return;
-    }
-
-    res.send(await User.delete(req.params.id));
-  } catch (error) {
-    console.log(error);
-    res.status(500).send("Erro ao processar requisição!");
-  }
-};
 
 exports.login = async (req, res) => {
   try {
@@ -146,4 +180,33 @@ exports.login = async (req, res) => {
     console.log(error);
     res.status(500).send("Erro ao processar requisição!");
   }
+};
+
+
+exports.changePassword = async (req, res) => {
+	try {
+		
+		let user = await User.findByEmail(req.user.email);
+
+		if (user.length) {
+			const samePass = await bcrypt.compare(
+				req.body.oldPassword,
+				user[0].password
+			);
+
+			if (samePass) {
+				
+				const password = await encrypt(req.body.newPassword)
+				await User.updatePassword(user[0].id, password)
+				res.status(200).send({message: "Senha alterada com sucesso!"});
+				return;
+			}
+		}
+
+		res.status(400).send({message: "Senha incorreta!"});
+
+	} catch (error) {
+		console.log(error);
+		res.status(500).send("Erro ao processar requisição!");
+	}
 };

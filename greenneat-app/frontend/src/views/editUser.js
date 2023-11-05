@@ -10,7 +10,7 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import List from '@mui/material/List';
-import Link from '@mui/material/Link';
+import LinkMui from '@mui/material/Link';
 import Menu from '@mui/material/Menu';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
@@ -27,6 +27,8 @@ import AvatarImage from "../images/PerfilGreenneat.png";
 import ProfileCoopForm from '../components/Forms/ProfileCoopForm';
 import ProfileEstabForm from '../components/Forms/ProfileEstabForm';
 import EditUserForm from '../components/Forms/EditUserForm';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { Link } from 'react-router-dom';
 
 const settings = [
   { name: 'Meu Perfil' },
@@ -113,7 +115,7 @@ export default function EditUser() {
               <strong><h2>GREENNEAT</h2></strong>
             </Box>
             <IconButton color="white" sx={{ marginLeft: 'auto', borderRadius: '0' }}>
-              <Link href='#' sx={{
+              <LinkMui href='#' sx={{
                 textDecoration: 'none',
                 '&:visited': {
                   color: 'inherit',
@@ -148,24 +150,24 @@ export default function EditUser() {
                         </strong>
                       </div>
                       <div style={{ margin: '0px 20px 10px 20px', color: 'grey' }}>
-												greenneat@email.com
-											</div>
+                        greenneat@email.com
+                      </div>
                       <Divider />
                       {settings.map((setting, index) => (
                         setting === 'divider' ? (
                           <Divider key={index} />
                         ) : (
                           <MenuItem key={setting.name} onClick={handleCloseUserMenu}>
-                            <Typography textAlign="center"><Link href='/meu-perfil-Greenneat' sx={{ textDecoration: 'none', color: 'inherit' }}>{setting.name}</Link></Typography>
-                            <Typography textAlign="center"><Link href='#' sx={{ textDecoration: 'none', color: 'inherit' }}>{setting.ajuda}</Link></Typography>
-                            <Typography textAlign="center"><Link href='/' sx={{ textDecoration: 'none', color: 'inherit' }}>{setting.sair}</Link></Typography>
+                            <Typography textAlign="center"><LinkMui href='/meu-perfil-Greenneat' sx={{ textDecoration: 'none', color: 'inherit' }}>{setting.name}</LinkMui></Typography>
+                            <Typography textAlign="center"><LinkMui href='#' sx={{ textDecoration: 'none', color: 'inherit' }}>{setting.ajuda}</LinkMui></Typography>
+                            <Typography textAlign="center"><LinkMui href='/' sx={{ textDecoration: 'none', color: 'inherit' }}>{setting.sair}</LinkMui></Typography>
                           </MenuItem>
                         )
                       ))}
                     </Menu>
                   </Box>
                 </Typography>
-              </Link>
+              </LinkMui>
             </IconButton>
           </Toolbar>
         </AppBar>
@@ -198,6 +200,9 @@ export default function EditUser() {
                 <Container maxWidth="lg" sx={{ m: 'auto', marginBottom: '16px', overflow: 'auto' }}>
                   <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{ marginTop: "20px" }}>
                     <Grid item xs={6}>
+                      <Link to="/usuarios-Greenneat">
+                        <ArrowBackIcon style={{ color: '#3B8F5C', height: '1rem' }} />
+                      </Link>
                       <Title>Editar Usuário</Title>
                       <SubTitle>Edite as informações do usuário</SubTitle>
                     </Grid>
