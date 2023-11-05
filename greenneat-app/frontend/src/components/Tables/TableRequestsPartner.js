@@ -217,7 +217,7 @@ function LongMenu(props) {
 					},
 				}}
 			>
-				{/* <MenuItem
+				<MenuItem
 					key={'Aceitar'}
 					selected={'Aceitar' === 'Pyxis'}
 					onClick={props.onClickAccept}
@@ -231,8 +231,8 @@ function LongMenu(props) {
 				>
 					<CloseIcon style={{ color: '#3B8F5C', height: '1rem' }} />
 					Recusar
-				</MenuItem> */}
-				{options.map((option) => (
+				</MenuItem>
+				{/* {options.map((option) => (
                     <MenuItem
                         key={option.label}
                         selected={option.label === 'Pyxis'}
@@ -240,7 +240,7 @@ function LongMenu(props) {
                     >
                         {option.icon} {option.label}
                     </MenuItem>
-                ))}
+                ))} */}
 			</Menu>
 		</div>
 	);
