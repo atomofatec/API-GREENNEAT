@@ -11,7 +11,7 @@
   <a href ="#backlog-das-sprints"> Backlog das Sprints </a> • 
   <a href ="#cronograma-das-sprints"> Cronograma das Sprints </a>
   <br>
-  <a href ="#user-stories"> User Stories </a>  •
+  <a href ="#bpmn"> BPMN </a>  •
   <a href ="#burndown-das-sprints"> Burndown das Sprints </a>  •
   <a href ="#modelagem-banco"> Modelagem do Banco de Dados </a>  •
   <a href ="#equipe">Equipe</a>  •
@@ -105,7 +105,11 @@ O desafio consiste em criar uma plataforma que gerencie os créditos a serem usa
 
 <br>
 
-<span id="user-stories">
+<span id="bpmn">
+  
+## 📊 Business Process Model and Notation - BPMN
+
+[BPMN_Fluxogramas.zip](https://github.com/atomofatec/API-GREENNEAT/files/13258598/BPMN_Fluxogramas.zip)
 
 <br>
 
