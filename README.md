@@ -130,13 +130,13 @@ O desafio consiste em criar uma plataforma que gerencie os créditos a serem usa
 
 <br>
 
-  <!-- //
 <h3>3ª Sprint</h3>
 
-<h1 align="center"></h1> 
+<h1 align="center"><img src="https://github.com/atomofatec/API-GREENNEAT/blob/main/imagens/burndown_sprint3.jpg" alt="Burndown da Sprint 3"/></h1> 
 
 <br>
 
+<!-- //
   <h3>4ª Sprint</h3>
 
 <h1 align="center"></h1> 
