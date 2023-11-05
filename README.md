@@ -132,7 +132,7 @@ O desafio consiste em criar uma plataforma que gerencie os créditos a serem usa
 
 <h3>3ª Sprint</h3>
 
-<h1 align="center"><img src="https://github.com/atomofatec/API-GREENNEAT/blob/main/imagens/burndown_sprint3.jpg" alt="Burndown da Sprint 3"/></h1> 
+<h1 align="center"><img src="https://github.com/atomofatec/API-GREENNEAT/blob/main/imagens/burndown_sprint3.jpeg" alt="Burndown da Sprint 3"/></h1> 
 
 <br>
 
@@ -167,6 +167,10 @@ O desafio consiste em criar uma plataforma que gerencie os créditos a serem usa
 **:link: Clique no link abaixo para assistir ao vídeo da Sprint Review 2.**  
 > [Sprint Review 2](https://www.youtube.com/watch?v=IFZ-cbV5QTU)
 
+<h3>Video Sprint Review 3</h3>
+
+**:link: Clique no link abaixo para assistir ao vídeo da Sprint Review 3.**  
+> [Sprint Review 3]()
 
 <!-- //
 <span id="produto">
