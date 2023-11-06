@@ -170,7 +170,7 @@ O desafio consiste em criar uma plataforma que gerencie os créditos a serem usa
 <h3>Video Sprint Review 3</h3>
 
 **:link: Clique no link abaixo para assistir ao vídeo da Sprint Review 3.**  
-> [Sprint Review 3]()
+> [Sprint Review 3](https://www.youtube.com/watch?v=TTgM_wds4mo)
 
 <!-- //
 <span id="produto">
