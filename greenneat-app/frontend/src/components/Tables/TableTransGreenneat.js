@@ -381,15 +381,6 @@ export default function TableTransGreenneat() {
                   selected={isItemSelected}
                   sx={{ cursor: "pointer" }}
                 >
-                  <TableCell padding="checkbox">
-                    <Checkbox
-                      color="success"
-                      checked={isItemSelected}
-                      inputProps={{
-                        "aria-labelledby": labelId,
-                      }}
-                    />
-                  </TableCell>
                   <TableCell
                     component="th"
                     id={labelId}
@@ -404,8 +395,6 @@ export default function TableTransGreenneat() {
                   <TableCell align="center">{row.data}</TableCell>
                   <TableCell align="center">{row.documento}</TableCell>
                   <TableCell align="center">{row.situacao}</TableCell>
-                  <TableCell align="center">{}</TableCell>
-                  <TableCell align="center">{}</TableCell>
                 </TableRow>
               );
             })}

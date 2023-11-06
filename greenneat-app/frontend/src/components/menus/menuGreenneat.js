@@ -60,7 +60,7 @@ export const mainListItems = (
         }
       />
     </ListItemButton>
-    {/* <ListItemButton component={Link} to="/historico-movimentacao" sx={{ color: 'white', height: '4rem' }}>
+    <ListItemButton component={Link} to="/historico-movimentacao" sx={{ color: 'white', height: '4rem' }}>
       <ListItemIcon>
         <HistoryIcon sx={{ color: 'white' }} />
       </ListItemIcon>
@@ -71,6 +71,6 @@ export const mainListItems = (
           </Typography>
         }
       />
-    </ListItemButton>*/}
+    </ListItemButton>
   </React.Fragment>
 );
