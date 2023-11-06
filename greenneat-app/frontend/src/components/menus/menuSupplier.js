@@ -17,9 +17,9 @@ export const mainListItems = (
       </ListItemIcon>
       <ListItemText
         primary={
-          <Typography variant="body2" style={{ fontSize: '18px', fontFamily: "'Century Gothic', Futura, sans-serif" }}>
+          {/*<Typography variant="body2" style={{ fontSize: '18px', fontFamily: "'Century Gothic', Futura, sans-serif" }}>
             Carteira
-          </Typography>
+          </Typography>*/}
         }
       />
     </ListItemButton>

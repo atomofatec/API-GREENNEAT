@@ -68,7 +68,7 @@ export default function Login() {
       if (user.idusertype === GREENNEAT_TYPE_USER) {
         navigate("/dashboard-greenneat");
       } else if (user.idusertype === SUPPLIER_TYPE_USER) {
-        navigate("/carteira-estabelecimento");
+        navigate("/solicitar-estabelecimento");
       } else if (user.idusertype === PARTNER_TYPE_USER)
         navigate("/dashboard-cooperativo");
 

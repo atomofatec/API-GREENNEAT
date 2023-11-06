@@ -37,8 +37,6 @@ export default function ProfileEstabForm(props) {
 
     const sendRequest = async () => {
         try{
-            const user = getUser()
-            const token = getUserToken()
             const body = {
                 "name": name,
                 "telephone": telephone,
@@ -47,8 +45,8 @@ export default function ProfileEstabForm(props) {
                 "location": getLocationCode(location)
             }
             
-            axios.defaults.headers.common['Authorization'] = token
-            const response = await axios.put(API_BASE_URL + `/users/${user.id}/update`, user);
+            axios.defaults.headers.common['Authorization'] = getUserToken()
+            const response = await axios.put(API_BASE_URL + "/users", body);
             
             if (response.status === 200) {
                 setSuccessMessage("Dados atualizados com sucesso");
@@ -77,7 +75,6 @@ export default function ProfileEstabForm(props) {
 
             const response = await axios.get(API_BASE_URL + "/users/" + user.id);
             setData(response.data[0])
-            console.log('DADOS:', response.data[0])
 
             setTelephone(response.data[0].telephone)
             setAdress(response.data[0].address)
