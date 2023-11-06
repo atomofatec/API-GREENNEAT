@@ -379,13 +379,13 @@ export default function TableHistGreenneat() {
                     padding="none"
                     align="center"
                   >
-                    {row.documento}
+                    {row.nome}
                   </TableCell>
+                  <TableCell align="center">{row.documento}</TableCell>
                   <TableCell align="center">{row.valor}</TableCell>
                   <TableCell align="center">{row.quantidade}</TableCell>
                   <TableCell align="center">{row.tipo}</TableCell>
                   <TableCell align="center">{row.data}</TableCell>
-                  <TableCell align="center">{row.nome}</TableCell>
                 </TableRow>
               );
             })}
