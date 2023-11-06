@@ -5,6 +5,15 @@ import axios from "axios";
 import {API_BASE_URL} from "../../../env.js";
 import { useState ,useEffect } from "react";
 import { getLocationCode, getUser, getUserToken } from "../../utils/util.js";
+import Alert from "@mui/material/Alert";
+import AlertTitle from "@mui/material/AlertTitle";
+
+const alertStyle = {
+    position: 'fixed',
+    top: '10px',
+    right: '10px',
+    zIndex: 9999,
+  };
 
 export default function ProfileEstabForm(props) {
 
@@ -14,6 +23,13 @@ export default function ProfileEstabForm(props) {
     const [name, setName] = useState("");
     const [businessName, setBusinessName] = useState("");
     const [location, setLocation] = useState("");
+
+    const [successAlertOpen, setSuccessAlertOpen] = useState(false);
+    const [errorAlertOpen, setErrorAlertOpen] = useState(false);
+    const [successMessage, setSuccessMessage] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
+    const [autoCloseSuccessTimeout, setAutoCloseSuccessTimeout] = useState(null);
+    const [autoCloseErrorTimeout, setAutoCloseErrorTimeout] = useState(null);
     
     useEffect( () => {
         getData()
@@ -34,13 +50,20 @@ export default function ProfileEstabForm(props) {
             axios.defaults.headers.common['Authorization'] = token
             const response = await axios.put(API_BASE_URL + `/users/${user.id}/update`, user);
             
-            if (response.status = 200)
-                alert("Dados atualizados com sucesso")
-            
-
-        }catch(error){
-            console.log(error)
-            alert("Erro ao salvar os dados")
+            if (response.status === 200) {
+                setSuccessMessage("Dados atualizados com sucesso");
+                setSuccessAlertOpen(true);
+                setAutoCloseSuccessTimeout(
+                    setTimeout(() => setSuccessAlertOpen(false), 5000)
+                );
+            }
+            } catch (error) {
+            console.log(error);
+            setErrorMessage("Erro ao salvar os dados");
+            setErrorAlertOpen(true);
+            setAutoCloseErrorTimeout(
+                setTimeout(() => setErrorAlertOpen(false), 5000)
+            );
         }
     }
 
@@ -65,6 +88,10 @@ export default function ProfileEstabForm(props) {
         }catch(error){
             console.log(error)
             alert("Erro ao buscar os dados")
+            setErrorAlertOpen(true);
+            setAutoCloseErrorTimeout(
+                setTimeout(() => setErrorAlertOpen(false), 5000)
+            );
         }
         
     }
@@ -206,6 +233,22 @@ export default function ProfileEstabForm(props) {
                     </Button>
                 </Grid>
             </Grid>
+            {errorAlertOpen && (
+                <div style={alertStyle}>
+                    <Alert severity="error">
+                        <AlertTitle>Erro</AlertTitle>
+                        {errorMessage}
+                    </Alert>
+                </div>
+            )}
+            {successAlertOpen && (
+                <div style={alertStyle}>
+                    <Alert severity="success">
+                        <AlertTitle>Sucesso</AlertTitle>
+                        {successMessage}
+                    </Alert>
+                </div>
+            )}
         </>
     )
 }
