@@ -37,11 +37,12 @@ export default function ProfileCoopForm(props) {
 
     const sendRequest = async () => {
         try {
-            const user = getUser();
-            const token = getUserToken();
+            const body = {
+                "telephone": telephone,
+            }
             
-            axios.defaults.headers.common['Authorization'] = token;
-            const response = await axios.put(API_BASE_URL + `/users/${user.id}/update`, user);
+            axios.defaults.headers.common['Authorization'] = getUserToken()
+            const response = await axios.put(API_BASE_URL + "/users", body);
             
             if (response.status === 200) {
                 setSuccessMessage("Dados atualizados com sucesso");
@@ -61,20 +62,20 @@ export default function ProfileCoopForm(props) {
     }
 
     const getData = async () => {
-        try {
-            const user = getUser();
-            const token = getUserToken();
+        try{
+            const user = getUser()
+            const token = getUserToken()
 
-            axios.defaults.headers.common['Authorization'] = token;
+            axios.defaults.headers.common['Authorization'] = token
 
             const response = await axios.get(API_BASE_URL + "/users/" + user.id);
-            setData(response.data[0]);
+            setData(response.data[0])
 
-            setTelephone(response.data[0].telephone);
-            setName(response.data[0].name);
-            setAddress(null);
-            setBusinessName(null);
-            setName(null);
+            setTelephone(response.data[0].telephone)
+            setAddress(null)
+            setName(null)
+            setBusinessName(null)
+            setLocation(null)
         } catch (error) {
             console.log(error);
             setErrorMessage("Erro ao buscar os dados");

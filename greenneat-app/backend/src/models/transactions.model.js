@@ -49,14 +49,14 @@ Transaction.findTransferRequest = async (user, amount) => {
     return result.rows
 }
 
-Transaction.transfer = async (transaction, sender, receiver = null, oilSupplierId = null) => {
+Transaction.transfer = async (transaction, sender, receiver = null) => {
     try{
         await sql.query('BEGIN')
         await Transaction.create(transaction)
         await User.updateBalance(sender)
         if (receiver) await User.updateBalance(receiver)
         await sql.query('COMMIT')
-
+ 
     } catch(error){
         await sql.query('ROLLBACK')
         throw error

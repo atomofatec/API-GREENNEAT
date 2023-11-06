@@ -13,14 +13,31 @@ export function getUserToken(){
 }
 
 export function getLocationCode(location) {
-    switch(location){
-      case 'Norte':
-        return 1
-      case 'Sul':
-        return 2
-      case 'Leste':
-        return 3
-      case 'Oeste':
-        return 4
+    switch (location) {
+        case 'Norte':
+            return 1
+        case 'Sul':
+            return 2
+        case 'Leste':
+            return 3
+        case 'Oeste':
+            return 4
     }
+}
+
+export function formatDate(date) {
+    var data = new Date(date)
+
+    var dia = data.getDate();
+    if (dia < 10) {
+        dia = "0" + dia;
+    }
+
+    var mes = data.getMonth() + 1;
+    if (mes < 10) {
+        mes = "0" + mes;
+    }
+
+    var ano = data.getFullYear();
+    return dia + "/" + mes + "/" + ano;
 }

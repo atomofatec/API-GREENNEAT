@@ -5,29 +5,28 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const GREENEAT_USER = 1;
 const SUPPLIER_USER = 2;
-
+ 
 async function encrypt(password) {
-  return await bcrypt.hash(password, 2);
+	return await bcrypt.hash(password, 2);
 }
-
+ 
 function generateAccessToken(user) {
-  return jwt.sign({ user }, process.env.JWT_SECRET, { expiresIn: "86400s" });
+	return jwt.sign({ user }, process.env.JWT_SECRET, { expiresIn: "86400s" });
 }
-
+ 
 exports.findAll = async (req, res) => {
-  try {
-    const data = await User.findAll();
-    res.send(data);
-  } catch (error) {
-    console.log(error);
-    res.status(500).send("Erro ao processar requisição!");
-  }
+	try {
+		const data = await User.findAll();
+		res.send(data);
+	} catch (error) {
+		console.log(error);
+		res.status(500).send("Erro ao processar requisição!");
+	}
 };
-
+ 
 exports.findById = async (req, res) => {
 	try {
 		const user = await User.findById(req.params.id);
-
 		if (!user.length) {
 			res.status(400).send("Usuário não encontrado");
 			return;
@@ -117,7 +116,7 @@ exports.updateUserProfile = async (req, res) => {
     res.status(500).json({ error: 'Falha ao atualizar o usuário.' });
   }
 };
-
+ 
 exports.create = async (req, res) => {
   try {
     const emailExists = await User.findByEmail(req.body.email);
@@ -155,6 +154,27 @@ exports.create = async (req, res) => {
   }
 };
 
+exports.delete = async (req, res) => {
+	try {
+  
+		if (req.user.idusertype != GREENEAT_USER) {
+			res.status(400).send("Apenas a greeneat pode excluir o cadastro");
+			return;
+		}
+  
+		const user = await User.findById(req.params.id);
+  
+		if (!user.length) {
+			res.status(400).send("Usuário não encontrado!");
+			return;
+		}
+  
+		res.send(await User.delete(req.params.id));
+	} catch (error) {
+		console.log(error);
+		res.status(500).send("Erro ao processar requisição!");
+	}
+  };
 
 exports.login = async (req, res) => {
   try {
