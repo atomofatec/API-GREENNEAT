@@ -30,6 +30,7 @@ import { mainListItems } from '../components/menus/menuGreenneat';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { API_BASE_URL, GREENNEAT_TYPE_USER } from '../../env.js'
+import { getUser, getUserToken } from '../utils/util';
 
 const settings = [
   { name: 'Meu Perfil' },
@@ -152,9 +153,7 @@ export default function NovaTransacaoGreenneat() {
       };
 
       //obter o token do cookie e formata para enviar para o backend
-      const tokenCookie = document.cookie.split(" ")
-      let token = tokenCookie[0].split("=")[1]
-      token = token.substring(0, token.length - 1)
+      const token = getUserToken()
 
       axios.defaults.headers.common['Authorization'] = token
 
@@ -205,8 +204,7 @@ export default function NovaTransacaoGreenneat() {
   }, [successAlertOpen]);
 
   //obter o usuario dos cookies e verifica o type user 
-  let user = document.cookie.split("=")
-  user = JSON.parse(user[2])
+  const user = getUser()
 
   if (user.idusertype != GREENNEAT_TYPE_USER)
     return <span> Acesso negado </span>

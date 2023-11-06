@@ -31,6 +31,7 @@ import CarteiraCoopEnvForm from '../components/Forms/CarteiraCoopEnvForm';
 import { mainListItems } from '../components/menus/menuPartner';
 import axios from 'axios';
 import { API_BASE_URL, PARTNER_TYPE_USER } from '../../env';
+import { getUser } from '../utils/util';
 
 const settings = [
   { name: 'Meu Perfil' },
@@ -221,8 +222,7 @@ export default function CarteiraCooperativo() {
   }, [successAlertOpen]);
 
   //obter o usuario dos cookies e verifica o type user 
-  let user = document.cookie.split("=")
-  user = JSON.parse(user[2])
+  const user = getUser()
 
   if (user.idusertype != PARTNER_TYPE_USER)
     return <span> Acesso negado </span>

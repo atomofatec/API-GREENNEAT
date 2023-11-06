@@ -27,7 +27,9 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import axios from 'axios';
 import { API_BASE_URL } from '../../../env';
 import { visuallyHidden } from '@mui/utils';
+import { getUserToken } from '../../utils/util';
 import { Navigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 function createData(cnpj, email, telefone, razao, nome) {
     return {
@@ -151,7 +153,14 @@ EnhancedTableHead.propTypes = {
 };
 
 const options = [
-    { icon: <EditIcon style={{ color: '#3B8F5C', height: '1rem' }} />, label: 'Editar' },
+    {
+        icon: (
+            <Link to="/editar-usuario">
+                <EditIcon style={{ color: '#3B8F5C', height: '1rem' }} />
+            </Link>
+        ),
+        label: 'Editar'
+    },
     { icon: <DeleteIcon style={{ color: '#3B8F5C', height: '1rem' }} />, label: 'Excluir' },
 ];
 
@@ -276,30 +285,29 @@ export default function TableUsersGreenneat() {
 
     React.useEffect(() => {
 
-        const request = async () => {
+		const request = async () => {
 
-            try {
+			try {
+				
+				//obter o token do cookie e formata para enviar para o backend
+				const token = getUserToken()
+				axios.defaults.headers.common['Authorization'] = token
 
-                //obter o token do cookie e formata para enviar para o backend
-                const tokenCookie = document.cookie.split(" ")
-                let token = tokenCookie[0].split("=")[1]
-                token = token.substring(0, token.length - 1)
-                axios.defaults.headers.common['Authorization'] = token
+				const response = await axios.get(API_BASE_URL + `/users`)
 
-                const response = await axios.get(API_BASE_URL + `/users`)
+				const users = response.data.filter(user => user.idusertype != 1)
 
-                const users = response.data.filter(user => user.idusertype != 1)
+				const r = users.map(item => createData(item.document, item.email, item.telephone, item.businessname, item.name))
+				setRows(r)
 
-                const r = users.map(item => createData(item.document, item.email, item.telephone, item.businessname, item.name))
-                setRows(r)
+			} catch (error) {
+				alert("Erro ao obter dados")
+			}
+		}
 
-            } catch (error) {
-                alert("Erro ao obter dados")
-            }
-        }
+		request();
+	}, [])
 
-        request();
-    }, [])
 
     const handleRequestSort = (event, property) => {
         const isAsc = orderBy === property && order === 'asc';

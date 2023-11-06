@@ -28,6 +28,7 @@ import SubTitle from "../components/Outros/SubTitle";
 import { mainListItems } from "../components/menus/menuSupplier";
 import {API_BASE_URL, GREENEAT_DOCUMENT, SUPPLIER_TYPE_USER} from "../../env.js";
 import axios from "axios";
+import { getUser } from '../utils/util';
 
 const settings = [
   { name: 'Meu Perfil' },
@@ -149,8 +150,7 @@ export default function CarteiraEstabelecimento() {
   };
 
   //obter o usuario dos cookies e verifica o type user 
-  let user = document.cookie.split("=")
-  user = JSON.parse(user[2])
+  const user = getUser()
 
   if (user.idusertype != SUPPLIER_TYPE_USER)
     return <span> Acesso negado </span>

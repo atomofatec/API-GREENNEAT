@@ -1,10 +1,10 @@
-export function getUser() {
+export function getUser () {
     let user = document.cookie.split("=");
     user = JSON.parse(user[2]);
     return user;
 }
 
-export function getUserToken() {
+export function getUserToken(){
     //obter o token do cookie e formata para enviar para o backend
     const tokenCookie = document.cookie.split(" ")
     let token = tokenCookie[0].split("=")[1]

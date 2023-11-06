@@ -1,24 +1,14 @@
 import React from "react";
-import ReactApexChart from 'react-apexcharts';
+import ReactApexChart from "react-apexcharts";
 
 class RegionChart extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-        series: [
-          {
-            name: 'Óleo virgem',
-            data: [44, 55, 41, 64],
-          },
-          {
-            name: 'Óleo usado',
-            data: [53, 32, 33, 52],
-          },
-        ],
       options: {
         chart: {
-          type: 'bar',
+          type: "bar",
           height: 430,
           toolbar: {
             show: false,
@@ -33,10 +23,10 @@ class RegionChart extends React.Component {
           enabled: false,
         },
         xaxis: {
-          categories: ['Norte', 'Sul', 'Leste', 'Oeste'],
+          categories: ["Norte", "Sul", "Leste", "Oeste"],
         },
         grid: {
-            show: false,
+          show: false,
         },
         tooltip: {
           y: {
@@ -51,9 +41,28 @@ class RegionChart extends React.Component {
   }
 
   render() {
+
+    const series = [
+      {
+        name: "Estabelecimentos",
+        data: this.props.chartData.map((item) => item.count),
+      },
+    ];
+
+    const options = {
+      ...this.state.options,
+      xaxis: {
+        categories: this.props.chartData.map((item) => item.namearea),
+      },
+    };
     return (
       <div id="chart">
-        <ReactApexChart options={this.state.options} series={this.state.series} type="bar"  />
+        <ReactApexChart
+          options={options}
+          series={series}
+          type="bar"
+          height={430}
+        />
       </div>
     );
   }

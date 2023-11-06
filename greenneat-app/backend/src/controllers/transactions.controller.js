@@ -76,7 +76,6 @@ exports.transfer = async (req, res) => {
           });
           return;
         }
-  
         receiver.balance += transaction[0].amount;
         await Transaction.approve(transaction[0], receiver);
         res.send("Transferencia aprovada");

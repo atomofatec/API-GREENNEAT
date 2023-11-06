@@ -343,7 +343,7 @@ export default function TableRequestsPartner() {
 		const request = async () => {
 
 			try {
-				
+				//obter o token do cookie e formata para enviar para o backend
 				const token = getUserToken()
 				axios.defaults.headers.common['Authorization'] = token
 

@@ -1,24 +1,14 @@
 import React from "react";
-import ReactApexChart from 'react-apexcharts';
+import ReactApexChart from "react-apexcharts";
 
 class PartnerSupplierRegionChart extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      series: [
-        {
-          name: 'Parceiros',
-          data: [76, 101, 98, 105],
-        },
-        {
-          name: 'Estabelecimentos',
-          data: [41, 36, 76, 45],
-        },
-      ],
       options: {
         chart: {
-          type: 'bar',
+          type: "bar",
           height: 350,
           toolbar: {
             show: false,
@@ -27,8 +17,8 @@ class PartnerSupplierRegionChart extends React.Component {
         plotOptions: {
           bar: {
             horizontal: false,
-            columnWidth: '55%',
-            endingShape: 'rounded',
+            columnWidth: "55%",
+            endingShape: "rounded",
           },
         },
         dataLabels: {
@@ -37,11 +27,9 @@ class PartnerSupplierRegionChart extends React.Component {
         stroke: {
           show: true,
           width: 2,
-          colors: ['transparent'],
+          colors: ["transparent"],
         },
-        xaxis: {
-          categories: ['Norte', 'Sul', 'Leste', 'Oeste',],
-        },
+
         fill: {
           opacity: 1,
         },
@@ -53,17 +41,36 @@ class PartnerSupplierRegionChart extends React.Component {
           },
         },
         grid: {
-            show: false,
+          show: false,
         },
-        colors: ['#2E9AFE', '#01DF74'],
-        },
-      };
-    }
+        colors: ["#2E9AFE", "#01DF74"],
+      },
+    };
+  }
 
   render() {
+    const series = [
+      {
+        name: "Estabelecimentos",
+        data: this.props.chartData.map((item) => item.count),
+      },
+    ];
+
+    const options = {
+      ...this.state.options,
+      xaxis: {
+        categories: this.props.chartData.map((item) => item.namearea),
+      },
+    };
+
     return (
       <div id="chart">
-        <ReactApexChart options={this.state.options} series={this.state.series} type="bar" height={350} />
+        <ReactApexChart
+          options={options}
+          series={series}
+          type="bar"
+          height={350}
+        />
       </div>
     );
   }
