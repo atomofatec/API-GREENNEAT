@@ -46,7 +46,7 @@ export default function ProfileEstabForm(props) {
             }
             
             axios.defaults.headers.common['Authorization'] = getUserToken()
-            const response = await axios.put(API_BASE_URL + "/users", body);
+            const response = await axios.put(API_BASE_URL + "/usersUpdate", body);
             
             if (response.status === 200) {
                 setSuccessMessage("Dados atualizados com sucesso");
