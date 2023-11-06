@@ -38,7 +38,11 @@ export default function ProfileCoopForm(props) {
     const sendRequest = async () => {
         try {
             const body = {
+                "name": name,
                 "telephone": telephone,
+                "address": address,
+                "businessname": businessName,
+                "location": location
             }
             
             axios.defaults.headers.common['Authorization'] = getUserToken()
@@ -72,10 +76,10 @@ export default function ProfileCoopForm(props) {
             setData(response.data[0])
 
             setTelephone(response.data[0].telephone)
-            setAddress(null)
-            setName(null)
-            setBusinessName(null)
-            setLocation(null)
+            setAddress('')
+            setName('')
+            setBusinessName('')
+            setLocation('')
         } catch (error) {
             console.log(error);
             setErrorMessage("Erro ao buscar os dados");
