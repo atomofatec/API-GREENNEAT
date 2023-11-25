@@ -21,6 +21,7 @@ import TableUsersGreenneat from '../components/Tables/TableUsersGreenneat';
 import { mainListItems } from '../components/menus/menuGreenneat';
 import { GREENNEAT_TYPE_USER } from '../../env';
 import { getUser } from '../utils/util';
+import { useNavigate } from 'react-router-dom';
 
 const settings = [
 	{ name: 'Meu Perfil' },
@@ -78,6 +79,10 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 );
 
 export default function UsuariosGreenneat() {
+
+	
+
+
 	const [open, setOpen] = React.useState(false);
 	const toggleDrawer = () => {
 		setOpen(!open);

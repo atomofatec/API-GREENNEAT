@@ -30,13 +30,12 @@ import { API_BASE_URL } from "../../../env";
 import { visuallyHidden } from "@mui/utils";
 import { getUserToken } from "../../utils/util";
 
-function createData(sender, receiver, valor, data, documento, situacao) {
+function createData(receiver, documento, valor, data, situacao) {
   return {
-    sender,
     receiver,
+    documento,
     valor,
     data,
-    documento,
     situacao,
   };
 }
@@ -71,16 +70,17 @@ function stableSort(array, comparator) {
 
 const headCells = [
   {
-    id: "cnpj_sender",
-    numeric: true,
-    disablePadding: false,
-    label: "Remetente",
-  },
-  {
     id: "cnpj_receiver",
     numeric: false,
     disablePadding: false,
     label: "Destinatário",
+  },
+  
+  {
+    id: "documento",
+    numeric: false,
+    disablePadding: false,
+    label: "Documento",
   },
   {
     id: "valor",
@@ -93,12 +93,6 @@ const headCells = [
     numeric: false,
     disablePadding: true,
     label: "Data",
-  },
-  {
-    id: "documento",
-    numeric: false,
-    disablePadding: false,
-    label: "Documento",
   },
   {
     id: "situacao",
@@ -260,12 +254,13 @@ export default function TableTransGreenneat() {
 				
 				const r = await Promise.all(transactions.map(async transaction => {
 					
-					let sender = await axios.get(API_BASE_URL + `/users/` + transaction.idsenderuser)
-					sender = sender.data[0]
+					// let sender = await axios.get(API_BASE_URL + `/users/` + transaction.idsenderuser)
+					// sender = sender.data[0]
 					let receiver = await axios.get(API_BASE_URL + `/users/` + transaction.idreceiveruser)
 					receiver = receiver.data[0]
 
-					return createData(sender.businessname, receiver.businessname, transaction.amount, formatDate(transaction.date))
+					return createData(receiver.businessname, receiver.document, transaction.amount, formatDate(transaction.date), 
+          transaction.status);
 				}))
 
 				setRows(r)
@@ -368,20 +363,20 @@ export default function TableTransGreenneat() {
           <TableBody>
             {visibleRows.map((row, index) => {
               const isItemSelected = isSelected(row.sender);
-              const labelId = `enhanced-table-checkbox-${index}`;
+              //const labelId = `enhanced-table-checkbox-${index}`;
 
               return (
                 <TableRow
-                  hover
-                  onClick={(event) => handleClick(event, row.sender)}
-                  role="checkbox"
-                  aria-checked={isItemSelected}
-                  tabIndex={-1}
-                  key={row.sender}
-                  selected={isItemSelected}
-                  sx={{ cursor: "pointer" }}
+                  // hover
+                  // onClick={(event) => handleClick(event, row.sender)}
+                  // //role="checkbox"
+                  // aria-checked={isItemSelected}
+                  // tabIndex={-1}
+                  // key={row.sender}
+                  // selected={isItemSelected}
+                  // sx={{ cursor: "pointer" }}
                 >
-                  <TableCell padding="checkbox">
+                  {/* <TableCell padding="checkbox">
                     <Checkbox
                       color="success"
                       checked={isItemSelected}
@@ -389,23 +384,21 @@ export default function TableTransGreenneat() {
                         "aria-labelledby": labelId,
                       }}
                     />
-                  </TableCell>
-                  <TableCell
+                  </TableCell> */}
+                  {/* <TableCell
                     component="th"
-                    id={labelId}
+                    //id={labelId}
                     scope="row"
                     padding="none"
                     align="center"
                   >
                     {row.sender}
-                  </TableCell>
+                  </TableCell> */}
                   <TableCell align="center">{row.receiver}</TableCell>
+                  <TableCell align="center">{row.documento}</TableCell>
                   <TableCell align="center">{row.valor}</TableCell>
                   <TableCell align="center">{row.data}</TableCell>
-                  <TableCell align="center">{row.documento}</TableCell>
                   <TableCell align="center">{row.situacao}</TableCell>
-                  <TableCell align="center">{}</TableCell>
-                  <TableCell align="center">{}</TableCell>
                 </TableRow>
               );
             })}

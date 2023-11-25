@@ -18,11 +18,12 @@ import { styled } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import axios from 'axios';
 import { API_BASE_URL } from '../../../env';
-
+import { getUserToken } from "../../utils/util";
 import { visuallyHidden } from '@mui/utils';
 
-function createData(documento, valor, quantidade, tipo, data) {
+function createData(nome, documento, valor, quantidade, tipo, data) {
 	return {
+		nome,
 		documento,
 		valor,
 		quantidade,
@@ -61,6 +62,12 @@ function stableSort(array, comparator) {
 }
 
 const headCells = [
+	{
+		id: "nome",
+		numeric: false,
+		disablePadding: false,
+		label: "Nome",
+	  },
 	{
 		id: 'documento',
 		numeric: true,
@@ -231,6 +238,40 @@ export default function TableHistGreenneat() {
 	const [rows, setRows] = React.useState([]);
 	const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
+
+	React.useEffect(() => {
+		const request = async () => {
+		  try {
+			//obter o token do cookie e formata para enviar para o backend
+			const token = getUserToken();
+			axios.defaults.headers.common["Authorization"] = token;
+	
+			const response = await axios.get(
+			  API_BASE_URL + `/oils/transfers/greeneat`
+			);
+			console.log(response);
+	
+			//const users = response.data.filter((user) => user.idusertype != 1);
+	
+			const r = response.data.map((item) =>
+			  createData(
+				item.nomeparceiro,
+				item.document,
+				item.price,
+				item.quantity + ' L',
+				item.type,
+				formatDate(item.deliverydate)
+			  )
+			);
+			setRows(r);
+		  } catch (error) {
+			alert("Erro ao obter dados");
+		  }
+		};
+	
+		request();
+	  }, []);
+
 	const handleRequestSort = (event, property) => {
 		const isAsc = orderBy === property && order === 'asc';
 		setOrder(isAsc ? 'desc' : 'asc');
@@ -322,7 +363,7 @@ export default function TableHistGreenneat() {
 									role="checkbox"
 									aria-checked={isItemSelected}
 									tabIndex={-1}
-									key={row.documento}
+									key={row.nome}
 								>
 									<TableCell
 										component="th"
@@ -331,8 +372,9 @@ export default function TableHistGreenneat() {
 										padding="none"
 										align="center"
 									>
-										{row.documento}
+										{row.nome}
 									</TableCell>
+									<TableCell align="center">{row.documento}</TableCell>
 									<TableCell align="center">{row.valor}</TableCell>
 									<TableCell align="center">{row.quantidade}</TableCell>
 									<TableCell align="center">{row.tipo}</TableCell>
