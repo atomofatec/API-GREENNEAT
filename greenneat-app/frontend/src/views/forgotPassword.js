@@ -103,10 +103,23 @@ export default function Register() {
                   <Typography
                     component="h1"
                     variant="h5"
+                    color={"white"}
+                    fontWeight={"bold"}
+                    mt={5}
+                    fontSize={"23px"}
+                    sx={{
+                      textAlign: "center",
+                    }}
+                  >
+                    Para redefinir sua <br /> senha  informe o  <br /> email cadastrado e  <br /> enviaremos um código  <br /> para alteração
+                  </Typography>
+                  <Typography
+                    component="h1"
+                    variant="h5"
                     color={"#0E681D"}
                     fontWeight={"bold"}
                     mt={5}
-                    fontSize={"17.4vw"}
+                    fontSize={"7.2vw"}
                     sx={{
                       textAlign: "center",
                     }}

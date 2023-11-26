@@ -12,6 +12,41 @@ export default function RegisterSupplierForm(props) {
 
     const theme = useTheme(); 
     
+    const formatCNPJ = (value) => {
+        const cleaned = value.replace(/\D/g, '').slice(0, 14);
+        const match = cleaned.match(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/);
+        if (match) {
+            return `${match[1]}.${match[2]}.${match[3]}/${match[4]}-${match[5]}`;
+        }
+        return cleaned;
+    };
+
+    const formatPhone = (value) => {
+        const cleaned = value.replace(/\D/g, '').slice(0, 11);
+        const match = cleaned.match(/^(\d{2})(\d{1})(\d{4})(\d{4})$/);
+        if (match) {
+            return `(${match[1]}) ${match[2]} ${match[3]}-${match[4]}`;
+        }
+        return cleaned;
+    };  
+
+    const handleInputNumberChange = (event) => {
+        event.target.value = event.target.value.replace(/\D/g, '');
+    };
+    
+    const handleInputChange = (e) => {
+        const inputValue = e.target.value;
+        let formattedValue = inputValue;
+    
+        if (e.target.name === 'document') {
+            formattedValue = formatCNPJ(inputValue);
+        } else if (e.target.name === 'telefone') {
+            formattedValue = formatPhone(inputValue);
+        }
+    
+        e.target.value = formattedValue;
+    };
+
     return (
         <>
             <Grid container spacing={0}>
@@ -26,6 +61,7 @@ export default function RegisterSupplierForm(props) {
                         autoComplete="cnpj"
                         required
                         autoFocus
+                        onInput={handleInputChange}
                         style={{ backgroundColor: 'white' }}
                     />
                 </Grid>
@@ -65,6 +101,7 @@ export default function RegisterSupplierForm(props) {
                         label="Telefone"
                         id="telefone"
                         required
+                        onInput={handleInputChange}
                         style={{ backgroundColor: 'white' }}
                     />
                 </Grid>
@@ -101,6 +138,7 @@ export default function RegisterSupplierForm(props) {
                         label="Número"
                         id="numero"
                         required
+                        onInput={handleInputNumberChange}
                         style={{ backgroundColor: 'white' }}
                     />
                 </Grid>

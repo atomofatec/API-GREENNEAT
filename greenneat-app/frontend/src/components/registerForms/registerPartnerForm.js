@@ -9,6 +9,52 @@ export default function RegisterPartnerForm() {
         setSelectedOption(option);
     };
 
+    const formatCPF = (value) => {
+        const cleaned = value.replace(/\D/g, '').slice(0, 11);
+        const match = cleaned.match(/^(\d{3})(\d{3})(\d{3})(\d{2})$/);
+        if (match) {
+            return `${match[1]}.${match[2]}.${match[3]}-${match[4]}`;
+        }
+        return cleaned;
+    };
+
+    const formatCNPJ = (value) => {
+        const cleaned = value.replace(/\D/g, '').slice(0, 14);
+        const match = cleaned.match(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/);
+        if (match) {
+            return `${match[1]}.${match[2]}.${match[3]}/${match[4]}-${match[5]}`;
+        }
+        return cleaned;
+    };
+
+    const formatPhone = (value) => {
+        const cleaned = value.replace(/\D/g, '').slice(0, 11);
+        const match = cleaned.match(/^(\d{2})(\d{1})(\d{4})(\d{4})$/);
+        if (match) {
+            return `(${match[1]}) ${match[2]} ${match[3]}-${match[4]}`;
+        }
+        return cleaned;
+    };  
+
+    const handleInputNumberChange = (event) => {
+        event.target.value = event.target.value.replace(/\D/g, '');
+    };
+
+    const handleInputChange = (e) => {
+        const inputValue = e.target.value;
+        let formattedValue = inputValue;
+    
+        if (e.target.name === 'telefone') {
+            formattedValue = formatPhone(inputValue);
+        } else if (selectedOption === 'cpf') {
+            formattedValue = formatCPF(inputValue);
+        } else if (selectedOption === 'cnpj') {
+            formattedValue = formatCNPJ(inputValue);
+        }
+    
+        e.target.value = formattedValue;
+    };
+
     return (
         <>
             {/* campos comuns (aparecem em cnpj e cpf) */}
@@ -19,24 +65,13 @@ export default function RegisterPartnerForm() {
                         color="success"
                         fullWidth
                         id="document"
-                        label="CPF"
+                        label={selectedOption === 'cpf' ? 'CPF' : 'CNPJ'}
                         name="document"
-                        autoComplete="cpf"
+                        autoComplete={selectedOption === 'cpf' ? 'cpf' : 'cnpj'}
                         required
                         autoFocus
-                        style={{ backgroundColor: 'white', display: selectedOption === 'cpf' ? 'block' : 'none' }}
-                    />
-                    <TextField
-                        margin="normal"
-                        color="success"
-                        fullWidth
-                        id="document"
-                        label="CNPJ"
-                        name="document"
-                        autoComplete="cnpj"
-                        required
-                        autoFocus
-                        style={{ backgroundColor: 'white', display: selectedOption === 'cnpj' ? 'block' : 'none' }}
+                        onInput={handleInputChange}
+                        style={{ backgroundColor: 'white' }}
                     />
                     {/* botão que altera de cpf para cnpj */}
                     <Typography
@@ -85,6 +120,7 @@ export default function RegisterPartnerForm() {
                         label="Telefone"
                         id="telefone"
                         required
+                        onInput={handleInputChange}
                         style={{ backgroundColor: 'white' }}
                     />
                 </Grid>
@@ -124,6 +160,7 @@ export default function RegisterPartnerForm() {
                                 label="Número"
                                 id="numero"
                                 required
+                                onInput={handleInputNumberChange}
                                 style={{ backgroundColor: 'white' }}
                             />
                         </Grid>
