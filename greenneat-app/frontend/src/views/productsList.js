@@ -25,7 +25,6 @@ import ProductCard from '../components/Cards/productCard';
 
 const settings = [
   { name: 'Meu Perfil' },
-  { name: 'Ajuda' },
   'divider',
   { sair: 'Sair' },
 ];
