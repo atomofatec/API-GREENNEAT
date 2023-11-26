@@ -11,18 +11,18 @@ import { Link } from 'react-router-dom';
 
 export const mainListItems = (
   <React.Fragment>
-    <ListItemButton component={Link} to="/carteira-estabelecimento" sx={{ color: 'white', height: '4rem' }}>
+    {/*<ListItemButton component={Link} to="/carteira-estabelecimento" sx={{ color: 'white', height: '4rem' }}>
       <ListItemIcon>
         <WalletIcon sx={{ color: 'white' }} />
       </ListItemIcon>
       <ListItemText
         primary={
-          {/*<Typography variant="body2" style={{ fontSize: '18px', fontFamily: "'Century Gothic', Futura, sans-serif" }}>
+          <Typography variant="body2" style={{ fontSize: '18px', fontFamily: "'Century Gothic', Futura, sans-serif" }}>
             Carteira
-          </Typography>*/}
+          </Typography>
         }
       />
-    </ListItemButton>
+    </ListItemButton>*/}
     <ListItemButton component={Link} to="/solicitar-estabelecimento" sx={{ color: 'white', height: '4rem' }}>
       <ListItemIcon>
         <CalendarTodayIcon sx={{ color: 'white' }} />
