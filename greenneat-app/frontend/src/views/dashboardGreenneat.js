@@ -35,7 +35,6 @@ import { API_BASE_URL } from '../../env';
 
 const settings = [
   { name: "Meu Perfil" },
-  { ajuda: "Ajuda #" },
   "divider",
   { sair: "Sair" },
 ];
@@ -284,17 +283,6 @@ export default function DashboardGreenneat() {
                                 }}
                               >
                                 {setting.name}
-                              </Link>
-                            </Typography>
-                            <Typography textAlign="center">
-                              <Link
-                                href="#"
-                                sx={{
-                                  textDecoration: "none",
-                                  color: "inherit",
-                                }}
-                              >
-                                {setting.ajuda}
                               </Link>
                             </Typography>
                             <Typography textAlign="center">

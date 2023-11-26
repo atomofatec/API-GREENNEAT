@@ -32,7 +32,6 @@ import { Link } from 'react-router-dom';
 
 const settings = [
   { name: 'Meu Perfil' },
-  { ajuda: 'Ajuda #' },
   'divider',
   { sair: 'Sair' },
 ];
@@ -159,7 +158,6 @@ export default function EditUser() {
                         ) : (
                           <MenuItem key={setting.name} onClick={handleCloseUserMenu}>
                             <Typography textAlign="center"><LinkMui href='/meu-perfil-Greenneat' sx={{ textDecoration: 'none', color: 'inherit' }}>{setting.name}</LinkMui></Typography>
-                            <Typography textAlign="center"><LinkMui href='#' sx={{ textDecoration: 'none', color: 'inherit' }}>{setting.ajuda}</LinkMui></Typography>
                             <Typography textAlign="center"><LinkMui href='/' sx={{ textDecoration: 'none', color: 'inherit' }}>{setting.sair}</LinkMui></Typography>
                           </MenuItem>
                         )

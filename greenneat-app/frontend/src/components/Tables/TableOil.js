@@ -28,6 +28,16 @@ import axios from 'axios';
 import { API_BASE_URL } from '../../../env';
 import { visuallyHidden } from '@mui/utils';
 import { getUserToken, formatDate } from '../../utils/util';
+import { useState ,useEffect } from "react";
+import Alert from "@mui/material/Alert";
+import AlertTitle from "@mui/material/AlertTitle";
+
+const alertStyle = {
+    position: 'fixed',
+    top: '10px',
+    right: '10px',
+    zIndex: 9999,
+  };
 
 function createData(id, estabelecimento, cnpj, quantidade, preco, data, status) {
     return {
@@ -285,6 +295,13 @@ export default function TableOil() {
     const [rows, setRows] = React.useState([]);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
+    const [successAlertOpen, setSuccessAlertOpen] = useState(false);
+    const [errorAlertOpen, setErrorAlertOpen] = useState(false);
+    const [successMessage, setSuccessMessage] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
+    const [autoCloseSuccessTimeout, setAutoCloseSuccessTimeout] = useState(null);
+    const [autoCloseErrorTimeout, setAutoCloseErrorTimeout] = useState(null);
+
     React.useEffect(() => {
 
 		const request = async () => {
@@ -320,7 +337,11 @@ export default function TableOil() {
 
 			await axios.put(API_BASE_URL + `/oils/deliver/${id}`)
 
-			alert("Oleo enviado com sucesso")
+			setSuccessMessage("Oleo enviado com sucesso");
+            setSuccessAlertOpen(true);
+            setAutoCloseSuccessTimeout(
+                setTimeout(() => setSuccessAlertOpen(false), 5000)
+            );
 			setRows(rows.map(item => {
 				if(item.id == id)
 					item.status = "ENTREGUE"
@@ -329,7 +350,11 @@ export default function TableOil() {
 			
 		} catch(error){
 			console.log(error)
-			alert(error.response.data.message)
+			setErrorMessage(error.response.data.message);
+            setErrorAlertOpen(true);
+            setAutoCloseErrorTimeout(
+                setTimeout(() => setErrorAlertOpen(false), 5000)
+            );
 		}	
 		
 	}
@@ -428,7 +453,11 @@ export default function TableOil() {
                                     <TableCell align="center">{row.quantidade}</TableCell>
                                     <TableCell align="center">{row.preco}</TableCell>
                                     <TableCell align="center">{row.data}</TableCell>
-                                    <TableCell align="center">{row.status}</TableCell>
+                                    <TableCell align="center" sx={{
+										color:
+											row.status === 'ENTREGUE' ? 'green' :
+											row.status === 'COLETADO' ? 'red' : 'inherit',
+									}}>{row.status}</TableCell>
                                     <TableCell align="center">
                                         <LongMenu onClickSend={() => sendOilToGreeneat(row.id, row.document, row.price)} row={row}/>
                                     </TableCell>
@@ -458,6 +487,22 @@ export default function TableOil() {
                 onPageChange={handleChangePage}
                 onRowsPerPageChange={handleChangeRowsPerPage}
             />
+            {errorAlertOpen && (
+                <div style={alertStyle}>
+                    <Alert severity="error">
+                        <AlertTitle>Erro</AlertTitle>
+                        {errorMessage}
+                    </Alert>
+                </div>
+            )}
+            {successAlertOpen && (
+                <div style={alertStyle}>
+                    <Alert severity="success">
+                        <AlertTitle>Sucesso</AlertTitle>
+                        {successMessage}
+                    </Alert>
+                </div>
+            )}
         </Paper>
     );
 }
