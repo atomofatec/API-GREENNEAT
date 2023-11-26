@@ -30,6 +30,16 @@ import axios from 'axios';
 import { API_BASE_URL } from '../../../env';
 import { visuallyHidden } from '@mui/utils';
 import { getUserToken, formatDate } from '../../utils/util';
+import { useState ,useEffect } from "react";
+import Alert from "@mui/material/Alert";
+import AlertTitle from "@mui/material/AlertTitle";
+
+const alertStyle = {
+    position: 'fixed',
+    top: '10px',
+    right: '10px',
+    zIndex: 9999,
+  };
 
 function createData(id, supplier, oil_amount, price, status, data, document) {
 	return {
@@ -173,7 +183,6 @@ EnhancedTableHead.propTypes = {
 
 const options = [
     { icon: <CheckIcon style={{ color: '#3B8F5C', height: '1rem' }} />, label: 'Aceitar' },
-    { icon: <CloseIcon style={{ color: '#3B8F5C', height: '1rem' }} />, label: 'Recusar' },
 ];
 
 const ITEM_HEIGHT = 48;
@@ -224,13 +233,6 @@ function LongMenu(props) {
 				>
 					<CheckIcon style={{ color: '#3B8F5C', height: '1rem' }} /> 
 					Aceitar
-				</MenuItem>
-				<MenuItem
-					key={'Recusar'}
-					selected={'Recusar' === 'Pyxis'}
-				>
-					<CloseIcon style={{ color: '#3B8F5C', height: '1rem' }} />
-					Recusar
 				</MenuItem>
 				{/* {options.map((option) => (
                     <MenuItem
@@ -338,6 +340,13 @@ export default function TableRequestsPartner() {
 	const [rows, setRows] = React.useState([]);
 	const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
+	const [successAlertOpen, setSuccessAlertOpen] = useState(false);
+    const [errorAlertOpen, setErrorAlertOpen] = useState(false);
+    const [successMessage, setSuccessMessage] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
+    const [autoCloseSuccessTimeout, setAutoCloseSuccessTimeout] = useState(null);
+    const [autoCloseErrorTimeout, setAutoCloseErrorTimeout] = useState(null);
+
 	React.useEffect(() => {
 
 		const request = async () => {
@@ -369,7 +378,11 @@ export default function TableRequestsPartner() {
 			const body = { amount: parseInt(amount), document: document }
 			await axios.post(API_BASE_URL + `/transactions/transfer`, body)
 
-			alert("Oleo coletado com sucesso")
+			setSuccessMessage("Oleo coletado com sucesso");
+			setSuccessAlertOpen(true);
+            setAutoCloseSuccessTimeout(
+                setTimeout(() => setSuccessAlertOpen(false), 5000)
+            );
 			setRows(rows.map(item => {
 				if(item.id == id)
 					item.status = "COLETADO"
@@ -379,7 +392,11 @@ export default function TableRequestsPartner() {
 		} catch(error){
 			await axios.put(API_BASE_URL + `/oils/restore/${id}`)
 			console.log(error)
-			alert(error.response.data.message)
+			setErrorMessage(error.response.data.message);
+            setErrorAlertOpen(true);
+            setAutoCloseErrorTimeout(
+                setTimeout(() => setErrorAlertOpen(false), 5000)
+            );
 		}	
 		
 
@@ -500,7 +517,11 @@ export default function TableRequestsPartner() {
 									</TableCell>
 									<TableCell align="center">{row.oil_amount}</TableCell>
 									<TableCell align="center">{row.price}</TableCell>
-									<TableCell align="center">{row.status}</TableCell>
+									<TableCell align="center" sx={{
+										color:
+											row.status === 'DISPONIVEL' ? 'green' :
+											row.status === 'COLETADO' ? 'red' : 'inherit',
+									}}>{row.status}</TableCell>
 									<TableCell align="center">{row.data}</TableCell>
 									<TableCell align="center">
 										{row.status == "DISPONIVEL" &&
@@ -533,6 +554,22 @@ export default function TableRequestsPartner() {
 				onPageChange={handleChangePage}
 				onRowsPerPageChange={handleChangeRowsPerPage}
 			/>
+			{errorAlertOpen && (
+                <div style={alertStyle}>
+                    <Alert severity="error">
+                        <AlertTitle>Erro</AlertTitle>
+                        {errorMessage}
+                    </Alert>
+                </div>
+            )}
+            {successAlertOpen && (
+                <div style={alertStyle}>
+                    <Alert severity="success">
+                        <AlertTitle>Sucesso</AlertTitle>
+                        {successMessage}
+                    </Alert>
+                </div>
+            )}
 		</Paper>
 	);
 }

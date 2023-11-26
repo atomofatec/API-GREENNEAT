@@ -27,7 +27,6 @@ import AvatarImage from "../images/PerfilGreenneat.png";
 
 const settings = [
   { name: 'Meu Perfil' },
-  { ajuda: 'Ajuda #' },
   'divider',
   { sair: 'Sair' },
 ];
@@ -166,7 +165,6 @@ export default function DashboardGreenneat() {
                         ) : (
                           <MenuItem key={setting.name} onClick={handleCloseUserMenu}>
                             <Typography textAlign="center"><Link href='/meu-perfil-Greenneat' sx={{ textDecoration: 'none', color: 'inherit' }}>{setting.name}</Link></Typography>
-                            <Typography textAlign="center"><Link href='#' sx={{ textDecoration: 'none', color: 'inherit' }}>{setting.ajuda}</Link></Typography>
                             <Typography textAlign="center"><Link href='/' sx={{ textDecoration: 'none', color: 'inherit' }}>{setting.sair}</Link></Typography>
                           </MenuItem>
                         )

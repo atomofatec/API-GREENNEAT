@@ -1,34 +1,24 @@
-import * as React from "react";
-import PropTypes from "prop-types";
-import { alpha } from "@mui/material/styles";
-import Box from "@mui/material/Box";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TablePagination from "@mui/material/TablePagination";
-import TableRow from "@mui/material/TableRow";
-import TableSortLabel from "@mui/material/TableSortLabel";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import Paper from "@mui/material/Paper";
-import Checkbox from "@mui/material/Checkbox";
-import IconButton from "@mui/material/IconButton";
-import Tooltip from "@mui/material/Tooltip";
-import DeleteIcon from "@mui/icons-material/Delete";
-import Menu from "@mui/material/Menu";
-import Grid from "@mui/material/Grid";
-import Title from "../Outros/Title";
-import MenuItem from "@mui/material/MenuItem";
-import { styled } from "@mui/material/styles";
-import InputBase from "@mui/material/InputBase";
-import EditIcon from "@mui/icons-material/Edit";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import axios from "axios";
-import { API_BASE_URL } from "../../../env";
-import { visuallyHidden } from "@mui/utils";
-import { getUserToken } from "../../utils/util";
+import * as React from 'react';
+import PropTypes from 'prop-types';
+import Box from '@mui/material/Box';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TablePagination from '@mui/material/TablePagination';
+import TableRow from '@mui/material/TableRow';
+import TableSortLabel from '@mui/material/TableSortLabel';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import Paper from '@mui/material/Paper';
+import Grid from '@mui/material/Grid';
+import Title from '../Outros/Title';
+import { styled } from '@mui/material/styles';
+import InputBase from '@mui/material/InputBase';
+import axios from 'axios';
+import { API_BASE_URL } from '../../../env';
+import { visuallyHidden } from '@mui/utils';
 
 function createData(receiver, documento, valor, data, situacao) {
   return {
@@ -40,32 +30,33 @@ function createData(receiver, documento, valor, data, situacao) {
   };
 }
 
+
 function descendingComparator(a, b, orderBy) {
-  if (b[orderBy] < a[orderBy]) {
-    return -1;
-  }
-  if (b[orderBy] > a[orderBy]) {
-    return 1;
-  }
-  return 0;
+	if (b[orderBy] < a[orderBy]) {
+		return -1;
+	}
+	if (b[orderBy] > a[orderBy]) {
+		return 1;
+	}
+	return 0;
 }
 
 function getComparator(order, orderBy) {
-  return order === "desc"
-    ? (a, b) => descendingComparator(a, b, orderBy)
-    : (a, b) => -descendingComparator(a, b, orderBy);
+	return order === 'desc'
+		? (a, b) => descendingComparator(a, b, orderBy)
+		: (a, b) => -descendingComparator(a, b, orderBy);
 }
 
 function stableSort(array, comparator) {
-  const stabilizedThis = array.map((el, index) => [el, index]);
-  stabilizedThis.sort((a, b) => {
-    const order = comparator(a[0], b[0]);
-    if (order !== 0) {
-      return order;
-    }
-    return a[1] - b[1];
-  });
-  return stabilizedThis.map((el) => el[0]);
+	const stabilizedThis = array.map((el, index) => [el, index]);
+	stabilizedThis.sort((a, b) => {
+		const order = comparator(a[0], b[0]);
+		if (order !== 0) {
+			return order;
+		}
+		return a[1] - b[1];
+	});
+	return stabilizedThis.map((el) => el[0]);
 }
 
 const headCells = [
@@ -103,18 +94,18 @@ const headCells = [
 ];
 
 function EnhancedTableHead(props) {
-  const {
-    onSelectAllClick,
-    order,
-    orderBy,
-    numSelected,
-    rowCount,
-    onRequestSort,
-  } = props;
+	const {
+		onSelectAllClick,
+		order,
+		orderBy,
+		numSelected,
+		rowCount,
+		onRequestSort,
+	} = props;
 
-  const createSortHandler = (property) => (event) => {
-    onRequestSort(event, property);
-  };
+	const createSortHandler = (property) => (event) => {
+		onRequestSort(event, property);
+	};
 
 	return (
 		<TableHead>
@@ -148,18 +139,18 @@ function EnhancedTableHead(props) {
 }
 
 EnhancedTableHead.propTypes = {
-  numSelected: PropTypes.number.isRequired,
-  onRequestSort: PropTypes.func.isRequired,
-  onSelectAllClick: PropTypes.func.isRequired,
-  order: PropTypes.oneOf(["asc", "desc"]).isRequired,
-  orderBy: PropTypes.string.isRequired,
-  rowCount: PropTypes.number.isRequired,
+	numSelected: PropTypes.number.isRequired,
+	onRequestSort: PropTypes.func.isRequired,
+	onSelectAllClick: PropTypes.func.isRequired,
+	order: PropTypes.oneOf(['asc', 'desc']).isRequired,
+	orderBy: PropTypes.string.isRequired,
+	rowCount: PropTypes.number.isRequired,
 };
 
 const ITEM_HEIGHT = 48;
 
 function EnhancedTableToolbar(props) {
-  const { numSelected } = props;
+	const { numSelected } = props;
 
 	return (
 		<Toolbar
@@ -190,63 +181,66 @@ function EnhancedTableToolbar(props) {
 }
 
 EnhancedTableToolbar.propTypes = {
-  numSelected: PropTypes.number.isRequired,
+	numSelected: PropTypes.number.isRequired,
 };
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
-  textAlign: "center",
+	textAlign: 'center',
 }));
+
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: "inherit",
-  "& .MuiInputBase-input": {
-    padding: theme.spacing(1, 1, 1, 0),
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create("width"),
-    width: "100%",
-    [theme.breakpoints.up("sm")]: {
-      width: "12ch",
-      "&:focus": {
-        width: "20ch",
-      },
-    },
-  },
+	color: 'inherit',
+	'& .MuiInputBase-input': {
+		padding: theme.spacing(1, 1, 1, 0),
+		paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+		transition: theme.transitions.create('width'),
+		width: '100%',
+		[theme.breakpoints.up('sm')]: {
+			width: '12ch',
+			'&:focus': {
+				width: '20ch',
+			},
+		},
+	},
 }));
 
-function formatDate(date) {
-  var data = new Date(date);
+function formatDate(date){
+	var data = new Date(date)
+	
+	var dia  = data.getDate();
+	if (dia< 10) {
+		dia  = "0" + dia;
+	}
 
-  var dia = data.getDate();
-  if (dia < 10) {
-    dia = "0" + dia;
-  }
+	var mes  = data.getMonth() + 1;
+	if (mes < 10) {
+		mes  = "0" + mes;
+	}
 
-  var mes = data.getMonth() + 1;
-  if (mes < 10) {
-    mes = "0" + mes;
-  }
-
-  var ano = data.getFullYear();
-  return dia + "/" + mes + "/" + ano;
+	var ano  = data.getFullYear();
+	return dia + "/" + mes + "/" + ano;
 }
 
 export default function TableTransGreenneat() {
-  const [order, setOrder] = React.useState("asc");
-  const [orderBy, setOrderBy] = React.useState("sender");
-  const [selected, setSelected] = React.useState([]);
-  const [page, setPage] = React.useState(0);
-  const [dense, setDense] = React.useState(false);
-  const [rows, setRows] = React.useState([]);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+	const [order, setOrder] = React.useState('asc');
+	const [orderBy, setOrderBy] = React.useState('sender');
+	const [selected, setSelected] = React.useState([]);
+	const [page, setPage] = React.useState(0);
+	const [dense, setDense] = React.useState(false);
+	const [rows, setRows] = React.useState([]);
+	const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
-  React.useEffect(() => {
+	React.useEffect(() => {
 
 		const request = async () => {
 
 			try {
 				
 				//obter o token do cookie e formata para enviar para o backend
-				const token = getUserToken()
+				const tokenCookie = document.cookie.split(" ")
+				let token = tokenCookie[0].split("=")[1]
+				token = token.substring(0, token.length - 1)
 				axios.defaults.headers.common['Authorization'] = token
 
 				const response = await axios.get(API_BASE_URL + `/transactions`)
@@ -273,67 +267,67 @@ export default function TableTransGreenneat() {
 		request();
 	}, [])
 
-  const handleRequestSort = (event, property) => {
-    const isAsc = orderBy === property && order === "asc";
-    setOrder(isAsc ? "desc" : "asc");
-    setOrderBy(property);
-  };
+	const handleRequestSort = (event, property) => {
+		const isAsc = orderBy === property && order === 'asc';
+		setOrder(isAsc ? 'desc' : 'asc');
+		setOrderBy(property);
+	};
 
-  const handleSelectAllClick = (event) => {
-    if (event.target.checked) {
-      const newSelected = rows.map((n) => n.sender);
-      setSelected(newSelected);
-      return;
-    }
-    setSelected([]);
-  };
+	const handleSelectAllClick = (event) => {
+		if (event.target.checked) {
+			const newSelected = rows.map((n) => n.sender);
+			setSelected(newSelected);
+			return;
+		}
+		setSelected([]);
+	};
 
-  const handleClick = (event, sender) => {
-    const selectedIndex = selected.indexOf(sender);
-    let newSelected = [];
+	const handleClick = (event, sender) => {
+		const selectedIndex = selected.indexOf(sender);
+		let newSelected = [];
 
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, sender);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1)
-      );
-    }
+		if (selectedIndex === -1) {
+			newSelected = newSelected.concat(selected, sender);
+		} else if (selectedIndex === 0) {
+			newSelected = newSelected.concat(selected.slice(1));
+		} else if (selectedIndex === selected.length - 1) {
+			newSelected = newSelected.concat(selected.slice(0, -1));
+		} else if (selectedIndex > 0) {
+			newSelected = newSelected.concat(
+				selected.slice(0, selectedIndex),
+				selected.slice(selectedIndex + 1),
+			);
+		}
 
-    setSelected(newSelected);
-  };
+		setSelected(newSelected);
+	};
 
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
+	const handleChangePage = (event, newPage) => {
+		setPage(newPage);
+	};
 
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
+	const handleChangeRowsPerPage = (event) => {
+		setRowsPerPage(parseInt(event.target.value, 10));
+		setPage(0);
+	};
 
-  const handleChangeDense = (event) => {
-    setDense(event.target.checked);
-  };
+	const handleChangeDense = (event) => {
+		setDense(event.target.checked);
+	};
 
-  const isSelected = (sender) => selected.indexOf(sender) !== -1;
+	const isSelected = (sender) => selected.indexOf(sender) !== -1;
 
-  const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
+	const emptyRows =
+		page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
-  const visibleRows = React.useMemo(
-    () =>
-      stableSort(rows, getComparator(order, orderBy)).slice(
-        page * rowsPerPage,
-        page * rowsPerPage + rowsPerPage
-      ),
-    [order, orderBy, page, rowsPerPage]
-  );
+	const visibleRows = React.useMemo(
+		() =>
+			stableSort(rows, getComparator(order, orderBy)).slice(
+				page * rowsPerPage,
+				page * rowsPerPage + rowsPerPage,
+			),
+		[order, orderBy, page, rowsPerPage],
+	);
 
   return (
     <Paper
