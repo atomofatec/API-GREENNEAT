@@ -31,7 +31,7 @@ import CarteiraCoopEnvForm from '../components/Forms/CarteiraCoopEnvForm';
 import { mainListItems } from '../components/menus/menuPartner';
 import axios from 'axios';
 import { API_BASE_URL, PARTNER_TYPE_USER } from '../../env';
-import { getUser } from '../utils/util';
+import { getUser, getUserToken } from '../utils/util';
 
 const settings = [
   { name: 'Meu Perfil' },
@@ -102,6 +102,29 @@ export default function CarteiraCooperativo() {
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [valor, setValor] = useState("");
   const [cnpj, setCnpj] = useState("");
+  const [balance, setBalance] = useState("");
+
+  useEffect(() => {
+    getData()
+  }, [balance])
+
+  const getData = async () => {
+
+    try{
+        const user = getUser()
+        const token = getUserToken()
+
+        axios.defaults.headers.common['Authorization'] = token
+
+        const response = await axios.get(API_BASE_URL + "/users/" + user.id);
+        setBalance(response.data[0].balance)
+
+    }catch(error){
+        console.log(error)
+        alert("Erro ao buscar os dados")
+    }
+    
+}
 
   const handleValorChange = (event) => {
     const input = event.target.value;
@@ -177,6 +200,7 @@ export default function CarteiraCooperativo() {
       await axios.post(API_BASE_URL + "/transactions/transfer", data);
       setSuccessMessage("Transferencia realizada!")
       setSuccessAlertOpen(true);
+      setBalance(balance - valor)
     }
 
     setValor("")
@@ -375,7 +399,7 @@ export default function CarteiraCooperativo() {
                 </Grid>
                 <Grid item xs={6}>
                   <Box display="flex" justifyContent="flex-end" alignItems="center">
-                    <Title>$100</Title>
+                    <Title>{balance}</Title>
                   </Box>
                   <Box textAlign="right">
                     <SubTitle>Moedas Greenneat</SubTitle>
@@ -411,7 +435,7 @@ export default function CarteiraCooperativo() {
                 </Grid>
                 <Grid item xs={6}>
                   <Box display="flex" justifyContent="flex-end" alignItems="center">
-                    <Title>$100</Title>
+                    <Title>{balance}</Title>
                   </Box>
                   <Box textAlign="right">
                     <SubTitle>Moedas Greenneat</SubTitle>
