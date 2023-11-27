@@ -15,7 +15,7 @@ module.exports = app => {
    	router.put("/usersUpdate", authenticateToken, userController.update)
     router.put("/users/:id/update", authenticateToken, userController.updateUserProfile)
     router.post("/users/forgotpassword", userController.forgotPassowrd)
-    router.post("/user/validatetoken", userController.validateToken)
+    router.post("/users/validatetoken", userController.validateToken)
 
     app.use("/api", router)
   
