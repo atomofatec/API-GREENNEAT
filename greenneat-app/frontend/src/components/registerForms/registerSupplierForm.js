@@ -61,7 +61,6 @@ export default function RegisterSupplierForm(props) {
                         autoComplete="cnpj"
                         required
                         autoFocus
-                        onInput={handleInputChange}
                         style={{ backgroundColor: 'white' }}
                     />
                 </Grid>
@@ -101,7 +100,6 @@ export default function RegisterSupplierForm(props) {
                         label="Telefone"
                         id="telefone"
                         required
-                        onInput={handleInputChange}
                         style={{ backgroundColor: 'white' }}
                     />
                 </Grid>
@@ -138,7 +136,6 @@ export default function RegisterSupplierForm(props) {
                         label="Número"
                         id="numero"
                         required
-                        onInput={handleInputNumberChange}
                         style={{ backgroundColor: 'white' }}
                     />
                 </Grid>

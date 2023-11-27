@@ -70,7 +70,6 @@ export default function RegisterPartnerForm() {
                         autoComplete={selectedOption === 'cpf' ? 'cpf' : 'cnpj'}
                         required
                         autoFocus
-                        onInput={handleInputChange}
                         style={{ backgroundColor: 'white' }}
                     />
                     {/* botão que altera de cpf para cnpj */}
@@ -120,7 +119,6 @@ export default function RegisterPartnerForm() {
                         label="Telefone"
                         id="telefone"
                         required
-                        onInput={handleInputChange}
                         style={{ backgroundColor: 'white' }}
                     />
                 </Grid>
@@ -160,7 +158,6 @@ export default function RegisterPartnerForm() {
                                 label="Número"
                                 id="numero"
                                 required
-                                onInput={handleInputNumberChange}
                                 style={{ backgroundColor: 'white' }}
                             />
                         </Grid>
