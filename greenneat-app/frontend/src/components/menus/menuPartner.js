@@ -12,7 +12,7 @@ import { Link } from 'react-router-dom';
 
 export const mainListItems = (
   <React.Fragment>
-    <ListItemButton component={Link} to="/dashboard-cooperativo" sx={{ color: 'white', height: '4rem' }}>
+    {/*<ListItemButton component={Link} to="/dashboard-cooperativo" sx={{ color: 'white', height: '4rem' }}>
       <ListItemIcon>
         <BarChartIcon sx={{ color: 'white' }} />
       </ListItemIcon>
@@ -23,7 +23,7 @@ export const mainListItems = (
           </Typography>
         }
       />
-    </ListItemButton>
+    </ListItemButton>*/}
     <ListItemButton component={Link} to="/carteira-cooperativo" sx={{ color: 'white', height: '4rem' }}>
       <ListItemIcon>
         <WalletIcon sx={{ color: 'white' }} />

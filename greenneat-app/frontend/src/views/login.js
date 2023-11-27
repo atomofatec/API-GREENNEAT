@@ -70,7 +70,7 @@ export default function Login() {
       } else if (user.idusertype === SUPPLIER_TYPE_USER) {
         navigate("/solicitar-estabelecimento");
       } else if (user.idusertype === PARTNER_TYPE_USER)
-        navigate("/dashboard-cooperativo");
+        navigate("/carteira-cooperativo");
 
     } catch (error) {
       setErrorMessage(error.response.data);
