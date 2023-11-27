@@ -28,10 +28,11 @@ import SubTitle from "../components/Outros/SubTitle";
 import { mainListItems } from "../components/menus/menuSupplier";
 import {API_BASE_URL, GREENEAT_DOCUMENT, SUPPLIER_TYPE_USER} from "../../env.js";
 import axios from "axios";
-import { getUser } from '../utils/util';
+import { getUser, getUserToken } from '../utils/util';
 
 const settings = [
   { name: 'Meu Perfil' },
+  { ajuda: 'Ajuda #' },
   'divider',
   { sair: 'Sair' },
 ]; 
@@ -96,6 +97,29 @@ export default function CarteiraEstabelecimento() {
   const [open, setOpen] = React.useState(false);
   const [valor, setValor] = useState("");
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [balance, setBalance] = useState("");
+
+  useEffect(() => {
+    getData()
+  }, [balance])
+
+  const getData = async () => {
+
+    try{
+        const user = getUser()
+        const token = getUserToken()
+
+        axios.defaults.headers.common['Authorization'] = token
+
+        const response = await axios.get(API_BASE_URL + "/users/" + user.id);
+        setBalance(response.data[0].balance)
+
+    }catch(error){
+        console.log(error)
+        alert("Erro ao buscar os dados")
+    }
+    
+}
 
   const toggleDrawer = () => {
     setOpen(!open);
@@ -140,6 +164,7 @@ export default function CarteiraEstabelecimento() {
       setSuccessMessage('Transferência realizada!');
       setSuccessAlertOpen(true);
       setValor("")
+      setBalance(balance - valor)
 
     } catch(error){
       setErrorMessage(error.response.data);
@@ -243,6 +268,7 @@ export default function CarteiraEstabelecimento() {
                         ) : (
                           <MenuItem key={setting.name} onClick={handleCloseUserMenu}>
                           <Typography textAlign="center"><Link href='/meu-perfil-estabelecimento' sx={{textDecoration: 'none', color: 'inherit'}}>{setting.name}</Link></Typography>
+                          <Typography textAlign="center"><Link href='#' sx={{textDecoration: 'none', color: 'inherit'}}>{setting.ajuda}</Link></Typography>
                           <Typography textAlign="center"><Link href='/' sx={{textDecoration: 'none', color: 'inherit'}}>{setting.sair}</Link></Typography>
                           </MenuItem>
                         )
@@ -313,7 +339,7 @@ export default function CarteiraEstabelecimento() {
                   justifyContent="flex-end"
                   alignItems="center"
                 >
-                  <Title>$30</Title>
+                  <Title>{balance}</Title>
                 </Box>
                 <Box textAlign="right">
                   <SubTitle>Moedas Greenneat</SubTitle>
