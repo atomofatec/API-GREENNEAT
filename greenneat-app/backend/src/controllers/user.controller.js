@@ -3,6 +3,7 @@ const User = require("../models/user.model.js");
 const UserDetail = require("../models/userDetail.model.js");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const nodemailer = require('nodemailer');
 const GREENEAT_USER = 1;
 const SUPPLIER_USER = 2;
  
@@ -23,7 +24,18 @@ exports.findAll = async (req, res) => {
 		res.status(500).send("Erro ao processar requisição!");
 	}
 };
- 
+
+exports.validateToken = async (req, res) => {
+	const { token } = req.body;
+	try {
+	  const payload = await User.validateToken(token);
+	  res.json(payload);
+	} catch (error) {
+	  console.error('Erro ao validar o token:', error);
+	  res.status(500).json({ error: true, message: 'deu ruim irmao' });
+	}
+};
+
 exports.findById = async (req, res) => {
 	try {
 		const user = await User.findById(req.params.id);
@@ -65,7 +77,6 @@ exports.update = async (req, res) => {
 	}
 };
 
-
 exports.delete = async (req, res) => {
 	try {
 
@@ -87,6 +98,46 @@ exports.delete = async (req, res) => {
 		res.status(500).send("Erro ao processar requisição!");
 	}
 };
+
+exports.forgotPassowrd = async(req, res) => {
+	const { email } = req.body;
+
+    try {
+        const user = await User.findByEmail(email);
+
+        if (user.length === 1) {
+            const token = jwt.sign({ email }, 'SECRET', { expiresIn: '12h' });
+
+            var transporter = nodemailer.createTransport({
+                host: 'smtp.office365.com',
+                port: 587,
+                secure: false,
+                auth: {
+                    user: 'recuperacaodesenhagreeneat@outlook.com.br',
+                    pass: 'greeneat2023'
+                }
+            });
+
+            let info = await transporter.sendMail({
+                from: 'recuperacaodesenhagreeneat@outlook.com.br',
+                to: email,
+                subject: 'Recuperação de Senha',
+                html: `<p>Olá ${email},</p>
+                    <p>Para trocar a senha, clique no link abaixo:</p>
+                    <p><a href="http://localhost:3000/alterarsenha/${token}">Trocar senha</a></p>`,
+            });
+
+            console.log('Email enviado:', info.messageId);
+            res.send({ msg: "Email enviado" });
+        } else {
+            console.log('usuário não cadastrado');
+            res.send({ msg: "Usuário não cadastrado/Informações estão incorretas" });
+        }
+    } catch (err) {
+        console.log('erro ao buscar usuário:', err);
+        res.status(500).send({ error: "Erro ao buscar usuário" });
+    }
+}
 
 exports.updateUserProfile = async (req, res) => {
   const userId = req.params.id; // Obtém o 'id' a partir dos parâmetros de rota

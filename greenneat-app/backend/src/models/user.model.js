@@ -9,6 +9,16 @@ const User = function(user) {
     this.idUserType = user.idUserType;
 }
 
+User.validateToken = async (token) => {
+    try {
+        const payload = jwt.verify(token, 'SECRET');
+        return payload;
+      } catch (error) {
+        console.error('Erro ao validar o token:', error);
+        throw new Error('Erro ao validar o token');
+      }
+}  
+
 User.findAll = async () => {
     const result = await sql.query(`SELECT users.id, users.email, users.balance, users.idusertype, userdetails.name, userdetails.telephone,
                                            userdetails.document, userdetails.address, userdetails.businessname
